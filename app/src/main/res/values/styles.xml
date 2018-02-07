@@ -34,4 +34,9 @@
         <item name="android:statusBarColor">@color/leaf_green</item>
     </style>
 
+    <style name="NavigationViewStyle" >
+        <item name="android:listDivider">@drawable/divider</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
 </resources>

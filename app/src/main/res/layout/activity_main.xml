@@ -23,6 +23,7 @@
         app:menu="@menu/activity_main_drawer"
         app:itemTextColor="@color/leaf_green"
         app:itemIconTint="@color/leaf_green"
+        android:theme="@style/NavigationViewStyle"
         />
 
 </android.support.v4.widget.DrawerLayout>
