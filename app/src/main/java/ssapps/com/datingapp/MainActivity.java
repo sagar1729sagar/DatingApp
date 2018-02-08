@@ -3,6 +3,8 @@ package ssapps.com.datingapp;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
 //        if (id == R.id.action_settings) {
 //            return true;
@@ -84,6 +87,44 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+
+        switch (id){
+            case R.id.nav_search:
+                break;
+            case R.id.nav_save_search:
+                break;
+            case R.id.nav_around_me:
+                break;
+            case R.id.nav_chat_messages:
+                break;
+            case R.id.nav_online:
+                break;
+            case R.id.nav_whos_new:
+                break;
+            case R.id.nav_in_depth:
+                break;
+            case R.id.nav_activity_board:
+                break;
+            case R.id.nav_friends:
+                break;
+            case R.id.favourites:
+                break;
+            case R.id.nav_liked_me:
+                break;
+            case R.id.nav_my_profile:
+                break;
+            case R.id.nav_upgrade_packages:
+                break;
+            case R.id.nav_terms_of_use:
+                break;
+            case R.id.nav_settings:
+                break;
+            case R.id.nav_logout:
+                break;
+            default:
+                break;
+        }
 
 //        if (id == R.id.nav_camera) {
 //            // Handle the camera action
@@ -103,4 +144,14 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
+    private void makeScreenTransition(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_placeholder,fragment);
+        ft.commit();
+    }
+
+
 }
