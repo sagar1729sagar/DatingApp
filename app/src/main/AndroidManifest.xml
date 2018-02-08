@@ -22,8 +22,11 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/MainTheme" />
-        <activity android:name=".SignInChooserActivity"
-            android:theme="@style/MainTheme"
+        <activity
+            android:name=".SignInChooserActivity"
+            android:theme="@style/MainTheme" />
+        <activity android:name=".SignupActivity"
+
             />
     </application>
 
