@@ -6,4 +6,5 @@
     <color name="white">#FFFF</color>
     <color name="leaf_green">#7ab545</color>
     <color name="red">#e11c40</color>
+    <color name="black">#000</color>
 </resources>

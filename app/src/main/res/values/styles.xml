@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/leaf_green</item>
         <item name="colorPrimaryDark">@color/leaf_green</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/leaf_green</item>
     </style>
 
 
@@ -43,6 +43,7 @@
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
         <item name="android:statusBarColor">@color/leaf_green</item>
+        <item name="colorAccent">@color/leaf_green</item>
     </style>
 
 </resources>
