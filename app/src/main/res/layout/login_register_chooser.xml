@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ssapps.com.datingapp.MainActivity"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/ll_lrc"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        >
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:id="@+id/register_choose"
+            android:background="@drawable/button_shape_corner"
+            android:textColor="@color/white"
+            android:text="@string/sign_up"
+            android:layout_marginRight="2dp"
+            android:layout_marginLeft="15dp"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:id="@+id/login_choose"
+            android:background="@drawable/button_shape_corner"
+            android:textColor="@color/white"
+            android:text="@string/login"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="15dp"
+            android:backgroundTint="@color/leaf_green"
+        />
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/ll_lrc"
+        android:background="@drawable/button_shape_round"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fb"
+        android:layout_above="@id/ll_lrc"
+        android:layout_margin="50dp"
+        />
+
+</RelativeLayout>
