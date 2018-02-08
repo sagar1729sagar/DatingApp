@@ -23,6 +23,106 @@
             app:actionLayout="@layout/nav_action_layout"
             />
     </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g3">
+        <item
+            android:id="@+id/nav_around_me"
+            android:icon="@drawable/ic_around_me"
+            android:title="@string/around_me"
+            app:actionLayout="@layout/nav_action_layout"
+            />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g4">
+        <item android:id="@+id/nav_chat_messages"
+            android:icon="@drawable/ic_chat_messages"
+            android:title="@string/chat"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g5">
+        <item android:id="@+id/nav_online"
+            android:icon="@drawable/ic_online"
+            android:title="@string/online"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g6">
+        <item android:id="@+id/nav_whos_new"
+            android:icon="@drawable/ic_whos_new"
+            android:title="@string/whos_new"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g7">
+        <item android:id="@+id/nav_in_depth"
+            android:icon="@drawable/ic_in_depth"
+            android:title="@string/in_depth"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g8">
+        <item android:id="@+id/nav_activity_board"
+            android:icon="@drawable/ic_activity_board"
+            android:title="@string/activity_board"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g9">
+        <item android:id="@+id/nav_friends"
+            android:icon="@drawable/ic_friends"
+            android:title="@string/friends"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g10">
+        <item android:id="@+id/favourites"
+            android:icon="@drawable/ic_favourites"
+            android:title="@string/favourites"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g11">
+        <item android:id="@+id/nav_liked_me"
+            android:icon="@drawable/ic_liked_me"
+            android:title="@string/liked_me"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g12">
+        <item android:id="@+id/nav_my_profile"
+            android:icon="@drawable/ic_my_profile"
+            android:title="@string/my_profile"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g13">
+        <item android:id="@+id/nav_upgrade_packages"
+            android:icon="@drawable/ic_upgrade_packages"
+            android:title="@string/upgrade_packages"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g14">
+        <item android:id="@+id/nav_terms_of_use"
+            android:icon="@drawable/ic_terms"
+            android:title="@string/terms"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g15">
+        <item android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/g16">
+        <item android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout"
+            app:actionLayout="@layout/nav_action_layout"/>
+    </group>
             <!--<group android:checkableBehavior="single">-->
         <!--<item-->
             <!--android:id="@+id/nav_camera"-->

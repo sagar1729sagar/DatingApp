@@ -9,4 +9,19 @@
 
     <string name="search">Search</string>
     <string name="save_search">Save Search</string>
+    <string name="around_me">Around me</string>
+    <string name="chat">Chat messages</string>
+    <string name="online">Online</string>
+    <string name="whos_new">Who\'s new</string>
+    <string name="in_depth">In depth</string>
+    <string name="activity_board">Activity Board</string>
+    <string name="friends">Friends</string>
+    <string name="favourites">Favourites</string>
+    <string name="liked_me">Liked me</string>
+    <string name="my_profile">My profile</string>
+    <string name="upgrade_packages">Upgrade packages</string>
+    <string name="terms">Terms of use</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
 </resources>
