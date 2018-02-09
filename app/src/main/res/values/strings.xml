@@ -26,6 +26,8 @@
     <string name="login">Login</string>
     <string name="sign_up">Register</string>
 
+
+
     <string name="user_name">User name</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
@@ -40,4 +42,10 @@
     <string name="t2">Sign Up </string>
     <string name="t3">you agree to our </string>
     <string name="t4">Terms and Policies</string>
+
+    <string name="or">--OR--</string>
+    <string name="fb">Signup with facebook</string>
+    <string name="photo">You can add photo now!</string>
+
+
 </resources>

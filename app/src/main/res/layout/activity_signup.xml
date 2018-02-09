@@ -15,8 +15,25 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_alignParentBottom="true"
-
+                android:id="@+id/ll1"
                 >
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_add_image"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/photo_circle"
+                        />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/photo"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="10sp"
+                    />
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -206,7 +223,50 @@
                     android:textSize="12sp"
                     />
             </LinearLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:id="@+id/signup_button"
+                    android:background="@color/leaf_green"
+                    android:text="@string/t2"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/or"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:id="@+id/fb_signup_button"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="@string/fb"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10sp"
+                    />
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/ll1"
+                android:src="@drawable/fb"
+                />
         </RelativeLayout>
 
 </layout>
