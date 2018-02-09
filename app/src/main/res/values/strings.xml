@@ -46,5 +46,8 @@
     <string name="fb">Signup with facebook</string>
     <string name="photo">You can add photo now!</string>
 
+    <string name="basics">Basic Information</string>
+    <string name="about_me">About me</string>
+
 
 </resources>
