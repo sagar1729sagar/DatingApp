@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -74,22 +76,49 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private  boolean checkAllFields(){
-        if (util.checkEditTextField(binding.username)){
+        if (!util.checkEditTextField(binding.username)){
             binding.userNameLayout.setError("Please enter a user name");
             return false;
         }
-        if (util.checkEditTextField(binding.password)){
+        if (!util.checkEditTextField(binding.password)){
             binding.passwordLayout.setError("Please enter a password");
             return false;
         }
-        if (util.checkEditTextField(binding.password) && !isValidPassword(binding.password.getText().toString())){
+        if (!util.checkEditTextField(binding.password) && !isValidPassword(binding.password.getText().toString())){
             binding.passwordLayout.setError("Pleas enter a valid password. (Your password must contain min 8 characters," +
                     " must be alpha numeric,must contain at least one symbol)");
             return false;
         }
-
+        if (getRadiButtonStatus() == 0 ){
+            setToast("Please select a gender");
+            return false;
+        }
+        if (!util.checkEditTextField(binding.dobEt)){
+            setToast("Please enter your date of birth");
+            return false;
+        }
 
         return true;
+    }
+
+
+    public int getRadiButtonStatus(){
+        if (binding.maleRadiobutton.isSelected()){
+            return 1;
+        }
+        if (binding.femaleRadiobutton.isSelected()){
+            return 2;
+        }
+        if (binding.queerRadiobutton.isSelected()){
+            return 3;
+        }
+        if (binding.transgenderRadiobutton.isSelected()){
+            return 4;
+        }
+        if (binding.allRadiobutton.isSelected()){
+            return 5;
+        }
+        return 0;
     }
 
     public  boolean isValidPassword(final String password) {
@@ -104,6 +133,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    private void setToast(String messgae){
+        Toast.makeText(this,messgae,Toast.LENGTH_SHORT).show();
+    }
 
 
 

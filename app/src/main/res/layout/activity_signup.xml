@@ -181,6 +181,7 @@
                         android:layout_marginLeft="20dp"
                         android:inputType="date"
                         android:textSize="12sp"
+                        android:id="@+id/dob_et"
                         />
 
 
