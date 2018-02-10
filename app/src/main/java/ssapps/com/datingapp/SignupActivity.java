@@ -1,13 +1,30 @@
 package ssapps.com.datingapp;
 
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -18,6 +35,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private ActivitySignupBinding binding;
     private Util util;
+    private static final int READ_EXT_STORAGE = 1;
+    private static final int SELECT_PICTURE = 2;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +53,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-
+        binding.photoCircle.setOnClickListener(this);
 
 
     }
@@ -67,11 +87,65 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     changeRadioButtonStatus(false,false,false,false,true);
                 }
                 break;
+            case R.id.photo_circle:
+                selectImage();
+                break;
 
             case R.id.signup_button:
                 //checkAllFields();
                 break;
 
+        }
+    }
+
+    private void selectImage() {
+        // check for read external storage permission
+
+        int check = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (check == -1){
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},READ_EXT_STORAGE);
+            }
+
+        }else {
+
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(i, SELECT_PICTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case SELECT_PICTURE:
+                if (resultCode==this.RESULT_OK && data != null && data.getData() != null){
+
+                    //get Image Location
+                    Uri image = data.getData();
+                    String[] filePath = {MediaStore.Images.Media.DATA};
+                    Cursor cursor = this.getContentResolver().query(image,filePath,null,null,null);
+                    cursor.moveToFirst();
+                    int columnIndex = cursor.getColumnIndex(filePath[0]);
+                    cursor.close();
+                    try {
+                        bitmap = getBitmapFromUri(image);
+                    } catch (IOException e) {
+
+                    }
+                    //Display on imageView
+                    //imageV.setImageURI(image);
+                    Resources res = getResources();
+//                    Bitmap src = BitmapFactory.decodeResource(res, iconResource);
+                    RoundedBitmapDrawable dr =
+                            RoundedBitmapDrawableFactory.create(res, bitmap);
+                    dr.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
+                   // imageView.setImageDrawable(dr);
+                    binding.photoCircle.setImageDrawable(dr);
+
+                }
+                break;
         }
     }
 
@@ -93,6 +167,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             setToast("Please select a gender");
             return false;
         }
+
         if (!util.checkEditTextField(binding.dobEt)){
             setToast("Please enter your date of birth");
             return false;
@@ -146,6 +221,36 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         binding.queerRadiobutton.setSelected(queer);
         binding.transgenderRadiobutton.setSelected(tansgender);
         binding.allRadiobutton.setSelected(all);
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                this.getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case READ_EXT_STORAGE:
+                if( grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, SELECT_PICTURE);
+
+                } else {
+                    setToast("You need to give permission to access gallery for uploading picture");
+                   // Toast.makeText(getContext(),"You need to give permission to access gallery",Toast.LENGTH_LONG).show();
+
+                }
+                break;
+
+        }
     }
 
     @Override

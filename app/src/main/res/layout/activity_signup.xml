@@ -18,14 +18,34 @@
                 android:id="@+id/ll1"
                 >
 
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                <!--<com.mikhaellopez.circularimageview.CircularImageView-->
+                    <!--android:layout_width="40dp"-->
+                    <!--android:layout_height="40dp"-->
+                    <!--android:src="@drawable/ic_add_image"-->
+                    <!--android:scaleType="fitXY"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:id="@+id/photo_circle"-->
+                        <!--/>-->
+                <!--<com.mikhaellopez.circularimageview.CircularImageView-->
+                    <!--android:layout_width="100dp"-->
+                    <!--android:layout_height="100dp"-->
+                    <!--android:src="@drawable/ic_add_image"-->
+                    <!--app:civ_border_color="#EEEEEE"-->
+                    <!--app:civ_border_width="4dp"-->
+                    <!--app:civ_shadow="true"-->
+                    <!--app:civ_shadow_radius="10"-->
+                    <!--app:civ_shadow_color="#8BC34A"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:scaleType="fitXY"-->
+                    <!--android:id="@+id/photo_circle"-->
+                    <!--/>-->
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/ic_add_image"
-                    android:scaleType="fitXY"
                     android:layout_gravity="center_horizontal"
                     android:id="@+id/photo_circle"
-                        />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -181,7 +201,7 @@
                         android:layout_marginLeft="20dp"
                         android:inputType="date"
                         android:textSize="12sp"
-                        android:id="@+id/dob_et"
+                        android:id="@+id/dobEt"
                         />
 
 
