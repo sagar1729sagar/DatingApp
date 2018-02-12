@@ -21,6 +21,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.io.FileDescriptor;
@@ -31,7 +33,7 @@ import java.util.regex.Matcher;
 import Util.Util;
 import ssapps.com.datingapp.databinding.ActivitySignupBinding;
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ActivitySignupBinding binding;
     private Util util;
@@ -45,6 +47,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
        // setContentView(R.layout.activity_signup);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_signup);
 
+       // radioButtonAdjstments()
+
         util = new Util();
 
         ActionBar actionBar = getSupportActionBar();
@@ -53,46 +57,53 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
-        binding.photoCircle.setOnClickListener(this);
+//        binding.photoCircle.setOnClickListener(this);
+//        binding.signupButton.setOnClickListener(this);
+//
+//
+//        binding.maleRadiobutton.setOnCheckedChangeListener(this);
+//        binding.femaleRadiobutton.setOnCheckedChangeListener(this);
+//        binding.allRadiobutton.setOnCheckedChangeListener(this);
+//        binding.queerRadiobutton.setOnCheckedChangeListener(this);
+//        binding.transgenderRadiobutton.setOnCheckedChangeListener(this);
+//
+//        binding.genderGroup.setOnCheckedChangeListener(this);
+
+
+//        binding.maleRadiobutton.setOnClickListener(this);
+//        binding.femaleRadiobutton.setOnClickListener(this);
+//        binding.queerRadiobutton.setOnClickListener(this);
+//        binding.transgenderRadiobutton.setOnClickListener(this);
+//        binding.allRadiobutton.setOnClickListener(this);
+
+
+
 
 
     }
+
+//    private void radioButtonAdjstments() {
+//        binding.maleRadiobutton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//            }
+//        });
+//    }
 
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.male_radiobutton :
-                if (!binding.maleRadiobutton.isSelected()){
-                    changeRadioButtonStatus(true,false,false,false,false);
-                }
-                break;
-            case R.id.female_radiobutton:
-                if (!binding.femaleRadiobutton.isSelected()){
-                    changeRadioButtonStatus(false,true,false,false,false);
-                }
-                break;
-            case R.id.queer_radiobutton:
-                if (!binding.queerRadiobutton.isSelected()){
-                    changeRadioButtonStatus(false,false,true,false,false);
-                }
-                break;
-            case R.id.transgender_radiobutton:
-                if (!binding.transgenderRadiobutton.isSelected()){
-                    changeRadioButtonStatus(false,false,false,true,false);
-                }
-                break;
-            case R.id.all_radiobutton:
-                if (!binding.allRadiobutton.isSelected()){
-                    changeRadioButtonStatus(false,false,false,false,true);
-                }
-                break;
+
             case R.id.photo_circle:
                 selectImage();
                 break;
 
             case R.id.signup_button:
+               // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                 //checkAllFields();
+                setToast(String.valueOf(checkRadioButtonstatus()));
                 break;
 
         }
@@ -212,15 +223,35 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         Toast.makeText(this,messgae,Toast.LENGTH_SHORT).show();
     }
 
+    private int checkRadioButtonstatus(){
+        int i = 0;
+        if (binding.maleRadiobutton.isSelected()) {
+            i++;
+        }
+        if (binding.femaleRadiobutton.isSelected()){
+            i++;
+        }
+        if (binding.allRadiobutton.isSelected()){
+            i++;
+        }
+        if (binding.queerRadiobutton.isSelected()){
+            i++;
+        }
+        if (binding.transgenderRadiobutton.isSelected()){
+            i++;
+        }
+        return i;
+    }
+
 
 
 
     private  void changeRadioButtonStatus(Boolean male,Boolean female,Boolean queer,Boolean tansgender,Boolean all){
-        binding.maleRadiobutton.setSelected(male);
-        binding.femaleRadiobutton.setSelected(female);
-        binding.queerRadiobutton.setSelected(queer);
-        binding.transgenderRadiobutton.setSelected(tansgender);
-        binding.allRadiobutton.setSelected(all);
+        binding.maleRadiobutton.setChecked(male);
+        binding.femaleRadiobutton.setChecked(female);
+        binding.queerRadiobutton.setChecked(queer);
+        binding.transgenderRadiobutton.setChecked(tansgender);
+        binding.allRadiobutton.setChecked(all);
     }
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
@@ -264,4 +295,40 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         onBackPressed();
         return true;
     }
+
+//    @Override
+//    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//        switch (compoundButton.getId()){
+//            case R.id.male_radiobutton :
+//                if (!binding.maleRadiobutton.isChecked()){
+//                    changeRadioButtonStatus(true,false,false,false,false);
+//                }
+//                break;
+//            case R.id.female_radiobutton:
+//                if (!binding.femaleRadiobutton.isChecked()){
+//                    changeRadioButtonStatus(false,true,false,false,false);
+//                }
+//                break;
+//            case R.id.queer_radiobutton:
+//                if (!binding.queerRadiobutton.isChecked()){
+//                    changeRadioButtonStatus(false,false,true,false,false);
+//                }
+//                break;
+//            case R.id.transgender_radiobutton:
+//                if (!binding.transgenderRadiobutton.isChecked()){
+//                    changeRadioButtonStatus(false,false,false,true,false);
+//                }
+//                break;
+//            case R.id.all_radiobutton:
+//                if (!binding.allRadiobutton.isChecked()){
+//                    changeRadioButtonStatus(false,false,false,false,true);
+//                }
+//                break;
+//        }
+//    }
+
+//    @Override
+//    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//        setToast("ca");
+//    }
 }
