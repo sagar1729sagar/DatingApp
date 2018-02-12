@@ -103,10 +103,21 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.signup_button:
                // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                 //checkAllFields();
-                setToast(String.valueOf(checkRadioButtonstatus()));
+             //   setToast(String.valueOf(checkRadioButtonstatus()));
+                if (checkAllFields()){
+                   if (util.isNetworkAvailable(this)){
+                       createAccount();
+                   }else{
+                       setToast("Please make sure you have an active internet connection to proceed further");
+                   }
+                }
                 break;
 
         }
+    }
+
+    private void createAccount() {
+
     }
 
     private void selectImage() {

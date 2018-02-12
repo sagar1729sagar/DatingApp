@@ -2,8 +2,8 @@ package Util;
 
 public class Keys {
 
-     static final String appKey = "C99E22A6-7810-5853-FF0A-967D99B61400";
-     static final String appId = "B48795E3-1979-9D5C-FF66-FD1FDC749600";
+     static final String appKey = "DA7F5BE6-4F7E-18B5-FF0B-B60520488600";
+     static final String appId = "7835246D-0BCD-B1BB-FF52-9CC27C9DF700";
 
 
 }
