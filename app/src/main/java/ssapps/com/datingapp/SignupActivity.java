@@ -17,20 +17,29 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.backendless.Backendless;
+import com.backendless.BackendlessUser;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+import com.backendless.persistence.DataQueryBuilder;
+import com.orm.util.QueryBuilder;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import Models.User;
 import Util.Util;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivitySignupBinding;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
@@ -40,12 +49,19 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private static final int READ_EXT_STORAGE = 1;
     private static final int SELECT_PICTURE = 2;
     private Bitmap bitmap;
+    private SweetAlertDialog dialog;
+    private SweetAlertDialog error;
+    private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
+    private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // setContentView(R.layout.activity_signup);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_signup);
+
+        Backendless.initApp(this,appId,appKey);
+
 
        // radioButtonAdjstments()
 
@@ -56,6 +72,18 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
+
+        dialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            dialog.getProgressHelper().setBarColor(getResources().getColor(R.color.leaf_green,null));
+        } else {
+            dialog.getProgressHelper().setBarColor(getResources().getColor(R.color.leaf_green));
+        }
+        dialog.setCancelable(false);
+        dialog.dismiss();
+
+        error = new SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE);
+
 
 //        binding.photoCircle.setOnClickListener(this);
 //        binding.signupButton.setOnClickListener(this);
@@ -103,11 +131,91 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.signup_button:
                // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                 //checkAllFields();
-                setToast(String.valueOf(checkRadioButtonstatus()));
+              //  setToast(String.valueOf(checkRadioButtonstatus()));
+                if (checkAllFields()){
+                  // signup();
+                    checkForUser(binding.username.getText().toString());
+                }
                 break;
 
         }
     }
+
+    private void checkForUser(String userName) {
+        dialog.setTitleText("Checking...");
+        dialog.show();
+        String whereClause = "username = '"+userName+"'";
+        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
+        queryBuilder.setWhereClause(whereClause);
+       // queryBuilder.setPageSize(1000);
+        Backendless.Data.of(User.class).find(queryBuilder, new AsyncCallback<List<User>>() {
+            @Override
+            public void handleResponse(List<User> response) {
+                if (response.size() == 0){
+                    dialog.dismiss();
+                    registerUser();
+                } else {
+                    dialog.dismiss();
+                    error.setTitleText("User name already taken")
+                            .setContentText("Please modify your username and try again");
+                }
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                dialog.dismiss();
+                error.setTitleText("Error connecting to VeMEET!!")
+                        .setContentText("The following error has occured while connecting to VeMeet" +
+                                "\n"+fault.getMessage()+"\nPlease try again").show();
+
+            }
+        });
+    }
+
+    private void registerUser() {
+        dialog.setTitleText("Registering");
+        dialog.show();
+        BackendlessUser user = new BackendlessUser();
+        user.setEmail(binding.email.getText().toString());
+        user.setPassword(binding.password.getText().toString());
+        Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
+            @Override
+            public void handleResponse(BackendlessUser response) {
+                saveResponse(response);
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                dialog.dismiss();
+                error.setTitleText("Error connecting to VeMEET!!")
+                        .setContentText("The following error has occured while connecting to VeMeet" +
+                                "\n"+fault.getMessage()+"\nPlease try again").show();
+            }
+        });
+
+    }
+
+    private void saveResponse(BackendlessUser response) {
+        dialog.dismiss();
+        User user = new User();
+        user.setUsername(binding.username.getText().toString());
+        user.setPassword(binding.password.getText().toString());
+        user.setDateofBirth(binding.dobEt.getText().toString());
+        user.save();
+        saveProfileImage();
+       // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
+    }
+
+    private void saveProfileImage() {
+        //todo
+        //String name =
+    }
+
+//    private void signup() {
+//
+//        Backendless.UserService.register();
+//
+//    }
 
     private void selectImage() {
         // check for read external storage permission
@@ -174,10 +282,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     " must be alpha numeric,must contain at least one symbol)");
             return false;
         }
-        if (getRadiButtonStatus() == 0 ){
-            setToast("Please select a gender");
-            return false;
-        }
+//        if (getRadiButtonStatus() == 0 ){
+//            setToast("Please select a gender");
+//            return false;
+//        }
 
         if (!util.checkEditTextField(binding.dobEt)){
             setToast("Please enter your date of birth");
@@ -188,24 +296,24 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    public int getRadiButtonStatus(){
-        if (binding.maleRadiobutton.isSelected()){
-            return 1;
-        }
-        if (binding.femaleRadiobutton.isSelected()){
-            return 2;
-        }
-        if (binding.queerRadiobutton.isSelected()){
-            return 3;
-        }
-        if (binding.transgenderRadiobutton.isSelected()){
-            return 4;
-        }
-        if (binding.allRadiobutton.isSelected()){
-            return 5;
-        }
-        return 0;
-    }
+//    public int getRadiButtonStatus(){
+//        if (binding.maleRadiobutton.isSelected()){
+//            return 1;
+//        }
+//        if (binding.femaleRadiobutton.isSelected()){
+//            return 2;
+//        }
+//        if (binding.queerRadiobutton.isSelected()){
+//            return 3;
+//        }
+//        if (binding.transgenderRadiobutton.isSelected()){
+//            return 4;
+//        }
+//        if (binding.allRadiobutton.isSelected()){
+//            return 5;
+//        }
+//        return 0;
+//    }
 
     public  boolean isValidPassword(final String password) {
 
@@ -223,25 +331,25 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         Toast.makeText(this,messgae,Toast.LENGTH_SHORT).show();
     }
 
-    private int checkRadioButtonstatus(){
-        int i = 0;
-        if (binding.maleRadiobutton.isSelected()) {
-            i++;
-        }
-        if (binding.femaleRadiobutton.isSelected()){
-            i++;
-        }
-        if (binding.allRadiobutton.isSelected()){
-            i++;
-        }
-        if (binding.queerRadiobutton.isSelected()){
-            i++;
-        }
-        if (binding.transgenderRadiobutton.isSelected()){
-            i++;
-        }
-        return i;
-    }
+//    private int checkRadioButtonstatus(){
+//        int i = 0;
+//        if (binding.maleRadiobutton.isSelected()) {
+//            i++;
+//        }
+//        if (binding.femaleRadiobutton.isSelected()){
+//            i++;
+//        }
+//        if (binding.allRadiobutton.isSelected()){
+//            i++;
+//        }
+//        if (binding.queerRadiobutton.isSelected()){
+//            i++;
+//        }
+//        if (binding.transgenderRadiobutton.isSelected()){
+//            i++;
+//        }
+//        return i;
+//    }
 
 
 

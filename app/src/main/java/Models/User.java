@@ -8,7 +8,7 @@ public class User extends SugarRecord {
     private String username,password,email,gender_others,aboutme,age_self,city_self,country_self,age_others,gender_self,
                     lifestyle_others,relationship_others,lifestyle_self,sexual_orientation_self,status_self,children_self,
                     smoking_self,religin_self,drinking_self,height_self,units,eyecoloe_self,haircolor_self,photourl,latitude,
-                    longitude,isPremiumMember;
+                    longitude,isPremiumMember,objectId,dateofBirth;
 
     public User(){
 
@@ -228,5 +228,21 @@ public class User extends SugarRecord {
 
     public void setIsPremiumMember(String isPremiumMember) {
         this.isPremiumMember = isPremiumMember;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public String getDateofBirth() {
+        return dateofBirth;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
+
+    public void setDateofBirth(String dateofBirth) {
+        this.dateofBirth = dateofBirth;
     }
 }
