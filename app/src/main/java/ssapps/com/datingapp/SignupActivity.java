@@ -28,6 +28,7 @@ import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.files.BackendlessFile;
 import com.backendless.persistence.DataQueryBuilder;
 import com.orm.util.QueryBuilder;
 
@@ -207,8 +208,24 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void saveProfileImage() {
-        //todo
-        //String name =
+        dialog.setTitleText("Uploading your picture");
+        dialog.show();
+        String name = "1";
+        Backendless.Files.Android.upload(bitmap, Bitmap.CompressFormat.PNG, 100, name + ".png",
+                binding.username.getText().toString(), true, new AsyncCallback<BackendlessFile>() {
+                    @Override
+                    public void handleResponse(BackendlessFile response) {
+                        dialog.dismiss();
+                        startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+                        dialog.dismiss();
+                        setToast("Error uploading picture. Try later");
+                        startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
+                    }
+                });
     }
 
 //    private void signup() {
