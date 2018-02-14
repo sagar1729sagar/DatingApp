@@ -8,7 +8,7 @@ public class User extends SugarRecord {
     private String username,password,email,gender_others,aboutme,age_self,city_self,country_self,age_others,gender_self,
                     lifestyle_others,relationship_others,lifestyle_self,sexual_orientation_self,status_self,children_self,
                     smoking_self,religin_self,drinking_self,height_self,units,eyecoloe_self,haircolor_self,photourl,latitude,
-                    longitude,isPremiumMember,objectId,dateofBirth;
+                    longitude,isPremiumMember,objectId,dateofBirth,who_view_photos,friend_requests,who_view_friends,incognito_mode;
 
     public User(){
 
@@ -244,5 +244,37 @@ public class User extends SugarRecord {
 
     public void setDateofBirth(String dateofBirth) {
         this.dateofBirth = dateofBirth;
+    }
+
+    public String getWho_view_photos() {
+        return who_view_photos;
+    }
+
+    public void setWho_view_photos(String who_view_photos) {
+        this.who_view_photos = who_view_photos;
+    }
+
+    public String getFriend_requests() {
+        return friend_requests;
+    }
+
+    public void setFriend_requests(String friend_requests) {
+        this.friend_requests = friend_requests;
+    }
+
+    public String getWho_view_friends() {
+        return who_view_friends;
+    }
+
+    public void setWho_view_friends(String who_view_friends) {
+        this.who_view_friends = who_view_friends;
+    }
+
+    public String getIncognito_mode() {
+        return incognito_mode;
+    }
+
+    public void setIncognito_mode(String incognito_mode) {
+        this.incognito_mode = incognito_mode;
     }
 }
