@@ -17,6 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profile_image"
+            android:src="@drawable/fb"
+            android:scaleType="fitXY"
             />
         <TextView
             android:layout_width="match_parent"
@@ -375,13 +377,24 @@
             />
     </android.support.design.widget.TextInputLayout>
 
-    <TextView
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/photos"-->
+        <!--android:background="@color/leaf_green"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:padding="5dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--/>-->
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/photos"
-        android:background="@color/leaf_green"
+        android:text="@string/save"
         android:textColor="@color/white"
-        android:padding="5dp"
+        android:background="@color/leaf_green"
+        android:textSize="12sp"
+        android:id="@+id/saveButton"
         android:layout_marginTop="10dp"
         />
 

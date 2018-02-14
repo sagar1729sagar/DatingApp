@@ -2,6 +2,7 @@ package ssapps.com.datingapp;
 
 
 import android.Manifest;
+import android.R;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -32,6 +33,7 @@ import com.backendless.files.BackendlessFile;
 import com.backendless.persistence.DataQueryBuilder;
 import com.orm.util.QueryBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.List;
@@ -42,6 +44,7 @@ import Models.User;
 import Util.Util;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivitySignupBinding;
+
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -203,7 +206,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         user.setPassword(binding.password.getText().toString());
         user.setDateofBirth(binding.dobEt.getText().toString());
         user.save();
-        saveProfileImage();
+        if (bitmap != null) {
+            saveProfileImage();
+        } else {
+            gotoNextpage();
+        }
        // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
     }
 
@@ -216,17 +223,32 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void handleResponse(BackendlessFile response) {
                         dialog.dismiss();
-                        startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
+                        gotoNextpage();
+                      //  startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                     }
 
                     @Override
                     public void handleFault(BackendlessFault fault) {
                         dialog.dismiss();
                         setToast("Error uploading picture. Try later");
-                        startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
+                        gotoNextpage();
+                       // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                     }
                 });
     }
+
+    private void gotoNextpage() {
+        Intent intent = new Intent(SignupActivity.this,SignupDetailsActivity.class);
+        if (bitmap != null) {
+            ByteArrayOutputStream bs = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG,50,bs);
+            intent.putExtra("image",bs.toByteArray());
+        }
+        intent.putExtra("user",binding.username.getText().toString());
+        startActivity(intent);
+
+    }
+
 
 //    private void signup() {
 //
