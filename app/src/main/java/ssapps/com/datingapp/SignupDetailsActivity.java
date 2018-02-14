@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.R;
 import android.view.View;
 
 import com.backendless.Backendless;

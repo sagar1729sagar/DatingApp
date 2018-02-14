@@ -74,5 +74,12 @@
 
     <string name="save">Save</string>
     <string name="modify">Modify</string>
+    <string name="cant_change">Can\'t change</string>
+    <string name="confirm">Confirm password</string>
+    <string name="photos_who">Who can see my photos</string>
+    <string name="friend_request">Friend request</string>
+    <string name="friend_view">Who can view my friends</string>
+    <string name="incognito">Incogrito modus</string>
+    <string name="submit">Submit</string>
 
 </resources>
