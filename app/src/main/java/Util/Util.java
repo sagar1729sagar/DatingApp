@@ -33,5 +33,15 @@ public class Util {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    public String getCity(String residence){
+        int a = residence.indexOf(",");
+        return residence.substring(0,a-1);
+    }
+
+    public String getCountry(String residence){
+        int a = residence.indexOf(",");
+        return residence.substring(a+1);
+    }
+
 
 }

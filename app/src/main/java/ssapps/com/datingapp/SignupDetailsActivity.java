@@ -10,6 +10,10 @@ import android.os.Bundle;
 import android.R;
 import android.view.View;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +29,16 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     private SweetAlertDialog dialog;
     private SweetAlertDialog error;
     private String user;
+    private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
+    private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_signup_details);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_signup_details);
+
+        Backendless.initApp(this,appKey,appId);
 
 
         ActionBar actionBar = getSupportActionBar();
@@ -49,6 +57,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         dialog.setCancelable(false);
         dialog.dismiss();
 
+        error =  new SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE);
+
         user = getIntent().getStringExtra("user");
 
         if (getIntent().hasExtra("image")){
@@ -58,7 +68,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
         binding.saveButton.setOnClickListener(this);
        // checkAllFields();
-        //todo
+
     }
 
     private boolean checkAllFields() {
@@ -154,7 +164,9 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
         switch (view.getId()){
             case R.id.saveButton:
-                saveDetails();
+                if (checkAllFields()){
+                    saveDetails();
+                }
                 break;
         }
 
@@ -162,7 +174,54 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
     private void saveDetails() {
         dialog.setTitleText("Saving....");
+        dialog.show();
         List<User> users = User.find(User.class,"username = ?",user);
+        final User currentUser = new User();
+        currentUser.setUsername(users.get(0).getUsername());
+        currentUser.setPassword(users.get(0).getPassword());
+        currentUser.setEmail(users.get(0).getEmail());
+        currentUser.setGender_others(binding.genderEt.getText().toString().trim());
+        currentUser.setAboutme(binding.abtMeEt.getText().toString().trim());
+        currentUser.setAge_self(binding.ageEt.getText().toString().trim());
+        currentUser.setCity_self(util.getCity(binding.residenceEt.getText().toString().trim()));
+        currentUser.setCountry_self(util.getCountry(binding.residenceEt.getText().toString().trim()));
+        currentUser.setAge_others(binding.ageOthersEt.getText().toString().trim());
+        currentUser.setGender_self(binding.giEt.getText().toString().trim());
+        currentUser.setLifestyle_others(binding.lifestyleEt.getText().toString().trim());
+        currentUser.setRelationship_others(binding.forEt.getText().toString().trim());
+        currentUser.setLifestyle_self(binding.lifestyleSelfEt.getText().toString().trim());
+        currentUser.setSexual_orientation_self(binding.soEt.getText().toString().trim());
+        currentUser.setStatus_self(binding.statusEt.getText().toString().trim());
+        currentUser.setChildren_self(binding.childrenEt.getText().toString().trim());
+        currentUser.setSmoking_self(binding.smokingEt.getText().toString().trim());
+        currentUser.setReligin_self(binding.religionEt.getText().toString().trim());
+        currentUser.setDrinking_self(binding.drinkingLayoutEt.getText().toString().trim());
+        currentUser.setHeight_self(binding.heightEt.getText().toString().trim());
+        currentUser.setEyecoloe_self(binding.eyeEt.getText().toString().trim());
+        currentUser.setHaircolor_self(binding.hairEt.getText().toString().trim());
+        currentUser.setPhotourl("https://api.backendless.com/648D896E-EDD8-49C8-FF74-2F1C32DB7A00/934C0B5C-A231-E928-FF37-655A05A3AB00/files/"+user+"/1.png");
+        currentUser.setIsPremiumMember("no");
+        currentUser.setObjectId(users.get(0).getObjectId());
+        currentUser.setDateofBirth(users.get(0).getDateofBirth());
+
+        Backendless.Data.save(currentUser, new AsyncCallback<User>() {
+            @Override
+            public void handleResponse(User response) {
+                User.delete(User.class);
+                currentUser.save();
+                dialog.dismiss();
+                //todo go to next page
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                dialog.dismiss();
+                error.setTitleText("Error connecting to VeMeet")
+                        .setContentText("The following error has occured while trying to connect to VeMeet\n"
+                        +fault.getMessage()+"\n Please try again").show();
+            }
+        });
+
         //todo
     }
 }
