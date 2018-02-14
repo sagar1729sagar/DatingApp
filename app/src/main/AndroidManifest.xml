@@ -49,7 +49,8 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".SignupDetailsActivity" />
-        <activity android:name=".ProfileFragment"></activity>
+        <activity android:name=".ProfileFragment" />
+        <activity android:name=".SettingsFragment"></activity>
     </application>
 
 </manifest>

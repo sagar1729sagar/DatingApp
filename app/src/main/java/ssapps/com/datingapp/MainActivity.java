@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_terms_of_use:
                 break;
             case R.id.nav_settings:
+                makeScreenTransition(new SettingsFragment());
                 break;
             case R.id.nav_logout:
               //  toolbar.setTitle("Choose one");
