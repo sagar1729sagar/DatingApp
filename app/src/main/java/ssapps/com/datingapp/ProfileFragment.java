@@ -12,11 +12,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
 
 import java.util.List;
 
 import Models.User;
 import Util.Prefs;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+import Util.Util;
 
 
 public class ProfileFragment extends Fragment {
@@ -27,6 +34,10 @@ public class ProfileFragment extends Fragment {
                         lifestyle_self,so_self,gender_self,status_self,children_self,smoking_self,religion_self,
                         drinking_self,height_self,eyecolor_self,haircolor_self;
     private Button modifyButton;
+    private SweetAlertDialog dialog;
+    private SweetAlertDialog error;
+    private User user;
+    private Util util;
 
     @Nullable
     @Override
@@ -38,8 +49,15 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         prefs = new Prefs(getContext());
-        List<User> users = User.find(User.class,"username = ?",prefs.getname())l;
-        User user = users.get(0);
+        util = new Util();
+
+        error = new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
+        dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
+        dialog.setCancelable(false);
+        dialog.dismiss();
+
+        final List<User> users = User.find(User.class,"username = ?",prefs.getname())l;
+        user = users.get(0);
 
         imageView = (ImageView)view.findViewById(R.id.profile_image_display);
 
@@ -103,7 +121,53 @@ public class ProfileFragment extends Fragment {
         modifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo
+                dialog.setTitleText("Modifying");
+                dialog.show();
+                User currentUser = new User();
+                currentUser.setUsername(user.getUsername());
+                //currentUser.setPassword(user.getPassword());
+                currentUser.setEmail(user.getEmail());
+                currentUser.setGender_others(gender_others.getText().toString().trim());
+                currentUser.setAboutme(about_me.getText().toString().trim());
+                currentUser.setAge_self(age_self.getText().toString().trim());
+                currentUser.setCity_self(util.getCity(residence.getText().toString().trim()));
+                currentUser.setCountry_self(util.getCountry(residence.getText().toString().trim()));
+                currentUser.setAge_others(age_others.getText().toString().trim());
+                currentUser.setGender_self(gender_self.getText().toString().trim());
+                currentUser.setLifestyle_others(lifestyle_others.getText().toString().trim());
+                currentUser.setRelationship_others(relationship_others.getText().toString().trim());
+                currentUser.setLifestyle_self(lifestyle_self.getText().toString().trim());
+                currentUser.setSexual_orientation_self(so_self.getText()toString().trim());
+                currentUser.setStatus_self(status_self.getText().toString().trim());
+                currentUser.setChildren_self(children_self.getText().toString().trim());
+                currentUser.setSmoking_self(smoking_self.getText().toString().trim());
+                currentUser.setReligin_self(religion_self.getText().toString().trim());
+                currentUser.setDrinking_self(drinking_self.getText().toString().trim());
+                currentUser.setHeight_self(height_self.getText().toString().trim());
+                currentUser.setEyecoloe_self(eyecolor_self.getText().toString().trim());
+                currentUser.setHaircolor_self(haircolor_self.getText().toString().trim());
+                currentUser.setPhotourl(user.getPhotourl());
+                currentUser.setIsPremiumMember(user.getIsPremiumMember());
+                currentUser.setObjectId(user.getObjectId());
+                currentUser.setDateofBirth(user.getDateofBirth());
+
+                Backendless.Data.save(currentUser, new AsyncCallback<User>() {
+                    @Override
+                    public void handleResponse(User response) {
+                        dialog.dismiss();
+                        Toast.makeText(getContext(),"Profile successfully modified",Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void handleFault(BackendlessFault fault) {
+                        dialog.dismiss();
+                        error.setTitleText("Error");
+                        error.setContentText("The following error has occured while modifying profile \n"+
+                                fault.getMessage()+"\n Please try again");
+                        error.show();
+                    }
+                });
+
             }
         });
 
