@@ -52,6 +52,18 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        drawer.post(new Runnable() {
+            @Override
+            public void run() {
+                if (getIntent().hasExtra("redirectProfile")){
+                    if (getIntent().getBooleanExtra("redirectProfile",false)){
+                        makeScreenTransition(new ProfileFragment());
+                    }
+                }
+            }
+        })
+
+
 
 
 

@@ -1,5 +1,6 @@
 package ssapps.com.datingapp;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -207,10 +208,14 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         Backendless.Data.save(currentUser, new AsyncCallback<User>() {
             @Override
             public void handleResponse(User response) {
-                User.delete(User.class);
+                User.deleteAll(User.class);
                 currentUser.save();
                 dialog.dismiss();
-                //todo go to next page
+                Intent i = new Intent(SignupDetailsActivity.this,MainActivity.class);
+                i.putExtra("redirectProfile",true);
+                startActivity(i);
+                finish();
+
             }
 
             @Override
