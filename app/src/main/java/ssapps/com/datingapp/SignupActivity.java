@@ -44,6 +44,7 @@ import Models.User;
 import Util.Util;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivitySignupBinding;
+import Util.Prefs;
 
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
@@ -57,6 +58,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private SweetAlertDialog error;
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
+    private Prefs pres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
        // radioButtonAdjstments()
 
         util = new Util();
+        pres = new Prefs(this);
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -206,6 +209,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         user.setPassword(binding.password.getText().toString());
         user.setDateofBirth(binding.dobEt.getText().toString());
         user.save();
+        pres.setName(binding.username.getText().toString());
         if (bitmap != null) {
             saveProfileImage();
         } else {

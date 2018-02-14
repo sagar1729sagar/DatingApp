@@ -16,7 +16,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/profile_image_display"
+                android:id="@+id/profile_image"
                 android:src="@drawable/fb"
                 android:scaleType="fitXY"
                 />
@@ -29,7 +29,12 @@
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
                 />
-                <TextView
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/aboutmelayout"
+                >
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/about_me"
@@ -40,6 +45,12 @@
                     android:drawableStart="@drawable/ic_about_me"
                     android:id="@+id/abtmeet"
                     />
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/agelayout"
+                >
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,6 +62,7 @@
                     android:drawableStart="@drawable/ic_age"
                     android:id="@+id/ageet"
                     />
+            </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
