@@ -165,6 +165,7 @@ public class ProfileFragment extends Fragment {
                         error.setContentText("The following error has occured while modifying profile \n"+
                                 fault.getMessage()+"\n Please try again");
                         error.show();
+                        
                     }
                 });
 
