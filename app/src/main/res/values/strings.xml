@@ -82,5 +82,6 @@
     <string name="incognito">Incogrito modus</string>
     <string name="submit">Submit</string>
     <string name="blank">(Leave it blank if not required)</string>
+    <string name="order">Order</string>
 
 </resources>

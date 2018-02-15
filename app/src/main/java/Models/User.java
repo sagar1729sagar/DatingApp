@@ -8,7 +8,8 @@ public class User extends SugarRecord {
     private String username,password,email,gender_others,aboutme,age_self,city_self,country_self,age_others,gender_self,
                     lifestyle_others,relationship_others,lifestyle_self,sexual_orientation_self,status_self,children_self,
                     smoking_self,religin_self,drinking_self,height_self,units,eyecoloe_self,haircolor_self,photourl,latitude,
-                    longitude,isPremiumMember,objectId,dateofBirth,who_view_photos,friend_requests,who_view_friends,incognito_mode;
+                    longitude,isPremiumMember,objectId,dateofBirth,who_view_photos,friend_requests,who_view_friends,incognito_mode,
+                    packages;
 
     public User(){
 
@@ -276,5 +277,13 @@ public class User extends SugarRecord {
 
     public void setIncognito_mode(String incognito_mode) {
         this.incognito_mode = incognito_mode;
+    }
+
+    public String getPackages() {
+        return packages;
+    }
+
+    public void setPackages(String packages) {
+        this.packages = packages;
     }
 }

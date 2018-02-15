@@ -207,6 +207,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setFriend_requests("All");
         currentUser.setWho_view_friends("All");
         currentUser.setIncognito_mode("Yes");
+        currentUser.setPackages("None");
 
         Backendless.Data.save(currentUser, new AsyncCallback<User>() {
             @Override
