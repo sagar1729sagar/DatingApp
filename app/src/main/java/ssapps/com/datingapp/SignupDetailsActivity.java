@@ -203,10 +203,10 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setIsPremiumMember("no");
         currentUser.setObjectId(users.get(0).getObjectId());
         currentUser.setDateofBirth(users.get(0).getDateofBirth());
-        currentUser.setWho_view_photos("all");
-        currentUser.setFriend_requests("all");
-        currentUser.setWho_view_friends("all");
-        currentUser.setIncognito_mode("all");
+        currentUser.setWho_view_photos("All");
+        currentUser.setFriend_requests("All");
+        currentUser.setWho_view_friends("All");
+        currentUser.setIncognito_mode("Yes");
 
         Backendless.Data.save(currentUser, new AsyncCallback<User>() {
             @Override
