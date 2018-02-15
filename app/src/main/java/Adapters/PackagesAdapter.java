@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Models.Packages;
 import ssapps.com.datingapp.R;
@@ -61,7 +62,14 @@ public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyView
     }
 
     @Override
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        //todo
+    }
+
+    @Override
     public int getItemCount() {
         return packages.size();
     }
+
+
 }
