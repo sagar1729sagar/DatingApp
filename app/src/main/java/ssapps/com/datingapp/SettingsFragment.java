@@ -36,6 +36,7 @@ public class SettingsFragment extends Fragment {
 
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
+  //  private ActivitySettingsFragmentBinding binding;
     private ActivitySettingsFragmentBinding binding;
     private Prefs prefs;
     private Util util;
@@ -50,8 +51,11 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //  return inflater.inflate(R.layout.activity_settings_fragment,container,false);
-        binding = DataBindingUtil.inflate(inflater, R.layout.activity_settings_fragment, container, false);
-        return binding.getRoot();
+       // binding = DataBindingUtil.inflate(inflater, R.layout.activity_settings_fragment, container, false);
+       // return binding.getRoot();
+        binding = DataBindingUtil.inflate(inflater,R.layout.activity_settings_fragment,container,false);
+        return binding.getroot();
+    }
 
         @Override
         public void onViewCreated (View view, @Nullable Bundle savedInstanceState){
@@ -182,7 +186,7 @@ public class SettingsFragment extends Fragment {
 
 
         }
-    }
+
 
 
     public  boolean isValidPassword(final String password) {
