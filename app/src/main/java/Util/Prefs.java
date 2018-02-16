@@ -23,7 +23,7 @@ public class Prefs {
         editor.commit();
     }
     public String getname(){
-        return prefs.getString(USERNAME,"none");
+        return prefs.getString(USERNAME,"None");
     }
   
 }
