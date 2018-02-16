@@ -13,11 +13,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import Util.Util;
+
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+
+import Models.User;
+import Util.Prefs;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
+    private Util util;
+ //   private Prefs prefs;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -26,6 +36,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        util = new Util();
+        util.updateOnlineStatus(this,true);
+
+       // prefs = new Prefs(this);
+       // updateOnlineStatus();
 
 
 
@@ -72,6 +88,8 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -183,5 +201,8 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
 
-
+    @Override
+    protected void onStop() {
+        util.updateOnlineStatus(this,false);
+    }
 }

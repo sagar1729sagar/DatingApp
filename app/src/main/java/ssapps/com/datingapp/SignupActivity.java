@@ -208,6 +208,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         user.setUsername(binding.username.getText().toString());
         user.setPassword(binding.password.getText().toString());
         user.setDateofBirth(binding.dobEt.getText().toString());
+        user.setIsOnline("Yes");
         if (bitmap == null){
             user.setHasPicture("No");
         }

@@ -5,6 +5,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.EditText;
 
+import com.backendless.Backendless;
+import com.backendless.async.callback.AsyncCallback;
+import com.backendless.exceptions.BackendlessFault;
+
+import java.security.PrivilegedExceptionAction;
+
+import Models.User;
+
 public class Util {
 
 
@@ -43,5 +51,36 @@ public class Util {
         return residence.substring(a+1);
     }
 
+
+    public void updateOnlineStatus(Context context,Boolean isOnline) {
+        Prefs prefs = new Prefs(context);
+        if (!prefs.getname().equals("None")){
+            User user = User.find(User.class,"username = ?",prefs.getname()).get(0);
+            if (isOnline && user.getIsOnline().equals("No")){
+                user.setIsOnline("Yes");
+                chageUserstatus(user);
+            } else if (!isOnline && user.getIsOnline().equals("Yes")){
+                user.setIsOnline("No");
+                chageUserstatus(user);
+            }
+        }
+
+    }
+
+    private void chageUserstatus(final User user) {
+        Backendless.Data.save(user, new AsyncCallback<User>() {
+            @Override
+            public void handleResponse(User response) {
+                user.delete();
+                response.save();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+
+            }
+        });
+
+    }
 
 }
