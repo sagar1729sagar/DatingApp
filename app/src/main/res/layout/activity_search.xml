@@ -79,12 +79,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="4"
+            android:layout_weight="1"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.25"
                 android:orientation="vertical"
                 >
                 <TextView
@@ -107,7 +107,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.25"
                 android:orientation="vertical"
                 >
                 <TextView
@@ -130,7 +130,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="0.5"
                 android:orientation="vertical"
                 >
                 <TextView
@@ -167,6 +167,45 @@
             android:id="@+id/city_material_spinner"
             android:textColor="@color/black"
             />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/miles_tv"
+                android:textSize="12sp"
+                android:text="@string/mile"
+                android:textColor="@color/black"
+                android:paddingLeft="20dp"
+                android:paddingStart="20dp"
+
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="distance"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:id="@+id/miles_et"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -176,6 +215,7 @@
             android:textColor="@color/black"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
+
             />
         <com.jaredrummler.materialspinner.MaterialSpinner
             android:layout_width="match_parent"
@@ -183,17 +223,19 @@
             android:id="@+id/for_material_spinner"
             android:textColor="@color/black"
             />
+        </LinearLayout>
+    </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"

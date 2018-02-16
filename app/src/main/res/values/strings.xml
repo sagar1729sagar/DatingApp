@@ -92,4 +92,6 @@
     <string name="saves_search">Save search</string>
     <string name="i_c">Inognito search</string>
     <string name="who_new">Who\'s new</string>
+    <string name="miles">Miles</string>
+    <string name="mile">Search miles around:</string>
 </resources>

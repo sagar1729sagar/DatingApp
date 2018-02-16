@@ -54,7 +54,7 @@ public class SettingsFragment extends Fragment {
        // binding = DataBindingUtil.inflate(inflater, R.layout.activity_settings_fragment, container, false);
        // return binding.getRoot();
         binding = DataBindingUtil.inflate(inflater,R.layout.activity_settings_fragment,container,false);
-        return binding.getroot();
+        return binding.getRoot();
     }
 
         @Override

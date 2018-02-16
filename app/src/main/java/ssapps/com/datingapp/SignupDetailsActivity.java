@@ -1,19 +1,29 @@
 package ssapps.com.datingapp;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +41,9 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     private String user;
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
+    private static final int ACCESS_FINE_LOCATION = 1;
+    private static final int LOCATION_HARDWARE = 2;
+    private double[] location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,10 +178,88 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()){
             case R.id.saveButton:
                 if (checkAllFields()){
-                    saveDetails();
+                    getLocation();
+                   // saveDetails();
                 }
                 break;
         }
+
+    }
+
+    private void getLocation() {
+
+        checkForFineLocationPermision();
+
+
+    }
+
+    private void checkForFineLocationPermision() {
+        int check = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (check == -1){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},ACCESS_FINE_LOCATION);
+            }
+        } else {
+            checkForHardWarePermission();
+        }
+    }
+
+    private void checkForHardWarePermission() {
+        int check = ContextCompat.checkSelfPermission(this, Manifest.permission.LOCATION_HARDWARE);
+        if (check == -1){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.LOCATION_HARDWARE},LOCATION_HARDWARE);
+            }
+        } else {
+            getGPS();
+        }
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case ACCESS_FINE_LOCATION:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    checkForHardWarePermission();
+                } else {
+                    Toast.makeText(this,"You need to give permission to access your location for others to find you",Toast.LENGTH_LONG).show();
+                    checkForFineLocationPermision();
+                }
+                break;
+            case LOCATION_HARDWARE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    getGPS();
+                } else {
+                    Toast.makeText(this,"You need to give permission to access your location for others to find you",Toast.LENGTH_LONG).show();
+                    checkForHardWarePermission();
+                }
+
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private  void getGPS() {
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = lm.getProviders(true);
+
+/* Loop over the array backwards, and if you get an accurate location, then break                 out the loop*/
+        Location l = null;
+
+        for (int i=providers.size()-1; i>=0; i--) {
+            l = lm.getLastKnownLocation(providers.get(i));
+            if (l != null) break;
+        }
+
+        double[] gps = new double[2];
+        if (l != null) {
+            gps[0] = l.getLatitude();
+            gps[1] = l.getLongitude();
+        }
+        location = gps;
+        saveDetails();
 
     }
 
@@ -208,6 +299,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setWho_view_friends("All");
         currentUser.setIncognito_mode("Yes");
         currentUser.setPackages("None");
+        currentUser.setLatitude(String.valueOf(location[0]));
+        currentUser.setLongitude(String.valueOf(location[1]));
 
 
         Backendless.Data.save(currentUser, new AsyncCallback<User>() {
@@ -232,6 +325,6 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        //todo
+
     }
 }

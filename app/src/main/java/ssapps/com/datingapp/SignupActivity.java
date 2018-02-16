@@ -2,7 +2,6 @@ package ssapps.com.datingapp;
 
 
 import android.Manifest;
-import android.R;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -347,7 +346,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         return true;
     }
+    public  boolean isValidPassword(final String password) {
 
+        Pattern pattern;
+        Matcher matcher;
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{4,}$";
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
+
+    }
 
 //    public int getRadiButtonStatus(){
 //        if (binding.maleRadiobutton.isSelected()){

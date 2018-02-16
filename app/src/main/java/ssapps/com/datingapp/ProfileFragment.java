@@ -60,10 +60,10 @@ public class ProfileFragment extends Fragment {
         dialog.setCancelable(false);
         dialog.dismiss();
 
-        final List<User> users = User.find(User.class,"username = ?",prefs.getname())l;
+        final List<User> users = User.find(User.class,"username = ?",prefs.getname());
         user = users.get(0);
 
-        imageView = (ImageView)view.findViewById(R.id.profile_image_display);
+        imageView = (ImageView)view.findViewById(R.id.profile_image);
 
         about_me = (EditText) view.findViewById(R.id.abtmeet);
         about_me.setText(user.getAboutme());
@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
         residence = (EditText) view.findViewById(R.id.residenceet);
         residence.setText(user.getCity_self()+","+user.getCountry_self());
 
-        gender_others = (EditText) view.findViewById(R.is.genderet);
+        gender_others = (EditText) view.findViewById(R.id.genderet);
         gender_others.setText(user.getGender_others());
 
         lifestyle_others = (EditText) view.findViewById(R.id.lifestyleet);
@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
         so_self = (EditText)view.findViewById(R.id.soet);
         so_self.setText(user.getSexual_orientation_self());
 
-        gender_self = (EditText)view.findViewById(R.is.giet);
+        gender_self = (EditText)view.findViewById(R.id.giet);
         gender_self.setText(user.getGender_self());
 
         status_self = (EditText)view.findViewById(R.id.statuset);
@@ -141,7 +141,7 @@ public class ProfileFragment extends Fragment {
                 currentUser.setLifestyle_others(lifestyle_others.getText().toString().trim());
                 currentUser.setRelationship_others(relationship_others.getText().toString().trim());
                 currentUser.setLifestyle_self(lifestyle_self.getText().toString().trim());
-                currentUser.setSexual_orientation_self(so_self.getText()toString().trim());
+                currentUser.setSexual_orientation_self(so_self.getText().toString().trim());
                 currentUser.setStatus_self(status_self.getText().toString().trim());
                 currentUser.setChildren_self(children_self.getText().toString().trim());
                 currentUser.setSmoking_self(smoking_self.getText().toString().trim());

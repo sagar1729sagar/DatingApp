@@ -98,7 +98,7 @@ public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyView
                     holder.arrow.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_up_arrow));
                     setTexts(position,myPackage,holder,true);
                 } else {
-                    holder.arrow.setImageDrawable(context.getResources().getDrawable(R.drawable.down_arrow));
+                    holder.arrow.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_down_arrow));
                     setTexts(position,myPackage,holder,false);
                 }
             }

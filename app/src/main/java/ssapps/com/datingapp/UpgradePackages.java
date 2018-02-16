@@ -38,7 +38,8 @@ public class UpgradePackages extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater,R.layout.activity_settings_fragment,container,false);
-        return binding.getroot();
+        return binding.getRoot();
+       // binding.getRoot()
     }
 
     @Override
