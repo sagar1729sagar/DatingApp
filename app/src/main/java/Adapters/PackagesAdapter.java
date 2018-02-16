@@ -31,7 +31,7 @@ import ssapps.com.datingapp.SettingsFragment;
 
 public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyViewHolder>{
 
-    private ArrayList<Packages> packages = new ArrayList<>();
+    private List<Packages> packages = new ArrayList<>();
     private static final String euro = "\u20ac";
     private Context context;
     private Prefs prefs;
@@ -66,7 +66,7 @@ public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyView
 
     }
 
-    public PackagesAdapter(Context context,ArrayList<Packages> packages){
+    public PackagesAdapter(Context context,List<Packages> packages){
         this.context = context;
         this.packages = packages;
         prefs = new Prefs(context);
