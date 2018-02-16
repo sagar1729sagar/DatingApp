@@ -84,4 +84,6 @@
     <string name="blank">(Leave it blank if not required)</string>
     <string name="order">Order</string>
 
+    <string name="who_are">Who are</string>
+
 </resources>
