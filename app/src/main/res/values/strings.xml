@@ -85,5 +85,11 @@
     <string name="order">Order</string>
 
     <string name="who_are">Who are</string>
-
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="only_online">Only online</string>
+    <string name="only_pic">Only with pic</string>
+    <string name="saves_search">Save search</string>
+    <string name="i_c">Inognito search</string>
+    <string name="who_new">Who\'s new</string>
 </resources>
