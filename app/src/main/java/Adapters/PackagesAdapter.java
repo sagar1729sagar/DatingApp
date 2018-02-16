@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.RectF;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,7 +25,9 @@ import Models.Packages;
 import Models.User;
 import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import ssapps.com.datingapp.MainActivity;
 import ssapps.com.datingapp.R;
+import ssapps.com.datingapp.SettingsFragment;
 
 public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyViewHolder>{
 
@@ -135,6 +138,9 @@ public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyView
             public void handleResponse(User response) {
                 dialog.dismiss();
                 Toast.makeText(context,"Your order has been saved successfully",Toast.LENGTH_LONG).show();
+                Intent i = new Intent(context, MainActivity.class);
+                i.putExtra("PackagesRedirect",true);
+                context.startActivity(i);
             }
 
             @Override

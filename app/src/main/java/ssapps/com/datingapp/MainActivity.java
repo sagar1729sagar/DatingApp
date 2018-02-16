@@ -59,9 +59,13 @@ public class MainActivity extends AppCompatActivity
                     if (getIntent().getBooleanExtra("redirectProfile",false)){
                         makeScreenTransition(new ProfileFragment());
                     }
+                } else if (getIntent().hasExtra("SettingsRedirect")){
+                    if (getIntent().getBooleanExtra("PackagesRedirect",false)){
+                        makeScreenTransition(new UpgradePackages());
+                    }
                 }
             }
-        })
+        });
 
 
 
@@ -135,6 +139,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_my_profile:
                 break;
             case R.id.nav_upgrade_packages:
+                makeScreenTransition(new UpgradePackages());
                 break;
             case R.id.nav_terms_of_use:
                 break;
