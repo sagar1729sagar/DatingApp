@@ -209,6 +209,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setIncognito_mode("Yes");
         currentUser.setPackages("None");
 
+
         Backendless.Data.save(currentUser, new AsyncCallback<User>() {
             @Override
             public void handleResponse(User response) {

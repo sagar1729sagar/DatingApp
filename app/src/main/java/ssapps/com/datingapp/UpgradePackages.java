@@ -64,7 +64,6 @@ public class UpgradePackages extends Fragment {
     private void fetchPackages(){
         DataQueryBuilder query = DataQueryBuilder.create();
         query.setPageSize(100);
-
         if (Packages.count(Packages.class) == 0){
             dialog.setTitleText("Fetching information");
             dialog.show();
@@ -80,7 +79,6 @@ public class UpgradePackages extends Fragment {
 //                    packages.add(response.get(i));
 //                    response.get(i).save();
 //                }
-
                 adapter.notifyDataSetChanged();
             }
 

@@ -9,7 +9,7 @@ public class User extends SugarRecord {
                     lifestyle_others,relationship_others,lifestyle_self,sexual_orientation_self,status_self,children_self,
                     smoking_self,religin_self,drinking_self,height_self,units,eyecoloe_self,haircolor_self,photourl,latitude,
                     longitude,isPremiumMember,objectId,dateofBirth,who_view_photos,friend_requests,who_view_friends,incognito_mode,
-                    packages;
+                    packages,hasPicture;
 
     public User(){
 
@@ -285,5 +285,13 @@ public class User extends SugarRecord {
 
     public void setPackages(String packages) {
         this.packages = packages;
+    }
+
+    public String getHasPicture() {
+        return hasPicture;
+    }
+
+    public void setHasPicture(String hasPicture) {
+        this.hasPicture = hasPicture;
     }
 }

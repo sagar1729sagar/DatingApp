@@ -208,6 +208,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         user.setUsername(binding.username.getText().toString());
         user.setPassword(binding.password.getText().toString());
         user.setDateofBirth(binding.dobEt.getText().toString());
+        if (bitmap == null){
+            user.setHasPicture("No");
+        }
         user.save();
         pres.setName(binding.username.getText().toString());
         if (bitmap != null) {
@@ -227,6 +230,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void handleResponse(BackendlessFile response) {
                         dialog.dismiss();
+                        User currentuser = User.listAll(User.class).get(0);
+                        currentuser.setHasPicture("Yes");
+                        currentuser.save();
                         gotoNextpage();
                       //  startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                     }
@@ -235,6 +241,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     public void handleFault(BackendlessFault fault) {
                         dialog.dismiss();
                         setToast("Error uploading picture. Try later");
+                        User currentuser = User.listAll(User.class).get(0);
+                        currentuser.setHasPicture("No");
+                        currentuser.save();
                         gotoNextpage();
                        // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                     }
