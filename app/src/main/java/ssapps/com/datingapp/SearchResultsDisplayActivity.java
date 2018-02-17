@@ -1,5 +1,6 @@
 package ssapps.com.datingapp;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import java.util.List;
 
@@ -32,14 +34,23 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
 
+
+
+
+
+        RecyclerViewClickListener listener = new RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                startActivity(new Intent(SearchResultsDisplayActivity.this,ViewSearchResultItemActivity.class));
+            }
+        };
+
         results = SearchResults.listAll(SearchResults.class);
-        adapter = new SearchResultsAdapter(this,results);
+        adapter = new SearchResultsAdapter(this,results,listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         binding.searchResultsRecyclerView.setLayoutManager(layoutManager);
         binding.searchResultsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.searchResultsRecyclerView.setAdapter(adapter);
-
-        //todo row click to be done
 
     }
 }

@@ -48,12 +48,13 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <!--<activity android:name=".SignupDetailsActivity" />-->
-        <!--<activity android:name=".ProfileFragment" />-->
-        <!--<activity android:name=".SettingsFragment" />-->
-        <!--<activity android:name=".UpgradePackages" />-->
-        <!--<activity android:name=".SearchActivity" />-->
-        <activity android:name=".SearchResultsDisplayActivity"/>
+        <!-- <activity android:name=".SignupDetailsActivity" /> -->
+        <!-- <activity android:name=".ProfileFragment" /> -->
+        <!-- <activity android:name=".SettingsFragment" /> -->
+        <!-- <activity android:name=".UpgradePackages" /> -->
+        <!-- <activity android:name=".SearchActivity" /> -->
+        <activity android:name=".SearchResultsDisplayActivity" />
+        <activity android:name=".ViewSearchResultItemActivity"></activity>
     </application>
 
 </manifest>

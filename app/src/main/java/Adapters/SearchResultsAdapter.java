@@ -21,18 +21,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.SearchResults;
+import ssapps.com.datingapp.RecyclerViewClickListener;
 
 public class SearchResultsAdapter  extends RecyclerView.Adapter<SearchResultsAdapter.MyViewHolder>{
 
     private List<SearchResults> results = new ArrayList<>();
     private Context context;
+    private RecyclerViewClickListener mListener;
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout., parent, false);
 
-        return new MyViewHolder(itemView);
+        return new MyViewHolder(itemView,mListener);
     }
 
     @Override
@@ -60,23 +62,32 @@ public class SearchResultsAdapter  extends RecyclerView.Adapter<SearchResultsAda
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public ImageView profile_image, online_offline_image,dummy;
         public TextView details,online_offilne_text;
 
-        public MyViewHolder(View view){
+        public MyViewHolder(View view ,RecyclerViewClickListener listener){
             super(view);
             profile_image = (ImageView)view.findViewById(R.id.circle_image);
             online_offline_image = (ImageView)view.findViewById(R.id.online_offline_image);
             details = (TextView)view.findViewById(R.id.name_age_tv);
             online_offilne_text = (TextView)view.findViewById(R.id.online_offline_tv);
             dummy = (ImageView)view.findViewById(R.id.dummy_image);
+
+            mListener = listener;
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view,getAdapterPosition());
         }
     }
 
-   public SearchResultsAdapter(Context context,List<SearchResults> results){
+   public SearchResultsAdapter(Context context,List<SearchResults> results,RecyclerViewClickListener listener){
         this.context = context;
         this.results = results;
+        this.mListener = listener;
    }
 
     public class CropSquareTransformation implements Transformation {
