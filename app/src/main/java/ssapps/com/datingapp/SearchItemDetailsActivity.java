@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 public class SearchItemDetailsActivity extends AppCompatActivity {
 
+    private static  final String key = "AIzaSyCXCH0moJoeDqFi9XIV2A8ogclFxo9zoJI";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
