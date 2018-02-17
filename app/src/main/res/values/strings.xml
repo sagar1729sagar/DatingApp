@@ -94,4 +94,6 @@
     <string name="who_new">Who\'s new</string>
     <string name="miles">Miles</string>
     <string name="mile">Search miles around:</string>
+
+    <string name="offline">Offline</string>
 </resources>
