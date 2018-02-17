@@ -41,7 +41,7 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                startActivity(new Intent(SearchResultsDisplayActivity.this,ViewSearchResultItemActivity.class));
+                startActivity(new Intent(SearchResultsDisplayActivity.this,SearchItemDetailsActivity.class));
             }
         };
 

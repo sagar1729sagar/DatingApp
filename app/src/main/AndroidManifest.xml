@@ -54,7 +54,7 @@
         <!-- <activity android:name=".UpgradePackages" /> -->
         <!-- <activity android:name=".SearchActivity" /> -->
         <activity android:name=".SearchResultsDisplayActivity" />
-        <activity android:name=".ViewSearchResultItemActivity"></activity>
+        <activity android:name=".SearchItemDetailsActivity"></activity>
     </application>
 
 </manifest>

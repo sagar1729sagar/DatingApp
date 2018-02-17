@@ -12,7 +12,7 @@ public class SearchResults extends SugarRecord {
             lifestyle_others,relationship_others,lifestyle_self,sexual_orientation_self,status_self,children_self,
             smoking_self,religin_self,drinking_self,height_self,units,eyecoloe_self,haircolor_self,photourl,latitude,
             longitude,isPremiumMember,objectId,dateofBirth,who_view_photos,friend_requests,who_view_friends,incognito_mode,
-            packages,hasPicture,isOnline;
+            packages,hasPicture,isOnline,videoUrl;
 
     public SearchResults(){
 
@@ -54,6 +54,7 @@ public class SearchResults extends SugarRecord {
         this.packages = user.getPackages();
         this.hasPicture = user.getHasPicture();
         this.isOnline = user.getIsOnline();
+        this.videoUrl = user.getVideoUrl();
     }
 
     public String getUsername() {
@@ -198,5 +199,9 @@ public class SearchResults extends SugarRecord {
 
     public String getIsOnline() {
         return isOnline;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
     }
 }
