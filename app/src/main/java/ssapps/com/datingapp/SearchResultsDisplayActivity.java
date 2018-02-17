@@ -53,4 +53,15 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
         binding.searchResultsRecyclerView.setAdapter(adapter);
 
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+    }
 }
