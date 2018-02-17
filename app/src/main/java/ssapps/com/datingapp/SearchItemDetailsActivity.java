@@ -1,33 +1,60 @@
 package ssapps.com.datingapp;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class SearchItemDetailsActivity extends AppCompatActivity {
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
 
-    private static  final String key = "AIzaSyCXCH0moJoeDqFi9XIV2A8ogclFxo9zoJI";
+import Models.User;
+import Util.Prefs;
+import ssapps.com.datingapp.databinding.ActivitySearchItemDetailsBinding;
+
+public class SearchItemDetailsActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+
+    private static final String key = "AIzaSyCXCH0moJoeDqFi9XIV2A8ogclFxo9zoJI";
+    ActivitySearchItemDetailsBinding binding;
+    private static final int RECOVERY_REQUEST = 1;
+    private User user;
+  //  private Prefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_item_details);
+        //   setContentView(R.layout.activity_search_item_details);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_search_item_deails);
 
-        ActionBar actionBar = getSupportActionBar();
+        if (getIntent().hasExtra("name")){
+            String userName = getIntent().getStringExtra("name");
 
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+            user = User.find(User.class,"username = ?",userName).get(0);
+
+            binding.leftHeaderTv.setText(user.getGender_self()+" looking for "+user.getGender_others());
+
+            if (user.getGender_self().equals("Male")){
+                //todo
+            }
+
+
+
+
+
+        }
+
+
+
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+
     }
 
     @Override
-    public void onBackPressed() {
-        this.finish();
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
     }
 }
