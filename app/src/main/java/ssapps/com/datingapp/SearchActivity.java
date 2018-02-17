@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Models.SavedSearch;
+import Models.SearchResults;
 import Models.User;
 import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -49,6 +51,7 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
     List<String> heights = new ArrayList<>();
     List<String> haircolor = new ArrayList<>();
     List<String> eyecolor = new ArrayList<>();
+
 
 
     @Nullable
@@ -119,7 +122,7 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
                     if (!isSearching) {
                         prepareSearchPage();
                     } else {
-                        sortData();
+                        prepareData();
 
                     }
                 }
@@ -137,8 +140,255 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         });
     }
 
-    private void sortData() {
-        //todo
+    private void prepareData() {
+        SavedSearch searchParams = new SavedSearch();
+        searchParams.setGender(genders.get(binding.genderSearchMaterialSpinner.getSelectedIndex()));
+        searchParams.setWho_are(sexual_orientations.get(binding.whoAreMaterialSpinner.getSelectedIndex()));
+        searchParams.setLifestyle(lifestyles.get(binding.lifestyleMaterialSpinner.getSelectedIndex()));
+        searchParams.setStatus(statuses.get(binding.statusMaterialSpinner.getSelectedIndex()));
+        searchParams.setMin_age(min_ages.get(binding.ageMinMaterialSpinner.getSelectedIndex()));
+        searchParams.setMax_age(max_ages.get(binding.ageMaxMaterialSpinner.getSelectedIndex()));
+        searchParams.setCountry(countries.get(binding.countryMaterialSpinner.getSelectedIndex()));
+        searchParams.setCity(cities.get(binding.cityMaterialSpinner.getSelectedIndex()));
+        searchParams.setMiles(binding.milesEt.getText().toString());
+        searchParams.setLooking_for(relationships.get(binding.forMaterialSpinner.getSelectedIndex()));
+        searchParams.setChildren(children.get(binding.childrenMaterialSpinner.getSelectedIndex()));
+        searchParams.setSmoking(smoking.get(binding.smokingMaterialSpinner.getSelectedIndex()));
+        searchParams.setDrinking(drinking.get(binding.drinkingMaterialSpinner.getSelectedIndex()));
+        searchParams.setReligion(religion.get(binding.religionMaterialSpinner.getSelectedIndex()));
+        searchParams.setHeigh(heights.get(binding.heightMaterialSpinner.getSelectedIndex()));
+        searchParams.setHaircolor(haircolor.get(binding.hairColorMaterialSpinner.getSelectedIndex()));
+        searchParams.setEryecolor(eyecolor.get(binding.eyeColorMaterialSpinner.getSelectedIndex()));
+        searchParams.setOnlyOnline(binding.onlyOnlineCheckbox.isChecked());
+        searchParams.setOnlyWithPic(binding.onlyPicCheckbox.isChecked());
+        searchParams.setWhosNew(binding.whoNewCheckbox.isChecked());
+        searchParams.setIncognitoSearch(binding.incognitoCheckbox.isChecked());
+        if (binding.saveSearchCheckbox.isChecked()){
+            searchParams.save();
+        }
+
+        List<User> results = User.listAll(User.class);
+        sortForGender(searchParams,results);
+    }
+
+    private void sortForGender(SavedSearch searchParams, List<User> results) {
+
+        String gender = searchParams.getGender();
+
+        for (int i=0;i<results.size();i++){
+            if (!results.get(i).getGender_self().equals(gender)){
+                results.remove(i);
+            }
+        }
+
+        sortForSexualOrientations(searchParams,results);
+    }
+
+    private void sortForSexualOrientations(SavedSearch searchParams, List<User> results) {
+        String sexual_Orientation = searchParams.getWho_are();
+
+        for (User result:results){
+            if (!result.getSexual_orientation_self().equals(sexual_Orientation)){
+                results.remove(result);
+            }
+        }
+
+        sortForLifeStyle(searchParams,results);
+    }
+
+    private void sortForLifeStyle(SavedSearch searchParams, List<User> results) {
+        String lifestyle = searchParams.getLifestyle();
+        for (User result:results){
+            if (!result.getLifestyle_self().equals(lifestyle)){
+                results.remove(result);
+            }
+        }
+
+        sortForStatus(searchParams,results);
+    }
+
+    private void sortForStatus(SavedSearch searchParams, List<User> results) {
+        String status = searchParams.getStatus();
+        for (User result:results){
+            if (!result.getStatus_self().equals(status)){
+                results.remove(result);
+            }
+        }
+
+        sortForMinAge(searchParams,results);
+    }
+
+    private void sortForMinAge(SavedSearch searchParams, List<User> results) {
+        int min_age = Integer.parseInt(searchParams.getMin_age());
+        for (User result:results){
+            if (Integer.parseInt(result.getAge_self()) < min_age){
+                results.remove(result);
+            }
+        }
+
+        sortForMaxage(searchParams,results);
+    }
+
+    private void sortForMaxage(SavedSearch searchParams, List<User> results) {
+        int max_age = Integer.parseInt(searchParams.getMax_age());
+        for (User reuslt:results){
+            if (Integer.parseInt(reuslt.getAge_self()) > max_age){
+                results.remove(reuslt);
+            }
+        }
+
+        sortForCountry(searchParams,results);
+    }
+
+    private void sortForCountry(SavedSearch searchParams, List<User> results) {
+        String country = searchParams.getCountry();
+        for (User result:results){
+            if (!result.getCountry_self().equals(country)){
+                results.remove(result);
+            }
+        }
+
+        sortFoCity(searchParams,results);
+    }
+
+    private void sortFoCity(SavedSearch searchParams, List<User> results) {
+        String city = searchParams.getCity();
+        for (User result:results){
+            if (!result.getCity_self().equals(city)){
+                results.remove(result);
+            }
+        }
+
+        searchForRelationship(searchParams,results);
+    }
+
+    private void searchForRelationship(SavedSearch searchParams, List<User> results) {
+        String relationship = searchParams.getLooking_for();
+        for (User result:results){
+            if (!result.getRelationship_others().equals(relationship)){
+                results.remove(result);
+            }
+        }
+
+        searchForChildren(searchParams,results);
+    }
+
+    private void searchForChildren(SavedSearch searchParams, List<User> results) {
+        String children = searchParams.getChildren();
+        for (User result:results){
+            if (!result.getChildren_self().equals(children)){
+                results.remove(result);
+            }
+        }
+
+        sortForSmoking(searchParams,results);
+    }
+
+    private void sortForSmoking(SavedSearch searchParams, List<User> results) {
+        String smoke = searchParams.getSmoking();
+        for (User result:results){
+            if (!result.getSmoking_self().equals(smoke)){
+                results.remove(result);
+            }
+        }
+
+        sortForDrinking(searchParams,results);
+    }
+
+    private void sortForDrinking(SavedSearch searchParams, List<User> results) {
+        String drink = searchParams.getDrinking();
+        for (User result:results){
+            if (!result.getDrinking_self().equals(drink)){
+                results.remove(result);
+            }
+        }
+
+        sortForReligion(searchParams,results);
+    }
+
+    private void sortForReligion(SavedSearch searchParams, List<User> results) {
+        String religion = searchParams.getReligion();
+        for (User result:results){
+            if (!result.getReligin_self().equals(religion)){
+                results.remove(result);
+            }
+        }
+
+        sortForHeight(searchParams,results);
+    }
+
+    private void sortForHeight(SavedSearch searchParams, List<User> results) {
+        String height = searchParams.getHeigh();
+        for (User result:results){
+            if (!result.getHeight_self().equals(height)){
+                results.remove(result);
+            }
+        }
+
+        sortForHaircolor(searchParams,results);
+    }
+
+    private void sortForHaircolor(SavedSearch searchParams, List<User> results) {
+        String hair = searchParams.getHaircolor();
+        for (User result:results){
+            if (!result.getHaircolor_self().equals(hair)){
+                results.remove(result);
+            }
+        }
+
+        sortForEyecolor(searchParams,results);
+    }
+
+    private void sortForEyecolor(SavedSearch searchParams, List<User> results) {
+        String eye = searchParams.getEryecolor();
+        for (User result:results){
+            if (!result.getEyecoloe_self().equals(eye)){
+                results.remove(result);
+            }
+        }
+        sorForOnline(searchParams,results);
+    }
+
+    private void sorForOnline(SavedSearch searchParams, List<User> results) {
+        String online;
+        if (searchParams.isOnlyOnline()){
+            online = "Yes";
+        } else {
+            online = "No";
+        }
+        for (User result:results){
+            if (!result.getIsOnline().equals(online)){
+                results.remove(result);
+            }
+        }
+
+        sortForPicture(searchParams,results);
+    }
+
+    private void sortForPicture(SavedSearch searchParams, List<User> results) {
+        String pic;
+        if (searchParams.isOnlyWithPic()){
+            pic = "Yes";
+        } else {
+            pic = "No";
+        }
+        for (User result:results){
+            if (!result.getHasPicture().equals(pic)){
+                results.remove(result);
+            }
+        }
+
+        saveRefinedResults(results);
+
+    }
+
+    private void saveRefinedResults(List<User> results) {
+        for (User result:results){
+            SearchResults searchResult = new SearchResults(result);
+            searchResult.save();
+        }
+        dialog.dismiss();
+        //todo go to result display page
     }
 
     private void prepareSearchPage() {
@@ -227,4 +477,5 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         dialog.setTitleText("Searching....");
         getData();
     }
+    //todo search for distance
 }
