@@ -188,6 +188,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void handleResponse(BackendlessUser response) {
                 saveResponse(response);
+              //  loginUser();
             }
 
             @Override
@@ -198,6 +199,36 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                                 "\n"+fault.getMessage()+"\nPlease try again").show();
             }
         });
+
+    }
+
+    private void loginUser() {
+
+        String email = binding.email.getText().toString();
+        String password = binding.password.getText().toString();
+
+        Backendless.UserService.login(email, password, new AsyncCallback<BackendlessUser>() {
+            @Override
+            public void handleResponse(BackendlessUser response) {
+
+                if (bitmap != null) {
+                    saveProfileImage();
+                } else {
+                    gotoNextpage();
+                }
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+
+
+                if (bitmap != null) {
+                    saveProfileImage();
+                } else {
+                    gotoNextpage();
+                }
+            }
+        },true);
 
     }
 
@@ -213,11 +244,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         }
         user.save();
         pres.setName(binding.username.getText().toString());
-        if (bitmap != null) {
-            saveProfileImage();
-        } else {
-            gotoNextpage();
-        }
+        loginUser();
+
        // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
     }
 

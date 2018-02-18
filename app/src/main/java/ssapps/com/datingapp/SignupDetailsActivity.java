@@ -29,6 +29,7 @@ import java.util.List;
 
 import Models.User;
 import Util.Util;
+import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivitySignupDetailsBinding;
 
@@ -41,9 +42,11 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     private String user;
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
+    private static final String GCM_SENDER_ID = "57050948456";
     private static final int ACCESS_FINE_LOCATION = 1;
     private static final int LOCATION_HARDWARE = 2;
     private double[] location;
+    private Prefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +57,14 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         Backendless.initApp(this,appKey,appId);
 
 
-        ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
+//        ActionBar actionBar = getSupportActionBar();
+//
+//        actionBar.setHomeButtonEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayShowHomeEnabled(true);
 
         util = new Util();
+        prefs = new Prefs(this);
         dialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             dialog.getProgressHelper().setBarColor(getResources().getColor(R.color.leaf_green,null));
@@ -308,11 +312,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             public void handleResponse(User response) {
                 User.deleteAll(User.class);
                 currentUser.save();
-                dialog.dismiss();
-                Intent i = new Intent(SignupDetailsActivity.this,MainActivity.class);
-                i.putExtra("redirectProfile",true);
-                startActivity(i);
-                finish();
+                registerForPushNotifications();
 
             }
 
@@ -327,4 +327,30 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
 
     }
+
+    private void registerForPushNotifications(){
+
+
+    Backendless.Messaging.registerDevice(GCM_SENDER_ID, prefs.getname(), new AsyncCallback<Void>() {
+        @Override
+        public void handleResponse(Void response) {
+            dialog.dismiss();
+            Intent i = new Intent(SignupDetailsActivity.this,MainActivity.class);
+            i.putExtra("redirectProfile",true);
+            startActivity(i);
+            finish();
+        }
+
+        @Override
+        public void handleFault(BackendlessFault fault) {
+            dialog.dismiss();
+            Intent i = new Intent(SignupDetailsActivity.this,MainActivity.class);
+            i.putExtra("redirectProfile",true);
+            startActivity(i);
+            finish();
+        }
+    });
+
+    }
+
 }

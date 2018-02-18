@@ -71,7 +71,7 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
                 @Override
                 public void onClick(View view) {
                     contactPerson();
-                    //todo send push notification
+
                 }
             });
 
@@ -102,6 +102,7 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
                 dialog.dismiss();
                 response.save();
                 Toast.makeText(getApplicationContext(),"Meesage sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+                //todo send push notification
             }
 
             @Override

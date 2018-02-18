@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import Util.Util;
 
 import com.backendless.Backendless;
+import com.backendless.DeviceRegistration;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
@@ -27,7 +28,10 @@ public class MainActivity extends AppCompatActivity
 
     private Toolbar toolbar;
     private Util util;
- //   private Prefs prefs;
+    private Prefs prefs;
+    private static final String GCM_SENDER_ID = "57050948456";
+    private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
+    private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -37,10 +41,16 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Backendless.initApp(this,appId,appKey);
+
         util = new Util();
         util.updateOnlineStatus(this,true);
 
-       // prefs = new Prefs(this);
+        prefs = new Prefs(this);
+
+        if (!prefs.getname().equals("None")){
+            checkForPushNotificationsRegistration();
+        }
        // updateOnlineStatus();
 
 
@@ -88,6 +98,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
 
 
 
@@ -203,6 +214,40 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onStop() {
-        util.updateOnlineStatus(this,false);
+        super.onStop();
+        util.updateOnlineStatus(this, false);
     }
+
+
+    private void checkForPushNotificationsRegistration() {
+        Backendless.Messaging.getRegistrations(new AsyncCallback<DeviceRegistration>() {
+            @Override
+            public void handleResponse(DeviceRegistration response) {
+                if (!response.getChannels().contains(prefs.getname())){
+                    registerForPushNotification();
+                }
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                //do nothing
+            }
+        });
+    }
+
+    private void registerForPushNotification() {
+        Backendless.Messaging.registerDevice(GCM_SENDER_ID, prefs.getname(), new AsyncCallback<Void>() {
+            @Override
+            public void handleResponse(Void response) {
+                //do Nothing
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                //do Nothing
+            }
+        });
+    }
+
+
 }
