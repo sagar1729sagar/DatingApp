@@ -1,6 +1,8 @@
 package ssapps.com.datingapp;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -168,8 +170,20 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         }
 
         List<User> results = User.listAll(User.class);
+        //sortForGender(searchParams,results);
+        sortForIncognitoSetting(searchParams,results);
+    }
+
+    private void sortForIncognitoSetting(SavedSearch searchParams, List<User> results) {
+        for (User result:results){
+            if (result.getIncognito_mode().equals("Yes")){
+                results.remove(result);
+            }
+        }
+
         sortForGender(searchParams,results);
     }
+
 
     private void sortForGender(SavedSearch searchParams, List<User> results) {
 
@@ -378,6 +392,31 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
             }
         }
 
+      //  saveRefinedResults(results);
+        sortForDistance(searchParams,results);
+
+
+    }
+
+
+    private void sortForDistance(SavedSearch searchParams, List<User> results) {
+
+        if (!prefs.getname().equals("None")){
+            User loggeduser = User.find(User.class,"username = ?",prefs.getname()).get(0);
+            if (checkForGeoPoint(loggeduser)){
+                for (User result:results){
+                    if (checkForGeoPoint(result)){
+                        Float distance = calculateDistace(Double.parseDouble(loggeduser.getLatitude()),
+                                Double.parseDouble(loggeduser.getLongitude()),Double.parseDouble(result.getLatitude()),
+                                Double.parseDouble(result.getLongitude()));
+                        if (distance > Float.parseFloat(searchParams.getMiles())){
+                            results.remove(result);
+                        }
+                    }
+                }
+            }
+        }
+
         saveRefinedResults(results);
 
     }
@@ -388,7 +427,8 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
             searchResult.save();
         }
         dialog.dismiss();
-        //todo go to result display page
+      //  Intent intent = new Intent(SearchActivity.this)
+        startActivity(new Intent(getContext(),SearchResultsDisplayActivity.class));
     }
 
     private void prepareSearchPage() {
@@ -477,5 +517,29 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         dialog.setTitleText("Searching....");
         getData();
     }
-    //todo search for distance
+
+    private boolean checkForGeoPoint(User user){
+        if (user.getLatitude().isEmpty() || user.getLatitude() == null || user.getLatitude().equals("0")){
+            return false;
+        }
+        if (user.getLongitude().isEmpty() || user.getLongitude() == null || user.getLongitude().equals("0")){
+            return false;
+        }
+        return true;
+    }
+
+
+    private float calculateDistace(Double lat1,Double lon1,Double lat2,Double lon2){
+        Location loc1 = new Location("");
+        loc1.setLatitude(lat1);
+        loc1.setLongitude(lon1);
+
+        Location loc2 = new Location("");
+        loc2.setLatitude(lat2);
+        loc2.setLongitude(lon2);
+
+        return loc1.distanceTo(loc2);
+    }
+
+
 }

@@ -4,7 +4,7 @@ import com.orm.SugarRecord;
 
 public class Packages extends SugarRecord {
 
-    private String packageName,price,description,bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,bp9,bp0;
+    private String packageName,price,description,bp1,bp2,bp3,bp4,bp5,bp6,bp7,bp8,bp9,bp0,objectId;
 
 
     public Packages(){
@@ -114,5 +114,13 @@ public class Packages extends SugarRecord {
 
     public void setBp0(String bp0) {
         this.bp0 = bp0;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 }
