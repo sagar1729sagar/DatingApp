@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity
                         makeScreenTransition(new UpgradePackages());
                     }
                 }
+                //todo redirect to chats from notifications
             }
         });
 
