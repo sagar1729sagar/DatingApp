@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.SearchResultsAdapter;
@@ -18,7 +19,7 @@ import ssapps.com.datingapp.databinding.ActivitySearchResultsDisplayBinding;
 
 public class SearchResultsDisplayActivity extends AppCompatActivity {
 
-    private List<SearchResults> results;
+    private List<SearchResults> results = new ArrayList<>();
     private SearchResultsAdapter adapter;
     private ActivitySearchResultsDisplayBinding binding;
 

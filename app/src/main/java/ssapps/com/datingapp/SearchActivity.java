@@ -17,6 +17,7 @@ import com.backendless.persistence.DataQueryBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import Models.SavedSearch;
@@ -76,7 +77,10 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         long count = User.count(User.class);
         if (count == 0 || count == 1){
           //  silence = false;
+            isSearching = false;
             getData();
+        } else {
+            prepareSearchPage();
         }
 
         binding.submitButton.setOnClickListener(this);
@@ -106,8 +110,8 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         Backendless.Data.find(User.class, query, new AsyncCallback<List<User>>() {
             @Override
             public void handleResponse(List<User> response) {
-                if (isFirstTime){
-                    isFirstTime = false;
+                if (isFirst){
+                   // isFirst = false;
                     if (prefs.getname().equals("None")){
                         User.deleteAll(User.class);
                     } else {
@@ -165,6 +169,7 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         searchParams.setOnlyWithPic(binding.onlyPicCheckbox.isChecked());
         searchParams.setWhosNew(binding.whoNewCheckbox.isChecked());
         searchParams.setIncognitoSearch(binding.incognitoCheckbox.isChecked());
+        searchParams.setSaved_time(Calendar.getInstance().getTimeInMillis());
         if (binding.saveSearchCheckbox.isChecked()){
             searchParams.save();
         }
@@ -422,6 +427,7 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
     }
 
     private void saveRefinedResults(List<User> results) {
+        SearchResults.deleteAll(SearchResults.class);
         for (User result:results){
             SearchResults searchResult = new SearchResults(result);
             searchResult.save();
@@ -513,7 +519,7 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        isFirstTime = true;
+        isSearching = true;
         dialog.setTitleText("Searching....");
         getData();
     }

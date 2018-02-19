@@ -6,6 +6,7 @@ public class SavedSearch extends SugarRecord {
 
     private String gender,who_are,lifestyle,Status,country,city,looking_for,children,min_age,max_age,miles,drinking,religion,heigh,eryecolor,haircolor,smoking;
     private boolean onlyOnline,onlyWithPic,WhosNew,incognitoSearch;
+    private long saved_time;
 
     public SavedSearch(){
 
@@ -177,5 +178,13 @@ public class SavedSearch extends SugarRecord {
 
     public void setSmoking(String smoking) {
         this.smoking = smoking;
+    }
+
+    public long getSaved_time() {
+        return saved_time;
+    }
+
+    public void setSaved_time(long saved_time) {
+        this.saved_time = saved_time;
     }
 }

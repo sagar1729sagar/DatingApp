@@ -97,5 +97,6 @@
 
     <string name="offline">Offline</string>
     <string name="back">Go Back</string>
+    <string name="searched_for">Searched for...</string>
 
 </resources>
