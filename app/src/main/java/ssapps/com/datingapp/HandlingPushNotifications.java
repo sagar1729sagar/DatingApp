@@ -47,7 +47,7 @@ public class HandlingPushNotifications extends BackendlessPushService {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,prefs.getname());
 
-        builder.setTicker(ticker_text);
+        builder.setTicker("Message from "+title_text);
         builder.setContentTitle(title_text);
         builder.setContentText(chat_message);
         builder.setSmallIcon(R.drawable.fb);
@@ -57,7 +57,7 @@ public class HandlingPushNotifications extends BackendlessPushService {
 
         Message message = new Message();
         message.setChat_message(chat_message);
-        message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+        message.setTime(ticker_text);
         message.setTo(prefs.getname());
         message.setFrom(title_text);
         message.setObject_id(chat_objectId);
