@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -118,7 +119,9 @@ public class ProfileFragment extends Fragment {
 
         haircolor_self = (EditText)view.findViewById(R.id.hairet);
         haircolor_self.setText(user.getHaircolor_self());
-        //todo image display
+        if (user.getHasPicture().equals("Yes")) {
+            Picasso.with(getContext()).load(user.getPhotourl()).into(imageView);
+        }
 
 
         modifyButton = (Button)view.findViewById(R.id.modifyButton);

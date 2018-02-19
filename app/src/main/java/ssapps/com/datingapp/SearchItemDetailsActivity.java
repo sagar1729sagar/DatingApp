@@ -7,8 +7,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
+import com.backendless.DeviceRegistration;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.messaging.MessageStatus;
+import com.backendless.messaging.PublishOptions;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -26,11 +29,13 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
     private static final String key = "AIzaSyCXCH0moJoeDqFi9XIV2A8ogclFxo9zoJI";
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
+    private static final String GCM_SENDER_ID = "57050948456";
     ActivitySearchItemDetailsBinding binding;
     private static final int RECOVERY_REQUEST = 1;
     private User user;
     private SweetAlertDialog error,dialog;
     private Prefs prefs;
+    private Message contact_message;
   //  private Prefs prefs;
 
     @Override
@@ -44,6 +49,8 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
         dialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
         dialog.setCancelable(false);
         dialog.dismiss();
+
+        contact_message = new Message();
 
         prefs = new Prefs(this);
 
@@ -66,12 +73,20 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
 
             binding.youtubePlayer.initialize(key,this);
 
+            binding.contactButton.setText("Contact "+user.getUsername());
 
             binding.contactButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     contactPerson();
 
+                }
+            });
+
+            binding.goBackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
                 }
             });
 
@@ -99,10 +114,11 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
         Backendless.Data.save(message, new AsyncCallback<Message>() {
             @Override
             public void handleResponse(Message response) {
-                dialog.dismiss();
+               // dialog.dismiss();
                 response.save();
-                Toast.makeText(getApplicationContext(),"Meesage sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
-                //todo send push notification
+                contact_message = response;
+
+                checkPushNotificationRegistration();
             }
 
             @Override
@@ -112,6 +128,67 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
                 error.setContentText("The following error has occured while sending message\n"+
                             fault.getMessage()+"\n Please try again");
                 error.show();
+            }
+        });
+
+    }
+
+    private void checkPushNotificationRegistration() {
+        Backendless.Messaging.getDeviceRegistration(new AsyncCallback<DeviceRegistration>() {
+            @Override
+            public void handleResponse(DeviceRegistration response) {
+                if (response.getChannels().contains(prefs.getname())){
+                    sendNotification();
+                } else {
+                    registerDevice();
+                }
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                //do nothing
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(),"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void registerDevice() {
+
+        Backendless.Messaging.registerDevice(GCM_SENDER_ID, user.getUsername(), new AsyncCallback<Void>() {
+            @Override
+            public void handleResponse(Void response) {
+                sendNotification();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                //do nothing
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(),"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void sendNotification() {
+
+        PublishOptions publishOptions = new PublishOptions();
+        publishOptions.putHeader("android-ticker-text", "Message from "+user.getUsername());
+        publishOptions.putHeader("android-content-title", user.getUsername());
+        publishOptions.putHeader("android-content-text", "I found your profile interesting. I would like to get to know you more");
+
+        Backendless.Messaging.publish(user.getUsername(), contact_message.getObject_id(), publishOptions, new AsyncCallback<MessageStatus>() {
+            @Override
+            public void handleResponse(MessageStatus response) {
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(),"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                //do nothing
+                dialog.dismiss();
+                Toast.makeText(getApplicationContext(),"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
             }
         });
 

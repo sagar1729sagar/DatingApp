@@ -96,4 +96,6 @@
     <string name="mile">Search miles around:</string>
 
     <string name="offline">Offline</string>
+    <string name="back">Go Back</string>
+
 </resources>
