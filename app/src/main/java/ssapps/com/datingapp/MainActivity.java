@@ -148,8 +148,10 @@ public class MainActivity extends AppCompatActivity
                 makeScreenTransition(new SearchActivity());
                 break;
             case R.id.nav_save_search:
+                makeScreenTransition(new SavedSearchActivity());
                 break;
             case R.id.nav_around_me:
+                makeScreenTransition(new AroundMeActivity());
                 break;
             case R.id.nav_chat_messages:
                 break;
