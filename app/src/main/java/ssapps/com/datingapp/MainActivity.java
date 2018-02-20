@@ -89,7 +89,10 @@ public class MainActivity extends AppCompatActivity
                     if (getIntent().getBooleanExtra("PackagesRedirect",false)){
                         makeScreenTransition(new UpgradePackages());
                     }
-                }
+                } else if (getIntent().hasExtra("chatRedirect")){
+                    if (getIntent().getBooleanExtra("chatRedirect",false)){
+                        makeScreenTransition(new ChatListingFragment());
+                    }
 
             }
         });

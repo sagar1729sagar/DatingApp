@@ -52,17 +52,20 @@ public class HandlingPushNotifications extends BackendlessPushService {
         builder.setContentText(chat_message);
         builder.setSmallIcon(R.drawable.fb);
 
-        Intent i = new Intent(context,MainActivity.class);
-        i.putExtra("chatRedirect","Yes");
+        Intent i = new Intent(context, MainActivity.class);
+        if (ticker_text.equals("message")) {
 
-        Message message = new Message();
-        message.setChat_message(chat_message);
-        message.setTime(ticker_text);
-        message.setTo(prefs.getname());
-        message.setFrom(title_text);
-        message.setObject_id(chat_objectId);
-        message.setType("Notification");
-        message.save();
+            i.putExtra("chatRedirect", "Yes");
+
+            Message message = new Message();
+            message.setChat_message(chat_message);
+            message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+            message.setTo(prefs.getname());
+            message.setFrom(title_text);
+            message.setObject_id(ticker_text);
+            message.setType("Notification");
+            message.save();
+        }
 
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

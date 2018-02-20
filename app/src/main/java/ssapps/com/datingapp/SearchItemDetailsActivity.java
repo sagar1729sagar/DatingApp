@@ -173,11 +173,11 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
     private void sendNotification() {
 
         PublishOptions publishOptions = new PublishOptions();
-        publishOptions.putHeader("android-ticker-text", String.valueOf(Calendar.getInstance().getTimeInMillis()));
+        publishOptions.putHeader("android-ticker-text", contact_message.getObject_id();
         publishOptions.putHeader("android-content-title", user.getUsername());
         publishOptions.putHeader("android-content-text", "I found your profile interesting. I would like to get to know you more");
 
-        Backendless.Messaging.publish(user.getUsername(), contact_message.getObject_id(), publishOptions, new AsyncCallback<MessageStatus>() {
+        Backendless.Messaging.publish(user.getUsername(), "message", publishOptions, new AsyncCallback<MessageStatus>() {
             @Override
             public void handleResponse(MessageStatus response) {
                 dialog.dismiss();
