@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import Models.Message;
+import Models.MessagesSorting;
 import Models.User;
 import ssapps.com.datingapp.RecyclerViewClickListener;
 
@@ -23,10 +24,10 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
 
     private Context context;
     private RecyclerViewClickListener mListener;
-    private List<Message> messages = new ArrayList<>();
+    private List<MessagesSorting> messages = new ArrayList<>();
     //private List<User> users = new ArrayList<>();
 
-    public ChatListingAdapter(Context context,List<Message> messages,RecyclerViewClickListener listener){
+    public ChatListingAdapter(Context context,List<MessagesSorting> messages,RecyclerViewClickListener listener){
         this.context = context;
         this.messages = messages;
      //   this.users = users;
@@ -44,7 +45,7 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        Message message = messages.get(position);
+        MessagesSorting message = messages.get(position);
 
 
 
@@ -67,8 +68,8 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
 
     }
 
-    private String getTime(String time) {
-        Long difference = Calendar.getInstance().getTimeInMillis() - Long.parseLong(time);
+    private String getTime(Long time) {
+        Long difference = Calendar.getInstance().getTimeInMillis() - time;
 
         int years = (int)(difference/(365*24*60*60*1000));
         if (years != 0){

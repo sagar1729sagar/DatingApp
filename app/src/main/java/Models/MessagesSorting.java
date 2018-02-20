@@ -17,7 +17,7 @@ public class MessagesSorting extends SugarRecord {
         this.time = Long.valueOf(message.time);
         this.type = message.getType();
         this.chat_message = message.chat_message;
-        this.object_id = message.object_id
+        this.object_id = message.object_id;
     }
 
     public String getFrom() {
