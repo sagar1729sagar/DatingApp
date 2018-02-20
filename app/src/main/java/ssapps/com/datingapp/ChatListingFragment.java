@@ -277,5 +277,5 @@ public class ChatListingFragment extends Fragment{
         }
     }
 
-    
+
 }

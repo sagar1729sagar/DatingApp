@@ -78,7 +78,8 @@
 
         <activity android:name=".SavedSearchActivity" />
         <activity android:name=".AroundMeActivity" />
-        <activity android:name=".ChatListingFragment"></activity>
+        <activity android:name=".ChatListingFragment" />
+        <activity android:name=".ChatActivity"></activity>
     </application>
 
 </manifest>
