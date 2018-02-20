@@ -8,5 +8,92 @@
     android:layout_height="match_parent"
     tools:context="ssapps.com.datingapp.AroundMeActivity">
 
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/sub_image"
+        android:src="@drawable/ic_subtract"
+        android:background="@color/leaf_green"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        />
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/add_image"
+        android:src="@drawable/ic_add"
+        android:background="@color/leaf_green"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        />
+    <com.warkiz.widget.IndicatorSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginEnd="40dp"
+        android:id="@+id/distance_seek_bar"
+        android:layout_alignBottom="@id/add_image"
+        android:layout_alignTop="@id/add_image"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/distance_seek_bar"
+        android:orientation="vertical"
+        >
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:siBorderWidth="2dp"
+            app:siBorderColor="@color/leaf_green"
+            android:id="@+id/profile_image_rounded"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_distance"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal"
+            />
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_marginBottom="20dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--&gt;-->
+        <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:id="@+id/sub_image"-->
+            <!--android:src="@drawable/ic_subtract"-->
+            <!--android:background="@color/leaf_green"-->
+            <!--/>-->
+        <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:id="@+id/add_image"-->
+            <!--android:src="@drawable/ic_add"-->
+            <!--android:background="@color/leaf_green"-->
+            <!--/>-->
+
+    <!--</LinearLayout>-->
+
 </RelativeLayout>
 </layout>

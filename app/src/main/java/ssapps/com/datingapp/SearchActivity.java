@@ -37,6 +37,8 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
     private boolean isFirstTime = true;
     private Prefs prefs;
 
+    private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
+    private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
 
     List<String> genders = new ArrayList<>();
     List<String> sexual_orientations = new ArrayList<>();
@@ -67,6 +69,7 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+        Backendless.initApp(getContext(),appId,appKey);
         dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
         dialog.setCancelable(false);
         dialog.setTitleText("Preparing the page....");
@@ -141,6 +144,8 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
                     error.setTitleText("Cannot prepare page");
                     error.setContentText("The following error has occured while contacting VeMeet\n"+fault.getMessage()+"\n Please try again later");
                     error.show();
+                } else {
+                    prepareData();
                 }
             }
         });
