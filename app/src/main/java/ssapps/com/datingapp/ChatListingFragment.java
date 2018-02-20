@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.backendless.messaging.MessageStatus;
 import com.backendless.persistence.BackendlessDataQuery;
 import com.backendless.persistence.DataQueryBuilder;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.Message;
+import Models.MessagesSorting;
 import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivityChatListingFragmentBinding;
@@ -119,16 +121,8 @@ public class ChatListingFragment extends Fragment{
     }
 
     private void sortData(List<Message> messageList) {
-        List<String> fromNames = new ArrayList<>();
-        List<String> toNames = new ArrayList<>();
 
-        for (Message message:messageList){
-            if (message.getFrom().equals(prefs.getname())){
-                if (toNames.contains(message.getTo())){
-                    //todo
-                }
-            }
-        }
+      //todo
 
     }
 
