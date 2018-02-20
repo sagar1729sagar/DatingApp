@@ -32,7 +32,7 @@ public class SearchResultsAdapter  extends RecyclerView.Adapter<SearchResultsAda
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout., parent, false);
+                .inflate(R.layout.search_result_row, parent, false);
 
         return new MyViewHolder(itemView,mListener);
     }

@@ -77,7 +77,8 @@
         <service android:name=".HandlingPushNotifications" />
 
         <activity android:name=".SavedSearchActivity" />
-        <activity android:name=".AroundMeActivity"></activity>
+        <activity android:name=".AroundMeActivity" />
+        <activity android:name=".ChatListingFragment"></activity>
     </application>
 
 </manifest>

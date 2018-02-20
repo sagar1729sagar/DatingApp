@@ -42,6 +42,10 @@
         android:id="@+id/distance_seek_bar"
         android:layout_alignBottom="@id/add_image"
         android:layout_alignTop="@id/add_image"
+        android:layout_toRightOf="@id/sub_image"
+        android:layout_toLeftOf="@id/add_image"
+        android:layout_toStartOf="@id/sub_image"
+        android:layout_toEndOf="@id/add_image"
         />
 
     <LinearLayout

@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity
                         makeScreenTransition(new UpgradePackages());
                     }
                 }
-                //todo redirect to chats from notifications
+
             }
         });
 
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity
                 makeScreenTransition(new AroundMeActivity());
                 break;
             case R.id.nav_chat_messages:
+                makeScreenTransition(new ChatListingFragment());
                 break;
             case R.id.nav_online:
                 break;
