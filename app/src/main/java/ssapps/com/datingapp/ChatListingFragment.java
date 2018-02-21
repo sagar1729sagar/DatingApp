@@ -1,5 +1,6 @@
 package ssapps.com.datingapp;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -259,7 +260,13 @@ public class ChatListingFragment extends Fragment{
             RecyclerViewClickListener listener = new RecyclerViewClickListener() {
                 @Override
                 public void onClick(View view, int position) {
-                    //todo go to next page
+                    Intent i = new Intent(getContext(),ChatActivity.class);
+                    if (messages.get(position).getFrom().equals(prefs.getname())){
+                        i.putExtra("user",messages.get(position).getTo());
+                    } else if (messages.get(position).getTo().equals(prefs.getname())){
+                        i.putExtra("user",messages.get(position).getFrom());
+                    }
+                    startActivity(i);
                 }
             };
 

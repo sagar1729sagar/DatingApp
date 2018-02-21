@@ -48,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/ll"
         android:id="@+id/chat"
+        android:padding="10dp"
         />
 
 </RelativeLayout>
