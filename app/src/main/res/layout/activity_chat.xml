@@ -8,5 +8,47 @@
     android:layout_height="match_parent"
     tools:context="ssapps.com.datingapp.ChatActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:id="@+id/ll"
+        >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/black"
+            android:src="@drawable/ic_smiley"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/type_a_message_here"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:padding="5dp"
+            android:background="#9c9999"
+            android:id="@+id/message_et"
+            />
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@color/leaf_green"
+            android:src="@drawable/ic_send"
+            android:layout_gravity="right"
+            android:id="@+id/send_button"
+            />
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/ll"
+        android:id="@+id/chat"
+        />
+
 </RelativeLayout>
 </layout>
