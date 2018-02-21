@@ -39,6 +39,7 @@
         android:layout_toRightOf="@id/to_image"
         android:layout_toLeftOf="@id/from_image"
         android:layout_alignTop="@id/to_image"
+        android:textSize="15sp"
         />
 
 

@@ -43,43 +43,45 @@ public class HandlingPushNotifications extends BackendlessPushService {
 
     private void displayNotification(Context context,String ticker_text,String title_text,String chat_message,String chat_objectId){
 
+        if (ticker_text.equals("message") && !prefs.isInChat()) {
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, prefs.getname());
+
+            builder.setTicker("Message from " + title_text);
+            builder.setContentTitle(title_text);
+            builder.setContentText(chat_message);
+            builder.setSmallIcon(R.drawable.fb);
+
+            Intent i = new Intent(context, MainActivity.class);
+            if (ticker_text.equals("message")) {
+
+                i.putExtra("chatRedirect", "Yes");
+
+                Message message = new Message();
+                message.setChat_message(chat_message);
+                message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+                message.setTo(prefs.getname());
+                message.setFrom(title_text);
+                message.setObject_id(ticker_text);
+                message.setType("Notification");
+                message.save();
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,prefs.getname());
+            }
 
-        builder.setTicker("Message from "+title_text);
-        builder.setContentTitle(title_text);
-        builder.setContentText(chat_message);
-        builder.setSmallIcon(R.drawable.fb);
 
-        Intent i = new Intent(context, MainActivity.class);
-        if (ticker_text.equals("message")) {
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addParentStack(MainActivity.class);
 
-            i.putExtra("chatRedirect", "Yes");
+            stackBuilder.addNextIntent(i);
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(pendingIntent);
 
-            Message message = new Message();
-            message.setChat_message(chat_message);
-            message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            message.setTo(prefs.getname());
-            message.setFrom(title_text);
-            message.setObject_id(ticker_text);
-            message.setType("Notification");
-            message.save();
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(123, builder.build());
+
         }
-
-
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainActivity.class);
-
-        stackBuilder.addNextIntent(i);
-        PendingIntent pendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(123, builder.build());
-
-
 
     }
 
