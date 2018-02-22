@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity
                 makeScreenTransition(new ChatListingFragment());
                 break;
             case R.id.nav_online:
+                makeScreenTransition(new OnlineActivity());
                 break;
             case R.id.nav_whos_new:
                 break;
