@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity
                 makeScreenTransition(new OnlineActivity());
                 break;
             case R.id.nav_whos_new:
+                makeScreenTransition(new WhosNewActivity());
                 break;
             case R.id.nav_in_depth:
                 break;
