@@ -81,7 +81,8 @@
         <activity android:name=".ChatListingFragment" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".OnlineActivity" />
-        <activity android:name=".WhosNewActivity"></activity>
+        <activity android:name=".WhosNewActivity" />
+        <activity android:name=".InDepthActivity"></activity>
     </application>
 
 </manifest>

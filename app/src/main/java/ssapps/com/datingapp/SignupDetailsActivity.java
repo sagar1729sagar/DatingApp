@@ -305,6 +305,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setPackages("None");
         currentUser.setLatitude(String.valueOf(location[0]));
         currentUser.setLongitude(String.valueOf(location[1]));
+        currentUser.setVideoUrl("None");
+
 
 
         Backendless.Data.save(currentUser, new AsyncCallback<User>() {

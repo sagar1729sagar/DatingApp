@@ -166,6 +166,7 @@ public class MainActivity extends AppCompatActivity
                 makeScreenTransition(new WhosNewActivity());
                 break;
             case R.id.nav_in_depth:
+                makeScreenTransition(new InDepthActivity());
                 break;
             case R.id.nav_activity_board:
                 break;
