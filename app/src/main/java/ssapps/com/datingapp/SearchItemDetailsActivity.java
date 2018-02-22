@@ -173,7 +173,7 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
     private void sendNotification() {
 
         PublishOptions publishOptions = new PublishOptions();
-        publishOptions.putHeader("android-ticker-text", contact_message.getObject_id();
+        publishOptions.putHeader("android-ticker-text", contact_message.getObjectId());
         publishOptions.putHeader("android-content-title", user.getUsername());
         publishOptions.putHeader("android-content-text", "I found your profile interesting. I would like to get to know you more");
 

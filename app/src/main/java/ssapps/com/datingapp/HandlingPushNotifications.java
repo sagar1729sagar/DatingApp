@@ -41,9 +41,9 @@ public class HandlingPushNotifications extends BackendlessPushService {
     }
 
 
-    private void displayNotification(Context context,String ticker_text,String title_text,String chat_message,String chat_objectId){
+    private void displayNotification(Context context,String ticker_text,String title_text,String chat_message,String type){
 
-        if (ticker_text.equals("message") && !prefs.isInChat()) {
+        if (!prefs.isInChat()) {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, prefs.getname());
 
@@ -53,7 +53,7 @@ public class HandlingPushNotifications extends BackendlessPushService {
             builder.setSmallIcon(R.drawable.fb);
 
             Intent i = new Intent(context, MainActivity.class);
-            if (ticker_text.equals("message")) {
+           // if (ticker_text.equals("message")) {
 
                 i.putExtra("chatRedirect", "Yes");
 
@@ -62,12 +62,12 @@ public class HandlingPushNotifications extends BackendlessPushService {
                 message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));
                 message.setTo(prefs.getname());
                 message.setFrom(title_text);
-                message.setObject_id(ticker_text);
+                message.setObjectId(ticker_text);
                 message.setType("Notification");
                 message.save();
 
 
-            }
+           // }
 
 
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

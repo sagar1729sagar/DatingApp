@@ -8,7 +8,7 @@ import com.orm.SugarRecord;
 
 public class Message extends SugarRecord {
 
-    String from,to,time,type,chat_message,object_id;
+    private String from,to,time,type,chat_message,objectId;
 
     public Message(){
 
@@ -54,11 +54,11 @@ public class Message extends SugarRecord {
         this.chat_message = chat_message;
     }
 
-    public String getObject_id() {
-        return object_id;
+    public String getObjectId() {
+        return objectId;
     }
 
-    public void setObject_id(String object_id) {
-        this.object_id = object_id;
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
 }

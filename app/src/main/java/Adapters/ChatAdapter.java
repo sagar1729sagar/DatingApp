@@ -14,17 +14,18 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import Models.IndividualChats;
 import Models.Message;
 import Models.User;
 import Util.Prefs;
 
 public class ChatAdapter extends BaseAdapter {
 
-    private List<Message> chats = new ArrayList<>();
+    private List<IndividualChats> chats = new ArrayList<>();
     private Prefs prefs;
     private Context context;
 
-    public ChatAdapter(Context context,List<Message> chats){
+    public ChatAdapter(Context context, List<IndividualChats> chats){
     this.chats = chats;
     this.context = context;
     prefs = new Prefs(context);
@@ -46,7 +47,7 @@ public class ChatAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Message chat = chats.get(i);
+        IndividualChats chat = chats.get(i);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.chat_row,null);
 
