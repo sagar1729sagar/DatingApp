@@ -85,10 +85,6 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-
-
-
-        //todo
     }
 
     private void subScribeToChat() {
