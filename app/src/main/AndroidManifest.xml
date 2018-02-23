@@ -82,7 +82,8 @@
         <activity android:name=".ChatActivity" />
         <activity android:name=".OnlineActivity" />
         <activity android:name=".WhosNewActivity" />
-        <activity android:name=".InDepthActivity"></activity>
+        <activity android:name=".InDepthActivity" />
+        <activity android:name=".ActivityBaord"></activity>
     </application>
 
 </manifest>

@@ -100,6 +100,10 @@
     <string name="searched_for">Searched for...</string>
     <string name="search_distance">Looking for people around you</string>
     <string name="type_a_message_here">Type a message here</string>
+    <string name="subject">Subject:</string>
+    <string name="date">Date:</string>
+    <string name="loc">Location:</string>
+    <string name="posted_by">Posted by</string>
 
 
 </resources>

@@ -5,6 +5,7 @@ import com.orm.SugarRecord;
 public class Activity extends SugarRecord {
 
     private String subject,date,postedTime,location,description,user,objectId,hasPicture,pictureUrl;
+    private Long time;
 
     public Activity(){
 
@@ -80,5 +81,13 @@ public class Activity extends SugarRecord {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public Long getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = time;
     }
 }
