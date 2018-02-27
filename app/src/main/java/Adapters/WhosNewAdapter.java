@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.SearchResults;
+import ssapps.com.datingapp.R;
 import ssapps.com.datingapp.RecyclerViewClickListener;
 
 public class WhosNewAdapter extends RecyclerView.Adapter<WhosNewAdapter.MyViewHolder>{
@@ -42,10 +43,12 @@ public class WhosNewAdapter extends RecyclerView.Adapter<WhosNewAdapter.MyViewHo
             Picasso.with(context).load(result.getPhotourl()).into(holder.profile_image);
         }
         if (result.getIsOnline().endsWith("Yes")){
-            holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dot);
+          //  holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dot);
+            holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_online_dot));
             holder.online_offilne_text.setText("Online");
         } else {
-            holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dor);
+          //  holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dor);
+            holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_offline_dor));
             holder.online_offilne_text.setText("Offline");
         }
         holder.name_person.setText(result.getUsername());
@@ -71,7 +74,7 @@ public class WhosNewAdapter extends RecyclerView.Adapter<WhosNewAdapter.MyViewHo
             //details = (TextView)view.findViewById(R.id.name_age_tv);
             online_offilne_text = (TextView)view.findViewById(R.id.online_offline_tv);
             //dummy = (ImageView)view.findViewById(R.id.dummy_image);
-            residence = (TextView)view.findViewById(R.is.ciy_tv);
+            residence = (TextView)view.findViewById(R.id.city_tv);
             lifestyle = (TextView)view.findViewById(R.id.lifestyle_tv);
             name_person = (TextView)view.findViewById(R.id.name_tv);
             mListener = listener;

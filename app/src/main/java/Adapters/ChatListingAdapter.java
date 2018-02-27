@@ -18,6 +18,7 @@ import java.util.List;
 import Models.Message;
 import Models.MessagesSorting;
 import Models.User;
+import ssapps.com.datingapp.R;
 import ssapps.com.datingapp.RecyclerViewClickListener;
 
 public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.MyViewHolder> {
@@ -57,10 +58,12 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
         holder.last_message_tv.setText(message.getChat_message());
         if (user.getIsOnline().equals("Yes")){
             holder.online_offline_tv.setText("online");
-            holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dot);
+           // holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dot);
+            holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_online_dot));
         } else if (user.getIsOnline().equals("No")){
             holder.online_offline_tv.setText("offline");
-            holder.online_offline_image.setImageDrawable(R.drawable.ic_offline_dor);
+          //  holder.online_offline_image.setImageDrawable(R.drawable.ic_offline_dor);
+            holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_offline_dor));
         }
 
         holder.last_message_time_tv.setText(getTime(message.getTime()));

@@ -11,7 +11,7 @@
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
-        app:siBorderAlpha="0.0f"
+        app:siBorderAlpha="0"
         android:id="@+id/profile_image_friend"
         />
     <TextView

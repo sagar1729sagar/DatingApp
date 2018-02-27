@@ -27,6 +27,7 @@ import Models.Activity;
 import Models.Message;
 import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
+import ssapps.com.datingapp.R;
 import ssapps.com.datingapp.RecyclerViewClickListener;
 
 public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdapter.MyViewHolder>{
@@ -201,8 +202,8 @@ public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdap
             subject = (TextView) itemView.findViewById(R.id.subject_tv);
             date = (TextView) itemView.findViewById(R.id.date_tv);
             location = (TextView)itemView.findViewById(R.id.location_tv);
-            picture = (ImageView)itemView.findViewById(R.id.activity_picture);
-            description = (TextView)itemView.findViewById(R.id.activity_description);
+            picture = (ImageView)itemView.findViewById(R.id.activiy_picture);
+            description = (TextView)itemView.findViewById(R.id.acitivity_description);
             owner = (TextView)itemView.findViewById(R.id.activity_owner);
             contact_Button = (Button)itemView.findViewById(R.id.contact_button);
         }

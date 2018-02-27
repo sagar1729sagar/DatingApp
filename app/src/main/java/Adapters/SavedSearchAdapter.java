@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import Models.SavedSearch;
+import ssapps.com.datingapp.R;
 import ssapps.com.datingapp.RecyclerViewClickListener;
 
 public class SavedSearchAdapter extends RecyclerView.Adapter<SavedSearchAdapter.MyViewHolder>{
@@ -21,7 +22,7 @@ public class SavedSearchAdapter extends RecyclerView.Adapter<SavedSearchAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.saced_search_row, parent, false);
+                .inflate(R.layout.saved_search_row, parent, false);
 
         return new MyViewHolder(itemView,listener);
     }

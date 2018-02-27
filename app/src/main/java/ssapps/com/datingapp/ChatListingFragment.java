@@ -48,7 +48,7 @@ public class ChatListingFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.activity_chat_listing_fragment,false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.activity_chat_listing_fragment,container,false);
         return binding.getRoot();
     }
 

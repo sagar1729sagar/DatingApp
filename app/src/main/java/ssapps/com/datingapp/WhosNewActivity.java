@@ -38,7 +38,7 @@ public class WhosNewActivity extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout_activity_whos_new,container,false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.activity_whos_new,container,false);
         return binding.getRoot();
     }
 
@@ -94,7 +94,7 @@ public class WhosNewActivity extends Fragment {
 
     private void plotView() {
 
-        final List<SearchResults> results = SearchResults.listAll(SearchResults.class)
+        final List<SearchResults> results = SearchResults.listAll(SearchResults.class);
 
         RecyclerViewClickListener listener = new RecyclerViewClickListener() {
             @Override

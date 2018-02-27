@@ -95,9 +95,9 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
                     .setLeftEndText("0")
                     .setRightEndText("100")
                     .setTickType(TickType.OVAL)
-                    .setBackgroundTrackColor(R.color.leaf_green)
+                    .setBackgroundTrackColor(getContext().getResources().getColor(R.color.leaf_green))
                     .setIndicatorType(IndicatorType.RECTANGLE_ROUNDED_CORNER)
-                    .setIndicatorColor(R.color.leaf_green)
+                    .setIndicatorColor(getContext().getResources().getColor(R.color.leaf_green))
                     .apply();
 
             binding.addImage.setOnClickListener(this);
@@ -268,7 +268,7 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
     }
 
     private void checkForFineLocationPermision() {
-        int check = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int check = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
         if (check == -1){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},ACCESS_FINE_LOCATION);
@@ -279,7 +279,7 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
     }
 
     private void checkForHardWarePermission() {
-        int check = ContextCompat.checkSelfPermission(this, Manifest.permission.LOCATION_HARDWARE);
+        int check = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.LOCATION_HARDWARE);
         if (check == -1){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.LOCATION_HARDWARE},LOCATION_HARDWARE);

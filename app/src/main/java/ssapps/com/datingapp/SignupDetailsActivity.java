@@ -16,16 +16,22 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.orm.SugarContext;
+import com.squareup.picasso.Picasso;
 
 import java.security.Permission;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import Models.User;
 import Util.Util;
@@ -47,6 +53,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     private static final int LOCATION_HARDWARE = 2;
     private double[] location;
     private Prefs prefs;
+    ArrayList<String> countries = new ArrayList<String>();
+    String country;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         binding = DataBindingUtil.setContentView(this, R.layout.activity_signup_details);
 
         Backendless.initApp(this,appKey,appId);
+        SugarContext.init(this);
 
 
 //        ActionBar actionBar = getSupportActionBar();
@@ -76,12 +85,39 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
         error =  new SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE);
 
-        user = getIntent().getStringExtra("user");
+        user = prefs.getname();
 
-        if (getIntent().hasExtra("image")){
-            Bitmap bitmap = BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra("image"),0,getIntent().getByteArrayExtra("image").length);
-            binding.profileImage.setImageBitmap(bitmap);
+        binding.profileImage.getLayoutParams().height = (int) (util.getScreenWidth(this)/3);
+        Log.v("current user",prefs.getname());
+      //  List<User> users_temp = User.find(User.class,"username = ?",user).size()
+       // Log.v("finding users", String.valueOf(User.find(User.class,"username = ?",user).size()));
+        //Log.v("photo url",User.find(User.class,"username = ?",user).get(0).getHasPicture());
+        if (User.find(User.class,"username = ?",user).get(0).getHasPicture().equals("Yes")) {
+            Picasso.with(this).load(User.find(User.class, "username = ?", user).get(0).getPhotourl())
+                    .placeholder(R.drawable.fb)
+                    .into(binding.profileImage);
         }
+
+        Locale[] locale = Locale.getAvailableLocales();
+        for( Locale loc : locale ){
+            country = loc.getDisplayCountry();
+            if( country.length() > 0 && !countries.contains(country) ){
+                countries.add( country );
+            }
+        }
+        Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
+
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,countries);
+        binding.countriesSpnner.setAdapter(spinnerAdapter);
+        binding.countriesSpnner.setSelection(spinnerAdapter.getPosition("India"));
+       // binding.countriesSpnner.setItems(countries);
+
+        //  user = getIntent().getStringExtra("user");
+
+//        if (getIntent().hasExtra("image")){
+//            Bitmap bitmap = BitmapFactory.decodeByteArray(getIntent().getByteArrayExtra("image"),0,getIntent().getByteArrayExtra("image").length);
+//            binding.profileImage.setImageBitmap(bitmap);
+//        }
 
         binding.saveButton.setOnClickListener(this);
        // checkAllFields();
@@ -355,4 +391,9 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SugarContext.terminate();
+    }
 }

@@ -41,25 +41,24 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Backendless.initApp(this,appId,appKey);
+        Backendless.initApp(this, appId, appKey);
 
         util = new Util();
-        util.updateOnlineStatus(this,true);
+        util.updateOnlineStatus(this, true);
 
         prefs = new Prefs(this);
 
-        if (!prefs.getname().equals("None")){
+        if (!prefs.getname().equals("None")) {
             checkForPushNotificationsRegistration();
         }
-       // updateOnlineStatus();
+        // updateOnlineStatus();
 
 
+        // toolbar.setSystemUiVisibility(View.INVISIBLE);
 
-       // toolbar.setSystemUiVisibility(View.INVISIBLE);
+        //  getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
 
-      //  getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
-
-       // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -81,26 +80,22 @@ public class MainActivity extends AppCompatActivity
         drawer.post(new Runnable() {
             @Override
             public void run() {
-                if (getIntent().hasExtra("redirectProfile")){
-                    if (getIntent().getBooleanExtra("redirectProfile",false)){
+                if (getIntent().hasExtra("redirectProfile")) {
+                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
                         makeScreenTransition(new ProfileFragment());
                     }
-                } else if (getIntent().hasExtra("SettingsRedirect")){
-                    if (getIntent().getBooleanExtra("PackagesRedirect",false)){
+                } else if (getIntent().hasExtra("SettingsRedirect")) {
+                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
                         makeScreenTransition(new UpgradePackages());
                     }
-                } else if (getIntent().hasExtra("chatRedirect")){
-                    if (getIntent().getBooleanExtra("chatRedirect",false)){
+                } else if (getIntent().hasExtra("chatRedirect")) {
+                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
                         makeScreenTransition(new ChatListingFragment());
                     }
 
+                }
             }
         });
-
-
-
-
-
     }
 
 
@@ -108,9 +103,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        DrawerLayout mdrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (mdrawer.isDrawerOpen(GravityCompat.START)) {
+            mdrawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }

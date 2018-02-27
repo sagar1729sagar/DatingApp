@@ -235,7 +235,7 @@ public class SavedSearchActivity extends Fragment {
             }
         }
 
-        sortForHaircolor(searchParams,results)
+        sortForHaircolor(searchParams,results);
     }
 
     private void sortForHaircolor(SavedSearch searchParams, List<User> results) {

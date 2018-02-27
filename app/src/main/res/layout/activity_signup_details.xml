@@ -13,12 +13,19 @@
         android:orientation="vertical"
         >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/profile_image"
             android:src="@drawable/fb"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="5dp"
             />
         <TextView
             android:layout_width="match_parent"
@@ -27,12 +34,13 @@
             android:background="@color/leaf_green"
             android:textColor="@color/white"
             android:padding="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             />
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/about_me_layout"
+            android:textColorHint="@color/black"
             >
             <EditText
                 android:layout_width="match_parent"
@@ -43,6 +51,7 @@
                 android:textSize="12sp"
                 android:drawableLeft="@drawable/ic_about_me"
                 android:drawableStart="@drawable/ic_about_me"
+                android:drawablePadding="10dp"
                 android:id="@+id/abt_me_et"
                 />
         </android.support.design.widget.TextInputLayout>
@@ -61,8 +70,22 @@
                 android:drawableLeft="@drawable/ic_age"
                 android:drawableStart="@drawable/ic_age"
                 android:id="@+id/age_et"
+                android:drawablePadding="10dp"
                 />
         </android.support.design.widget.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/countries_spnner"
+                android:scrollbars="vertical"
+
+                />
+        </LinearLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,6 +101,7 @@
                 android:drawableLeft="@drawable/ic_residence"
                 android:drawableStart="@drawable/ic_residence"
                 android:id="@+id/residence__et"
+                android:drawablePadding="10dp"
                 />
         </android.support.design.widget.TextInputLayout>
         <TextView
@@ -104,6 +128,7 @@
                 android:drawableLeft="@drawable/ic_gender"
                 android:drawableStart="@drawable/ic_gender"
                 android:id="@+id/gender_et"
+                android:drawablePadding="10dp"
                 />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
@@ -121,6 +146,7 @@
                 android:drawableLeft="@drawable/ic_life_style"
                 android:drawableStart="@drawable/ic_life_style"
                 android:id="@+id/lifestyle_et"
+                android:drawablePadding="10dp"
                 />
         </android.support.design.widget.TextInputLayout>
         <android.support.design.widget.TextInputLayout
@@ -138,6 +164,7 @@
                 android:drawableLeft="@drawable/ic_age"
                 android:drawableStart="@drawable/ic_age"
                 android:id="@+id/age_others_et"
+                android:drawablePadding="10dp"
                 />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
@@ -156,6 +183,7 @@
             android:drawableLeft="@drawable/ic_for"
             android:drawableStart="@drawable/ic_for"
             android:id="@+id/for_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -184,6 +212,7 @@
             android:drawableLeft="@drawable/ic_life_style"
             android:drawableStart="@drawable/ic_life_style"
             android:id="@+id/lifestyle_self_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -202,6 +231,7 @@
             android:drawableLeft="@drawable/ic_sexual_orientation"
             android:drawableStart="@drawable/ic_sexual_orientation"
             android:id="@+id/so_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -220,6 +250,7 @@
             android:drawableLeft="@drawable/ic_gender"
             android:drawableStart="@drawable/ic_gender"
             android:id="@+id/gi_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -238,6 +269,7 @@
             android:drawableLeft="@drawable/ic_status"
             android:drawableStart="@drawable/ic_status"
             android:id="@+id/status_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -256,6 +288,7 @@
             android:drawableLeft="@drawable/ic_children"
             android:drawableStart="@drawable/ic_children"
             android:id="@+id/children_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -274,6 +307,7 @@
             android:drawableLeft="@drawable/ic_smoking"
             android:drawableStart="@drawable/ic_smoking"
             android:id="@+id/smoking_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -292,6 +326,7 @@
             android:drawableLeft="@drawable/ic_religion"
             android:drawableStart="@drawable/ic_religion"
             android:id="@+id/religion_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -310,6 +345,7 @@
             android:drawableLeft="@drawable/ic_drinking"
             android:drawableStart="@drawable/ic_drinking"
             android:id="@+id/drinking_layout_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -338,6 +374,7 @@
             android:drawableLeft="@drawable/ic_height"
             android:drawableStart="@drawable/ic_height"
             android:id="@+id/height_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -356,6 +393,7 @@
             android:drawableLeft="@drawable/ic_eye"
             android:drawableStart="@drawable/ic_eye"
             android:id="@+id/eye_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -374,6 +412,7 @@
             android:drawableLeft="@drawable/ic_hair"
             android:drawableStart="@drawable/ic_hair"
             android:id="@+id/hair_et"
+            android:drawablePadding="10dp"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -395,9 +434,10 @@
         android:background="@color/leaf_green"
         android:textSize="12sp"
         android:id="@+id/saveButton"
-        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
         />
 
-
+    </LinearLayout>
 </ScrollView>
 </layout>

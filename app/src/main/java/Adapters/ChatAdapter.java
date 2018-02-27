@@ -1,5 +1,6 @@
 package Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import Models.IndividualChats;
 import Models.Message;
 import Models.User;
 import Util.Prefs;
+import ssapps.com.datingapp.R;
 
 public class ChatAdapter extends BaseAdapter {
 
@@ -45,6 +47,7 @@ public class ChatAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         IndividualChats chat = chats.get(i);

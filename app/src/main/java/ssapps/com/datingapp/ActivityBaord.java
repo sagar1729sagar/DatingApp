@@ -43,7 +43,8 @@ public class ActivityBaord extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.activity_baord,false);
+       // binding = DataBindingUtil.inflate(inflater,R.layout.activity_baord,false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.activity_baord,container,false);
         return binding.getRoot();
     }
 
@@ -87,7 +88,7 @@ public class ActivityBaord extends Fragment {
                 }
                 if (response.size() != 0){
                     Activity.saveInTx(response);
-                    queryBuilder.prepareNextPage()
+                    queryBuilder.prepareNextPage();
                     pullData(queryBuilder);
                 } else {
                     intr_activites.clear();

@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.SearchResults;
+import ssapps.com.datingapp.R;
 import ssapps.com.datingapp.RecyclerViewClickListener;
 
 public class SearchResultsAdapter  extends RecyclerView.Adapter<SearchResultsAdapter.MyViewHolder>{
@@ -45,10 +46,12 @@ public class SearchResultsAdapter  extends RecyclerView.Adapter<SearchResultsAda
                                 .into(holder.profile_image);
 
         if (result.getIsOnline().equals("Yes")){
-            holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dot);
+           // holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dot);
+            holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_online_dot));
             holder.online_offilne_text.setText(context.getResources().getString(R.string.online));
         } else if (result.getIsOnline().equals("No")){
-            holder.online_offline_image.setImageDrawable(R.drawable.ic_offline_dot);
+          //  holder.online_offline_image.setImageDrawable(R.drawable.ic_offline_dot);
+            holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_offline_dor));
             holder.online_offilne_text.setText(context.getResources().getString(R.string.offline));
         }
 

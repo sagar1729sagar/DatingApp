@@ -21,7 +21,10 @@ import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -30,6 +33,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.files.BackendlessFile;
 import com.backendless.persistence.DataQueryBuilder;
+import com.orm.SugarContext;
 import com.orm.util.QueryBuilder;
 
 import java.io.ByteArrayOutputStream;
@@ -46,15 +50,18 @@ import ssapps.com.datingapp.databinding.ActivitySignupBinding;
 import Util.Prefs;
 
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
+public class SignupActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener{
 
     private ActivitySignupBinding binding;
     private Util util;
     private static final int READ_EXT_STORAGE = 1;
     private static final int SELECT_PICTURE = 2;
+    private static final int INTERNET_PERMISSION = 3;
     private Bitmap bitmap;
     private SweetAlertDialog dialog;
     private SweetAlertDialog error;
+    //private static final String appKey = "7EEB27274E8D944CFFDD3D802BC37800";
+    //private static final String appId = "648D896EEDD849C8FF742F1C32DB7A00";
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
     private Prefs pres;
@@ -66,7 +73,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         binding = DataBindingUtil.setContentView(this,R.layout.activity_signup);
 
         Backendless.initApp(this,appId,appKey);
-
+        SugarContext.init(this);
 
        // radioButtonAdjstments()
 
@@ -91,15 +98,31 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         error = new SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE);
 
 
+        binding.photoCircle1.setOnClickListener(this);
+
 //        binding.photoCircle.setOnClickListener(this);
-//        binding.signupButton.setOnClickListener(this);
+        binding.signupButton.setOnClickListener(this);
+
+//
+//        binding.maleRadiobutton.setChecked(true);
+//        binding.femaleRadiobutton.setChecked(true);
+//
+//        binding.allRadiobutton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                Log.v("all button", String.valueOf(b));
+//                binding.femaleRadiobutton.setChecked(false);
+//            }
+//        });
+
+ //       binding.username.setOnClickListener(this);
 //
 //
-//        binding.maleRadiobutton.setOnCheckedChangeListener(this);
-//        binding.femaleRadiobutton.setOnCheckedChangeListener(this);
-//        binding.allRadiobutton.setOnCheckedChangeListener(this);
-//        binding.queerRadiobutton.setOnCheckedChangeListener(this);
-//        binding.transgenderRadiobutton.setOnCheckedChangeListener(this);
+        binding.maleRadiobutton.setOnCheckedChangeListener(this);
+        binding.femaleRadiobutton.setOnCheckedChangeListener(this);
+        binding.allRadiobutton.setOnCheckedChangeListener(this);
+        binding.queerRadiobutton.setOnCheckedChangeListener(this);
+        binding.transgenderRadiobutton.setOnCheckedChangeListener(this);
 //
 //        binding.genderGroup.setOnCheckedChangeListener(this);
 
@@ -130,7 +153,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
 
-            case R.id.photo_circle:
+            case R.id.photo_circle1:
                 selectImage();
                 break;
 
@@ -138,12 +161,33 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                 //checkAllFields();
               //  setToast(String.valueOf(checkRadioButtonstatus()));
+//                dialog.setTitleText("Checking...");
+//                dialog.show();
                 if (checkAllFields()){
-                  // signup();
-                    checkForUser(binding.username.getText().toString());
+                    checkForInternetPermission();
                 }
+             //   Log.v("pass",binding.password.getText().toString());
                 break;
 
+//            case R.id.username:
+//                if (!(binding.userNameLayout.getError() == null) || !binding.userNameLayout.getError().equals("")){
+//                    binding.userNameLayout.setError(null);
+//                }
+
+        }
+    }
+
+    private void checkForInternetPermission() {
+        int check = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+        if (check == -1){
+            Log.v("internet permisison","not granted");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.INTERNET},INTERNET_PERMISSION);
+            }
+        } else {
+            Log.v("internet permisison","available");
+
+           checkForUser(binding.username.getText().toString());
         }
     }
 
@@ -157,7 +201,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         Backendless.Data.of(User.class).find(queryBuilder, new AsyncCallback<List<User>>() {
             @Override
             public void handleResponse(List<User> response) {
-                if (response.size() == 0){
+                Log.v("check", String.valueOf(response));
+                if (response == null){
+                    dialog.dismiss();
+                    registerUser();
+                } else if (response.size() == 0){
                     dialog.dismiss();
                     registerUser();
                 } else {
@@ -169,30 +217,43 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void handleFault(BackendlessFault fault) {
-                dialog.dismiss();
-                error.setTitleText("Error connecting to VeMEET!!")
-                        .setContentText("The following error has occured while connecting to VeMeet" +
-                                "\n"+fault.getMessage()+"\nPlease try again").show();
+                Log.v("check",fault.getCode());
+                if (fault.getCode().equals("1009")){
+                    //no table exists code
+                    dialog.dismiss();
+                    registerUser();
+                } else {
+                    dialog.dismiss();
+                    error.setTitleText("Error connecting to VeMEET!!")
+                            .setContentText("The following error has occured while connecting to VeMeet" +
+                                    "\n" + fault.getMessage() + "\nPlease try again").show();
+                }
 
             }
         });
     }
 
     private void registerUser() {
+        Log.v("register","initiated");
         dialog.setTitleText("Registering");
         dialog.show();
         BackendlessUser user = new BackendlessUser();
+        user.setProperty("username",binding.username.getText().toString());
         user.setEmail(binding.email.getText().toString());
+        Log.v("pass",binding.password.getText().toString());
         user.setPassword(binding.password.getText().toString());
+        Log.v("user Pass",user.getPassword());
         Backendless.UserService.register(user, new AsyncCallback<BackendlessUser>() {
             @Override
             public void handleResponse(BackendlessUser response) {
+                Log.v("user","registered");
                 saveResponse(response);
               //  loginUser();
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
+                Log.v("register ","failed");
                 dialog.dismiss();
                 error.setTitleText("Error connecting to VeMEET!!")
                         .setContentText("The following error has occured while connecting to VeMeet" +
@@ -204,13 +265,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private void loginUser() {
 
+        dialog.setTitleText("logging you in");
+        dialog.show();
+
         String email = binding.email.getText().toString();
         String password = binding.password.getText().toString();
 
         Backendless.UserService.login(email, password, new AsyncCallback<BackendlessUser>() {
             @Override
             public void handleResponse(BackendlessUser response) {
-
+                dialog.dismiss();
+                Log.v("login ","successfull");
                 if (bitmap != null) {
                     saveProfileImage();
                 } else {
@@ -221,7 +286,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void handleFault(BackendlessFault fault) {
 
-
+                dialog.dismiss();
+                Log.v("login fail",fault.getMessage());
                 if (bitmap != null) {
                     saveProfileImage();
                 } else {
@@ -241,6 +307,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         user.setIsOnline("Yes");
         if (bitmap == null){
             user.setHasPicture("No");
+        } else {
+            user.setHasPicture("Yes");
         }
         user.save();
         pres.setName(binding.username.getText().toString());
@@ -258,8 +326,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void handleResponse(BackendlessFile response) {
                         dialog.dismiss();
-                        User currentuser = User.listAll(User.class).get(0);
+                        Log.v("upload picture","success");
+                        User currentuser = User.find(User.class,"username = ?",binding.username.getText().toString()).get(0);
                         currentuser.setHasPicture("Yes");
+                        currentuser.setPhotourl("https://api.backendless.com/648D896E-EDD8-49C8-FF74-2F1C32DB7A00/934C0B5C-A231-E928-FF37-655A05A3AB00/files/"+binding.username.getText().toString()+"/1.png");
                         currentuser.save();
                         gotoNextpage();
                       //  startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
@@ -268,6 +338,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void handleFault(BackendlessFault fault) {
                         dialog.dismiss();
+                        Log.v("pivture upload failed",fault.getMessage());
                         setToast("Error uploading picture. Try later");
                         User currentuser = User.listAll(User.class).get(0);
                         currentuser.setHasPicture("No");
@@ -280,12 +351,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private void gotoNextpage() {
         Intent intent = new Intent(SignupActivity.this,SignupDetailsActivity.class);
-        if (bitmap != null) {
-            ByteArrayOutputStream bs = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG,50,bs);
-            intent.putExtra("image",bs.toByteArray());
-        }
-        intent.putExtra("user",binding.username.getText().toString());
+//        if (bitmap != null) {
+//            ByteArrayOutputStream bs = new ByteArrayOutputStream();
+//            bitmap.compress(Bitmap.CompressFormat.PNG,50,bs);
+//            intent.putExtra("image",bs.toByteArray());
+//        }
+      //  intent.putExtra("user",binding.username.getText().toString());
+        pres.setName(binding.username.getText().toString());
         startActivity(intent);
 
     }
@@ -341,7 +413,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             RoundedBitmapDrawableFactory.create(res, bitmap);
                     dr.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
                    // imageView.setImageDrawable(dr);
-                    binding.photoCircle.setImageDrawable(dr);
+                    //binding.photoCircle.setImageDrawable(dr);
+                    binding.photoCircle1.setImageDrawable(dr);
 
                 }
                 break;
@@ -357,15 +430,25 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             binding.passwordLayout.setError("Please enter a password");
             return false;
         }
-        if (!util.checkEditTextField(binding.password) && !isValidPassword(binding.password.getText().toString())){
-            binding.passwordLayout.setError("Pleas enter a valid password. (Your password must contain min 8 characters," +
-                    " must be alpha numeric,must contain at least one symbol)");
-            return false;
-        }
+//        if (!isValidPassword(binding.password.getText().toString())){
+//            binding.passwordLayout.setError("Pleas enter a valid password. (Your password must contain min 8 characters," +
+//                    " must be alpha numeric,must contain at least one symbol)");
+//            return false;
+//        }
 //        if (getRadiButtonStatus() == 0 ){
 //            setToast("Please select a gender");
 //            return false;
 //        }
+
+        if (!util.checkEditTextField(binding.email)){
+            binding.emailLayout.setError("Please enter your email id");
+            return false;
+        }
+
+        if (!isValidEmail(binding.email.getText().toString())){
+            binding.emailLayout.setError("Please enter a valid email address");
+            return false;
+        }
 
         if (!util.checkEditTextField(binding.dobEt)){
             setToast("Please enter your date of birth");
@@ -374,7 +457,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         return true;
     }
-    public  boolean isValidPassword(final String password) {
+
+
+    private boolean isValidEmail(String email){
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private  boolean isValidPassword(final String password) {
 
         Pattern pattern;
         Matcher matcher;
@@ -469,6 +558,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
 
+            case INTERNET_PERMISSION:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    checkForUser(binding.username.getText().toString());
+                } else {
+                    setToast("Internet permission is required to create an account");
+                }
+
         }
     }
 
@@ -486,37 +582,49 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 //    @Override
 //    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//        switch (compoundButton.getId()){
-//            case R.id.male_radiobutton :
-//                if (!binding.maleRadiobutton.isChecked()){
-//                    changeRadioButtonStatus(true,false,false,false,false);
-//                }
-//                break;
-//            case R.id.female_radiobutton:
-//                if (!binding.femaleRadiobutton.isChecked()){
-//                    changeRadioButtonStatus(false,true,false,false,false);
-//                }
-//                break;
-//            case R.id.queer_radiobutton:
-//                if (!binding.queerRadiobutton.isChecked()){
-//                    changeRadioButtonStatus(false,false,true,false,false);
-//                }
-//                break;
-//            case R.id.transgender_radiobutton:
-//                if (!binding.transgenderRadiobutton.isChecked()){
-//                    changeRadioButtonStatus(false,false,false,true,false);
-//                }
-//                break;
-//            case R.id.all_radiobutton:
-//                if (!binding.allRadiobutton.isChecked()){
-//                    changeRadioButtonStatus(false,false,false,false,true);
-//                }
-//                break;
-//        }
+//
 //    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        switch (compoundButton.getId()){
+            case R.id.male_radiobutton :
+                if (binding.maleRadiobutton.isChecked()) {
+                    changeRadioButtonStatus(true, false, false, false, false);
+                }
+                break;
+            case R.id.female_radiobutton:
+                if (binding.femaleRadiobutton.isChecked()){
+                    changeRadioButtonStatus(false,true,false,false,false);
+                }
+                break;
+            case R.id.queer_radiobutton:
+                if (binding.queerRadiobutton.isChecked()){
+                    changeRadioButtonStatus(false,false,true,false,false);
+                }
+                break;
+            case R.id.transgender_radiobutton:
+                if (binding.transgenderRadiobutton.isChecked()){
+                    changeRadioButtonStatus(false,false,false,true,false);
+                }
+                break;
+            case R.id.all_radiobutton:
+                if (binding.allRadiobutton.isChecked()){
+                    changeRadioButtonStatus(false,false,false,false,true);
+                }
+                break;
+        }
+    }
 
 //    @Override
 //    public void onCheckedChanged(RadioGroup radioGroup, int i) {
 //        setToast("ca");
 //    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SugarContext.terminate();
+    }
 }

@@ -55,12 +55,19 @@
                     <!--android:scaleType="fitXY"-->
                     <!--android:id="@+id/photo_circle"-->
                     <!--/>-->
-                <ImageView
+                <!--<ImageView-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:src="@drawable/ic_add_image"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:id="@+id/photo_circle"-->
+                    <!--/>-->
+                <com.github.siyamed.shapeimageview.RoundedImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:id="@+id/photo_circle1"
                     android:src="@drawable/ic_add_image"
                     android:layout_gravity="center_horizontal"
-                    android:id="@+id/photo_circle"
                     />
 
                 <TextView
@@ -83,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/username"
                         android:hint="@string/user_name"
-                        android:textColor="@color/leaf_green"
+                        android:textColor="@color/black"
                         android:textSize="10sp"
                         />
                 </android.support.design.widget.TextInputLayout>
@@ -100,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/password"
                         android:hint="@string/password"
-                        android:textColor="@color/leaf_green"
+                        android:textColor="@color/black"
                         android:inputType="textPassword"
                         android:textSize="10sp"
                         />
@@ -117,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/email"
                         android:hint="@string/email"
-                        android:textColor="@color/leaf_green"
+                        android:textColor="@color/black"
                         android:inputType="textEmailAddress"
                         android:textSize="10sp"
                         />

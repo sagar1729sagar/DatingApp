@@ -20,6 +20,11 @@ public class Util {
 
     }
 
+    public float getScreenWidth(Context context){
+        return context.getResources().getDisplayMetrics().widthPixels;
+    }
+
+
 
     public boolean checkEditTextField(EditText editText){
         if (editText.getText().equals("")){
