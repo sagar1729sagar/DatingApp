@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -27,6 +28,12 @@ import com.backendless.exceptions.BackendlessFault;
 import com.orm.SugarContext;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -53,8 +60,12 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     private static final int LOCATION_HARDWARE = 2;
     private double[] location;
     private Prefs prefs;
+    private JSONObject obj;
+    private JSONArray array;
     ArrayList<String> countries = new ArrayList<String>();
+    ArrayList<String> cities = new ArrayList<>();
     String country;
+    private ArrayAdapter<String> citiesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +121,36 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,countries);
         binding.countriesSpnner.setAdapter(spinnerAdapter);
         binding.countriesSpnner.setSelection(spinnerAdapter.getPosition("India"));
-       // binding.countriesSpnner.setItems(countries);
+
+
+        initialiseLocationSpinners();
+
+
+        binding.countriesSpnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                try {
+                    array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
+                    Log.v("json array", String.valueOf(array));
+                    Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+                    citiesAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,cities);
+                    binding.citiesSpinner.setAdapter(citiesAdapter);
+                    binding.citiesSpinner.setSelection(0);
+                    Log.v("cities spinner","set");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.v("json array exception", String.valueOf(e));
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        // binding.counString jsonLocation = AssetJSONFile("formules.json", context)triesSpnner.setItems(countries);
 
         //  user = getIntent().getStringExtra("user");
 
@@ -120,7 +160,76 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 //        }
 
         binding.saveButton.setOnClickListener(this);
+
+
+
        // checkAllFields();
+
+    }
+
+    private void initialiseLocationSpinners() {
+
+//        Log.v("json","trying loading");
+//        try {
+//            obj = new JSONObject(loadFromAsset());
+//            array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
+//            Log.v("json array", String.valueOf(array));
+//            cities = util.convertToList(array);
+//            Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+//            citiesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,cities);
+//            binding.citiesSpinner.setAdapter(citiesAdapter);
+//            binding.citiesSpinner.setSelection(0);
+//            Log.v("cities spinner","set");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            Log.v("json array exception", String.valueOf(e));
+//        }
+
+
+        try {
+            Log.v("json","reading");
+            InputStream is = getAssets().open("countriesToCities.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            String json = new String(buffer,"UTF-8");
+            obj = new JSONObject(json);
+            Log.v("json ","object");
+            array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
+            Log.v("json","array");
+            cities = util.convertToList(array);
+            Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+            citiesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,cities);
+            binding.citiesSpinner.setAdapter(citiesAdapter);
+            binding.citiesSpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
+            Log.v("cities spinner","set");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.v("json","error "+e.getMessage());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String loadFromAsset() {
+        String json = null;
+            InputStream is = null;
+            try {
+                Log.v("json","reading");
+                is = getAssets().open("countriesToCities.json");
+                int size = is.available();
+                byte[] buffer = new byte[size];
+                is.read(buffer);
+                is.close();
+                json = new String(buffer,"UTF-8");
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.v("json","error "+e.getMessage());
+                return null;
+            }
+        return json;
 
     }
 

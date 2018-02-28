@@ -9,7 +9,11 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.security.PrivilegedExceptionAction;
+import java.util.ArrayList;
 
 import Models.User;
 
@@ -56,6 +60,20 @@ public class Util {
         return residence.substring(a+1);
     }
 
+
+    public ArrayList<String> convertToList(JSONArray array){
+        ArrayList<String> list = new ArrayList<>();
+        if (array != null){
+            for (int i =0;i<array.length();i++){
+                try {
+                    list.add(array.getString(i));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return list;
+    }
 
     public void updateOnlineStatus(Context context,Boolean isOnline) {
         Prefs prefs = new Prefs(context);
