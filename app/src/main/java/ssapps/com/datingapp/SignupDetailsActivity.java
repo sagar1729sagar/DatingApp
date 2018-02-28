@@ -242,10 +242,10 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 //          binding.residenceLayout.setError("Please enter your city adn country information");
 //          return false;
 //      }
-      if (!util.checkEditTextField(binding.genderEt)){
-          binding.genderLayout.setError("Please enter your gender preference");
-          return false;
-      }
+//      if (!util.checkEditTextField(binding.genderEt)){
+//          binding.genderLayout.setError("Please enter your gender preference");
+//          return false;
+//      }
       if (!util.checkEditTextField(binding.lifestyleEt)){
           binding.lifestyleLayout.setError("Please enter your lifestyle preference");
           return false;
@@ -415,7 +415,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setUsername(users.get(0).getUsername());
         currentUser.setPassword(users.get(0).getPassword());
         currentUser.setEmail(users.get(0).getEmail());
-        currentUser.setGender_others(binding.genderEt.getText().toString().trim());
+      //  currentUser.setGender_others(binding.genderEt.getText().toString().trim());
+        currentUser.setGender_others(binding.genderSpnner.getSelectedItem().toString());
         currentUser.setAboutme(binding.abtMeEt.getText().toString().trim());
         currentUser.setAge_self(binding.ageEt.getText().toString().trim());
       //  currentUser.setCity_self(util.getCity(binding.residenceEt.getText().toString().trim()));
