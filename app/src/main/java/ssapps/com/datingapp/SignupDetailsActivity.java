@@ -99,7 +99,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
         user = prefs.getname();
 
-        binding.profileImage.getLayoutParams().height = (int) (util.getScreenWidth(this)/4);
+        binding.profileImage.getLayoutParams().height = (int) (util.getScreenWidth(this)/2);
         Log.v("current user",prefs.getname());
       //  List<User> users_temp = User.find(User.class,"username = ?",user).size()
        // Log.v("finding users", String.valueOf(User.find(User.class,"username = ?",user).size()));
