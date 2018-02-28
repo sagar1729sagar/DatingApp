@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -57,7 +58,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
     private static final String GCM_SENDER_ID = "57050948456";
     private static final int ACCESS_FINE_LOCATION = 1;
-    private static final int LOCATION_HARDWARE = 2;
+    private static final int LOCATION_HARDWARE_1 = 2;
     private double[] location;
     private Prefs prefs;
     private JSONObject obj;
@@ -74,7 +75,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         //setContentView(R.layout.activity_signup_details);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_signup_details);
 
-        Backendless.initApp(this,appKey,appId);
+       // Backendless.initApp(this,appKey,appId);
+        Backendless.initApp(this,appId,appKey);
         SugarContext.init(this);
 
 
@@ -150,8 +152,27 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        setGenderSpinner();
-
+        setSpinner(binding.genderSpnner,getResources().getStringArray(R.array.genderArray));
+        setSpinner(binding.lifestyleSpnner,getResources().getStringArray(R.array.lifestyleArray));
+        setSpinner(binding.forSpnner,getResources().getStringArray(R.array.forArray));
+        setSpinner(binding.lifestyleSelfSpnner,getResources().getStringArray(R.array.lifestyleArray));
+        setSpinner(binding.sexualOrientationSpnner,getResources().getStringArray(R.array.sexualOrientationArray));
+        setSpinner(binding.genderIdentifySpnner,getResources().getStringArray(R.array.genderIndentifyArray));
+        setSpinner(binding.statusSpnner,getResources().getStringArray(R.array.statusArray));
+        setSpinner(binding.childrenSpnner,getResources().getStringArray(R.array.chldrenArray));
+        setSpinner(binding.smokingSpnner,getResources().getStringArray(R.array.smokingArray));
+        setSpinner(binding.religionSpnner,getResources().getStringArray(R.array.religionArray));
+        setSpinner(binding.drinkingSpnner,getResources().getStringArray(R.array.smokingArray));
+        setSpinner(binding.eyeSpnner,getResources().getStringArray(R.array.eyeColorArray));
+        setSpinner(binding.hairSpnner,getResources().getStringArray(R.array.hairColorArray));
+       // setGenderSpinner();
+       // setLifestyleSPinner();
+       // setforSpinner();
+       // setLifestyleSelfspinner();
+        //setSexualOrientationSpinner();
+        //setGenderIdentifySpinner();
+      //  setStatusSpinner();
+      //  setChildrenSpinner();
 
         // binding.counString jsonLocation = AssetJSONFile("formules.json", context)triesSpnner.setItems(countries);
 
@@ -170,12 +191,55 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
     }
 
-    private void setGenderSpinner() {
 
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.genderArray));
-        binding.genderSpnner.setAdapter(genderAdapter);
-
+    private void setSpinner(Spinner spinner,String[] list){
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,list);
+        spinner.setAdapter(adapter);
     }
+
+
+
+//    private void setChildrenSpinner() {
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.chldrenArray));
+//        binding.childrenSpnner.setAdapter(adapter);
+//    }
+//
+//    private void setStatusSpinner() {
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.statusArray));
+//        binding.statusSpnner.setAdapter(adapter);
+//    }
+//
+//    private void setGenderIdentifySpinner() {
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.genderIndentifyArray));
+//        binding.genderIdentifySpnner.setAdapter(adapter);
+//    }
+//
+//    private void setSexualOrientationSpinner() {
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.sexualOrientationArray));
+//        binding.sexualOrientationSpnner.setAdapter(adapter);
+//    }
+//
+//    private void setLifestyleSelfspinner() {
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.lifestyleArray));
+//        binding.lifestyleSelfSpnner.setAdapter(adapter);
+//    }
+//
+//    private void setforSpinner() {
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.forArray));
+//        binding.forSpnner.setAdapter(adapter);
+//    }
+//
+//    private void setLifestyleSPinner() {
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.lifestyleArray));
+//        binding.lifestyleSpnner.setAdapter(adapter);
+//    }
+//
+//    private void setGenderSpinner() {
+//
+//        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.genderArray));
+//        binding.genderSpnner.setAdapter(genderAdapter);
+//
+//    }
 
     private void initialiseLocationSpinners() {
 
@@ -237,7 +301,12 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
       if (!util.checkEditTextField(binding.ageEt)){
           binding.ageLayout.setError("Please enter your age");
           return false;
+      } else if (Integer.parseInt(binding.ageEt.getText().toString()) > 120 ||
+              Integer.parseInt(binding.ageEt.getText().toString()) < 18 ){
+          binding.ageLayout.setError("Please enter a age between 18-120");
+          return false;
       }
+
 //      if (!util.checkEditTextField(binding.residenceEt)){
 //          binding.residenceLayout.setError("Please enter your city adn country information");
 //          return false;
@@ -246,62 +315,62 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 //          binding.genderLayout.setError("Please enter your gender preference");
 //          return false;
 //      }
-      if (!util.checkEditTextField(binding.lifestyleEt)){
-          binding.lifestyleLayout.setError("Please enter your lifestyle preference");
-          return false;
-      }
+//      if (!util.checkEditTextField(binding.lifestyleEt)){
+//          binding.lifestyleLayout.setError("Please enter your lifestyle preference");
+//          return false;
+//      }
       if (!util.checkEditTextField(binding.ageOthersEt)){
           binding.ageOthersLayout.setError("Please enter your age preference");
           return false;
       }
-      if (!util.checkEditTextField(binding.forEt)){
-          binding.forLayout.setError("Please enter your relationship preference");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.lifestyleSelfEt)){
-          binding.lifestyleSelfLayout.setError("Lifestyle information is required");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.soEt)){
-          binding.soLayout.setError("Sexual orientation information is required");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.giEt)){
-          binding.giLayout.setError("Gender information is required");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.statusEt)){
-          binding.statusLayout.setError("Relationship status information is required");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.childrenEt)){
-          binding.childrenLayout.setError("Children information is required");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.smokingEt)){
-          binding.smokingLayout.setError("Smoking information is required");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.religionEt)){
-          binding.religionLayout.setError("Religion information is required");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.drinkingLayoutEt)){
-          binding.drinkingLayout.setError("Drinking information is required");
-          return false;
-      }
+//      if (!util.checkEditTextField(binding.forEt)){
+//          binding.forLayout.setError("Please enter your relationship preference");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.lifestyleSelfEt)){
+//          binding.lifestyleSelfLayout.setError("Lifestyle information is required");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.soEt)){
+//          binding.soLayout.setError("Sexual orientation information is required");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.giEt)){
+//          binding.giLayout.setError("Gender information is required");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.statusEt)){
+//          binding.statusLayout.setError("Relationship status information is required");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.childrenEt)){
+//          binding.childrenLayout.setError("Children information is required");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.smokingEt)){
+//          binding.smokingLayout.setError("Smoking information is required");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.religionEt)){
+//          binding.religionLayout.setError("Religion information is required");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.drinkingLayoutEt)){
+//          binding.drinkingLayout.setError("Drinking information is required");
+//          return false;
+//      }
       if (!util.checkEditTextField(binding.heightEt)){
           binding.heightLayout.setError("Height information is required");
           return false;
       }
-      if (!util.checkEditTextField(binding.eyeEt)){
-          binding.eyeLayout.setError("Eye color information is required");
-          return false;
-      }
-      if (!util.checkEditTextField(binding.hairEt)){
-          binding.hairLayout.setError("Hair color information is required");
-          return false;
-      }
+//      if (!util.checkEditTextField(binding.eyeEt)){
+//          binding.eyeLayout.setError("Eye color information is required");
+//          return false;
+//      }
+//      if (!util.checkEditTextField(binding.hairEt)){
+//          binding.hairLayout.setError("Hair color information is required");
+//          return false;
+//      }
       return true;
     }
 
@@ -337,24 +406,31 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
     }
 
+
     private void checkForFineLocationPermision() {
         int check = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         if (check == -1){
+            Log.v("FinelocationPermission","Not present");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},ACCESS_FINE_LOCATION);
             }
         } else {
-            checkForHardWarePermission();
+            Log.v("FinelocationPermission","present");
+            getGPS();
+           // checkForHardWarePermission();
         }
     }
 
     private void checkForHardWarePermission() {
         int check = ContextCompat.checkSelfPermission(this, Manifest.permission.LOCATION_HARDWARE);
         if (check == -1){
+            Log.v("hardwarePermission","Not present");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.LOCATION_HARDWARE},LOCATION_HARDWARE);
+                Log.v("trying permission","hardware");
+                requestPermissions(new String[]{Manifest.permission.LOCATION_HARDWARE},LOCATION_HARDWARE_1);
             }
         } else {
+            Log.v("hardwarPermission","present");
             getGPS();
         }
 
@@ -367,18 +443,23 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         switch (requestCode){
             case ACCESS_FINE_LOCATION:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    checkForHardWarePermission();
+                    Log.v("FinelocationPermission","granted");
+                    getGPS();
+                   // checkForHardWarePermission();
                 } else {
                     Toast.makeText(this,"You need to give permission to access your location for others to find you",Toast.LENGTH_LONG).show();
-                    checkForFineLocationPermision();
+                  //  checkForFineLocationPermision();
+                    Log.v("FinelocationPermission","Not granted");
                 }
                 break;
-            case LOCATION_HARDWARE:
+            case LOCATION_HARDWARE_1:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    Log.v("Fhardware permission","granted");
                     getGPS();
                 } else {
                     Toast.makeText(this,"You need to give permission to access your location for others to find you",Toast.LENGTH_LONG).show();
-                    checkForHardWarePermission();
+                  //  checkForHardWarePermission();
+                    Log.v("Fhardware permission","not granted");
                 }
 
         }
@@ -403,6 +484,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             gps[1] = l.getLongitude();
         }
         location = gps;
+        Log.v("gps", String.valueOf(gps[1]));
         saveDetails();
 
     }
@@ -424,19 +506,31 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
        // currentUser.setCountry_self(util.getCountry(binding.residenceEt.getText().toString().trim()));
         currentUser.setCountry_self(binding.countriesSpnner.getSelectedItem().toString());
         currentUser.setAge_others(binding.ageOthersEt.getText().toString().trim());
-        currentUser.setGender_self(binding.giEt.getText().toString().trim());
-        currentUser.setLifestyle_others(binding.lifestyleEt.getText().toString().trim());
-        currentUser.setRelationship_others(binding.forEt.getText().toString().trim());
-        currentUser.setLifestyle_self(binding.lifestyleSelfEt.getText().toString().trim());
-        currentUser.setSexual_orientation_self(binding.soEt.getText().toString().trim());
-        currentUser.setStatus_self(binding.statusEt.getText().toString().trim());
-        currentUser.setChildren_self(binding.childrenEt.getText().toString().trim());
-        currentUser.setSmoking_self(binding.smokingEt.getText().toString().trim());
-        currentUser.setReligin_self(binding.religionEt.getText().toString().trim());
-        currentUser.setDrinking_self(binding.drinkingLayoutEt.getText().toString().trim());
+        //currentUser.setGender_self(binding.giEt.getText().toString().trim());
+        currentUser.setGender_self(binding.genderIdentifySpnner.getSelectedItem().toString());
+       // currentUser.setLifestyle_others(binding.lifestyleEt.getText().toString().trim());
+        currentUser.setLifestyle_others(binding.lifestyleSpnner.getSelectedItem().toString());
+       // currentUser.setRelationship_others(binding.forEt.getText().toString().trim());
+        currentUser.setRelationship_others(binding.forSpnner.getSelectedItem().toString());
+       // currentUser.setLifestyle_self(binding.lifestyleSelfEt.getText().toString().trim());
+        currentUser.setLifestyle_self(binding.lifestyleSelfSpnner.getSelectedItem().toString());
+       // currentUser.setSexual_orientation_self(binding.soEt.getText().toString().trim());
+        currentUser.setSexual_orientation_self(binding.sexualOrientationSpnner.getSelectedItem().toString());
+      //  currentUser.setStatus_self(binding.statusEt.getText().toString().trim());
+        currentUser.setStatus_self(binding.statusSpnner.getSelectedItem().toString());
+    //    currentUser.setChildren_self(binding.childrenEt.getText().toString().trim());
+        currentUser.setChildren_self(binding.childrenSpnner.getSelectedItem().toString());
+        //currentUser.setSmoking_self(binding.smokingEt.getText().toString().trim());
+        currentUser.setSmoking_self(binding.smokingSpnner.getSelectedItem().toString());
+       // currentUser.setReligin_self(binding.religionEt.getText().toString().trim());
+        currentUser.setReligin_self(binding.religionSpnner.getSelectedItem().toString());
+       // currentUser.setDrinking_self(binding.drinkingLayoutEt.getText().toString().trim());
+        currentUser.setDrinking_self(binding.drinkingSpnner.getSelectedItem().toString());
         currentUser.setHeight_self(binding.heightEt.getText().toString().trim());
-        currentUser.setEyecoloe_self(binding.eyeEt.getText().toString().trim());
-        currentUser.setHaircolor_self(binding.hairEt.getText().toString().trim());
+      //  currentUser.setEyecoloe_self(binding.eyeEt.getText().toString().trim());
+        currentUser.setEyecoloe_self(binding.eyeSpnner.getSelectedItem().toString());
+      //  currentUser.setHaircolor_self(binding.hairEt.getText().toString().trim());
+        currentUser.setHaircolor_self(binding.hairSpnner.getSelectedItem().toString());
         currentUser.setPhotourl("https://api.backendless.com/648D896E-EDD8-49C8-FF74-2F1C32DB7A00/934C0B5C-A231-E928-FF37-655A05A3AB00/files/"+user+"/1.png");
         currentUser.setIsPremiumMember("no");
         currentUser.setObjectId(users.get(0).getObjectId());
@@ -464,6 +558,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             @Override
             public void handleFault(BackendlessFault fault) {
                 dialog.dismiss();
+                Log.v("code",fault.getCode());
                 error.setTitleText("Error connecting to VeMeet")
                         .setContentText("The following error has occured while trying to connect to VeMeet\n"
                         +fault.getMessage()+"\n Please try again").show();

@@ -114,5 +114,90 @@
         <item>@string/all</item>
     </string-array>
 
+    <string-array name="lifestyleArray">
+        <item>Vegan</item>
+        <item>Vegan(raw)</item>
+        <item>Vegan(xvx)</item>
+        <item>Vegetarian</item>
+        <item>Vegetarian(instincto)</item>
+        <item>Freegan</item>
+        <item>Fruitarian</item>
+    </string-array>
+
+    <string-array name="forArray">
+        <item>Heterosexual</item>
+        <item>Homosexual</item>
+        <item>Pansexual</item>
+        <item>Polysexual</item>
+        <item>None defined</item>
+        <item>All</item>
+    </string-array>
+
+    <string-array name="sexualOrientationArray">
+        <item>Heterosexual</item>
+        <item>Homosexual</item>
+        <item>Pansexual</item>
+        <item>Polysexual</item>
+    </string-array>
+
+    <string-array name="genderIndentifyArray">
+        <item>@string/female</item>
+        <item>@string/male</item>
+        <item>@string/queer</item>
+        <item>Transgender</item>
+    </string-array>
+    <string-array name="statusArray">
+        <item>Single</item>
+        <item>Divorced</item>
+        <item>Married</item>
+        <item>Open relationship</item>
+        <item>Prefer not to say</item>
+    </string-array>
+
+    <string-array name="chldrenArray">
+        <item>No</item>
+        <item>Yes</item>
+        <item>Prefer not to say</item>
+    </string-array>
+
+    <string-array name="smokingArray">
+        <item>No</item>
+        <item>Yes</item>
+        <item>Sometimes</item>
+        <item>Prefer not to say</item>
+    </string-array>
+    <string-array name="religionArray">
+        <item>Christian</item>
+        <item>Spiritual</item>
+        <item>Buddhism</item>
+        <item>Hindu</item>
+        <item>Jewish</item>
+        <item>Muslim</item>
+        <item>Atheist</item>
+        <item>Luthern</item>
+        <item>Mormon</item>
+        <item>Methodist</item>
+        <item>Other</item>
+        <item>Prefer not to say</item>
+    </string-array>
+
+    <string-array name="eyeColorArray">
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Gray</item>
+        <item>Brown</item>
+        <item>Colorfull</item>
+    </string-array>
+
+    <string-array name="hairColorArray">
+        <item>Blonde</item>
+        <item>Brown</item>
+        <item>Red</item>
+        <item>Black</item>
+        <item>Grey</item>
+        <item>White</item>
+        <item>Bald</item>
+        <item>Colorfull</item>
+    </string-array>
 
 </resources>
