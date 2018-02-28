@@ -117,18 +117,19 @@
             android:orientation="horizontal"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:padding="0dp"
                 android:src="@drawable/ic_residence"
                 android:layout_gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:scaleType="fitCenter"
                 />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp"
                 >
             <Spinner
                 android:layout_width="wrap_content"
@@ -167,10 +168,14 @@
             android:padding="10dp"
             >
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:padding="0dp"
                 android:src="@drawable/ic_gender"
                 android:layout_gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:scaleType="fitCenter"
                 />
             <Spinner
                 android:layout_width="wrap_content"
