@@ -105,5 +105,14 @@
     <string name="loc">Location:</string>
     <string name="posted_by">Posted by</string>
 
+    <string-array name="genderArray">
+        <item>@string/female</item>
+        <item>@string/male</item>
+        <item>@string/queer</item>
+        <item>Transgender</item>
+        <item>None defined</item>
+        <item>@string/all</item>
+    </string-array>
+
 
 </resources>

@@ -64,6 +64,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     private JSONArray array;
     ArrayList<String> countries = new ArrayList<String>();
     ArrayList<String> cities = new ArrayList<>();
+    ArrayList<String> genders = new ArrayList<>();
     String country;
     private ArrayAdapter<String> citiesAdapter;
 
@@ -98,7 +99,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
         user = prefs.getname();
 
-        binding.profileImage.getLayoutParams().height = (int) (util.getScreenWidth(this)/3);
+        binding.profileImage.getLayoutParams().height = (int) (util.getScreenWidth(this)/4);
         Log.v("current user",prefs.getname());
       //  List<User> users_temp = User.find(User.class,"username = ?",user).size()
        // Log.v("finding users", String.valueOf(User.find(User.class,"username = ?",user).size()));
@@ -149,6 +150,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             }
         });
 
+        setGenderSpinner();
+
 
         // binding.counString jsonLocation = AssetJSONFile("formules.json", context)triesSpnner.setItems(countries);
 
@@ -167,23 +170,15 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
     }
 
+    private void setGenderSpinner() {
+
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,getResources().getStringArray(R.array.genderArray));
+        binding.genderSpnner.setAdapter(genderAdapter);
+
+    }
+
     private void initialiseLocationSpinners() {
 
-//        Log.v("json","trying loading");
-//        try {
-//            obj = new JSONObject(loadFromAsset());
-//            array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
-//            Log.v("json array", String.valueOf(array));
-//            cities = util.convertToList(array);
-//            Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-//            citiesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,cities);
-//            binding.citiesSpinner.setAdapter(citiesAdapter);
-//            binding.citiesSpinner.setSelection(0);
-//            Log.v("cities spinner","set");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//            Log.v("json array exception", String.valueOf(e));
-//        }
 
 
         try {
@@ -243,10 +238,10 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
           binding.ageLayout.setError("Please enter your age");
           return false;
       }
-      if (!util.checkEditTextField(binding.residenceEt)){
-          binding.residenceLayout.setError("Please enter your city adn country information");
-          return false;
-      }
+//      if (!util.checkEditTextField(binding.residenceEt)){
+//          binding.residenceLayout.setError("Please enter your city adn country information");
+//          return false;
+//      }
       if (!util.checkEditTextField(binding.genderEt)){
           binding.genderLayout.setError("Please enter your gender preference");
           return false;
@@ -423,8 +418,10 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setGender_others(binding.genderEt.getText().toString().trim());
         currentUser.setAboutme(binding.abtMeEt.getText().toString().trim());
         currentUser.setAge_self(binding.ageEt.getText().toString().trim());
-        currentUser.setCity_self(util.getCity(binding.residenceEt.getText().toString().trim()));
-        currentUser.setCountry_self(util.getCountry(binding.residenceEt.getText().toString().trim()));
+      //  currentUser.setCity_self(util.getCity(binding.residenceEt.getText().toString().trim()));
+        currentUser.setCity_self(binding.citiesSpinner.getSelectedItem().toString());
+       // currentUser.setCountry_self(util.getCountry(binding.residenceEt.getText().toString().trim()));
+        currentUser.setCountry_self(binding.countriesSpnner.getSelectedItem().toString());
         currentUser.setAge_others(binding.ageOthersEt.getText().toString().trim());
         currentUser.setGender_self(binding.giEt.getText().toString().trim());
         currentUser.setLifestyle_others(binding.lifestyleEt.getText().toString().trim());
