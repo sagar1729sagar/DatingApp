@@ -121,24 +121,7 @@
                 />
             </LinearLayout>
         </LinearLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/residence_layout"
-            >
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/residence"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black"
-                android:textSize="12sp"
-                android:drawableLeft="@drawable/ic_residence"
-                android:drawableStart="@drawable/ic_residence"
-                android:id="@+id/residence__et"
-                android:drawablePadding="10dp"
-                />
-        </android.support.design.widget.TextInputLayout>
+     
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
