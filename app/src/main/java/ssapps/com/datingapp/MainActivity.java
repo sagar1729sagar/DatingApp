@@ -23,6 +23,7 @@ import com.orm.SugarContext;
 
 import Models.User;
 import Util.Prefs;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     private static final String GCM_SENDER_ID = "57050948456";
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
+    private SweetAlertDialog dialog,error;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -41,6 +43,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        dialog.setCancelable(false);
+        error = new SweetAlertDialog(this,SweetAlertDialog.ERROR_TYPE);
 
         Backendless.initApp(this, appId, appKey);
         SugarContext.init(this);
@@ -82,23 +88,32 @@ public class MainActivity extends AppCompatActivity
         drawer.post(new Runnable() {
             @Override
             public void run() {
-                makeScreenTransition(new ProfileFragment());
-//                if (getIntent().hasExtra("redirectProfile")) {
-//                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
-//                        makeScreenTransition(new ProfileFragment());
-//                    }
-//                } else if (getIntent().hasExtra("SettingsRedirect")) {
-//                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
-//                        makeScreenTransition(new UpgradePackages());
-//                    }
-//                } else if (getIntent().hasExtra("chatRedirect")) {
-//                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
-//                        makeScreenTransition(new ChatListingFragment());
-//                    }
-//
-//                }
+           //     makeScreenTransition(new ProfileFragment());
+                if (getIntent().hasExtra("redirectProfile")) {
+                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
+                        makeScreenTransition(new ProfileFragment());
+                    }
+                } else if (getIntent().hasExtra("SettingsRedirect")) {
+                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
+                        makeScreenTransition(new UpgradePackages());
+                    }
+                } else if (getIntent().hasExtra("chatRedirect")) {
+                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
+                        makeScreenTransition(new ChatListingFragment());
+                    }
+
+                }
             }
         });
+
+
+        if (!prefs.getname().equals("None")){
+            navigationView.getMenu().getItem(navigationView.getMenu().size()-1).setTitle("Logout");
+        } else {
+            navigationView.getMenu().getItem(navigationView.getMenu().size()-1).setTitle("Login");
+        }
+
+
     }
 
 
@@ -188,7 +203,11 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_logout:
               //  toolbar.setTitle("Choose one");
               //  makeScreenTransition(new LoginRegisterChooser());
-                startActivity(new Intent(MainActivity.this,SignInChooserActivity.class));
+                if (prefs.getname().equals("None")) {
+                    startActivity(new Intent(MainActivity.this, SignInChooserActivity.class));
+                } else {
+                  performLogout();
+                }
                 break;
             default:
                 break;
@@ -213,6 +232,29 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    private void performLogout() {
+
+        dialog.setTitleText("Logging out");
+        dialog.show();
+
+        Backendless.UserService.logout(new AsyncCallback<Void>() {
+            @Override
+            public void handleResponse(Void response) {
+                dialog.dismiss();
+                prefs.setName("None");
+                startActivity(new Intent(MainActivity.this,MainActivity.class));
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                dialog.dismiss();
+                error.setTitleText("Cannot logout");
+                error.setContentText("Please check your internet connection an try again");
+                error.show();
+            }
+        });
+
+    }
 
 
     private void makeScreenTransition(Fragment fragment) {
