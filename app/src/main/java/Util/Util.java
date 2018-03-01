@@ -79,13 +79,26 @@ public class Util {
         Prefs prefs = new Prefs(context);
         if (!prefs.getname().equals("None")){
             User user = User.find(User.class,"username = ?",prefs.getname()).get(0);
-            if (isOnline && user.getIsOnline().equals("No")){
-                user.setIsOnline("Yes");
-                chageUserstatus(user);
-            } else if (!isOnline && user.getIsOnline().equals("Yes")){
-                user.setIsOnline("No");
-                chageUserstatus(user);
+            if (isOnline){
+                if (user.getIsOnline().equals("No")){
+                    user.setIsOnline("Yes");
+                    chageUserstatus(user);
+                }
+            } else {
+                if (!isOnline){
+                    if (user.getIsOnline().equals("Yes")){
+                        user.setIsOnline("No");
+                        chageUserstatus(user);
+                    }
+                }
             }
+//            if (isOnline && user.getIsOnline().equals("No")){
+//                user.setIsOnline("Yes");
+//                chageUserstatus(user);
+//            } else if (!isOnline && user.getIsOnline().equals("Yes")){
+//                user.setIsOnline("No");
+//                chageUserstatus(user);
+//            }
         }
 
     }

@@ -307,10 +307,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         user.setIsOnline("Yes");
         if (bitmap == null){
             user.setHasPicture("No");
+            Log.v("picture","no");
         } else {
             user.setHasPicture("Yes");
+            Log.v("picture","yues");
         }
         user.save();
+        Log.v("user","saved");
+        Log.v("user pciture",user.getHasPicture());
         pres.setName(binding.username.getText().toString());
         loginUser();
 

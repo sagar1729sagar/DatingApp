@@ -104,13 +104,15 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         binding.profileImage.getLayoutParams().height = (int) (util.getScreenWidth(this)/2);
         Log.v("current user",prefs.getname());
       //  List<User> users_temp = User.find(User.class,"username = ?",user).size()
-       // Log.v("finding users", String.valueOf(User.find(User.class,"username = ?",user).size()));
-        //Log.v("photo url",User.find(User.class,"username = ?",user).get(0).getHasPicture());
+       Log.v("finding users", String.valueOf(User.find(User.class,"username = ?",user).size()));
+        Log.v("photo url",User.find(User.class,"username = ?",user).get(0).getHasPicture());
         if (User.find(User.class,"username = ?",user).get(0).getHasPicture().equals("Yes")) {
             Picasso.with(this).load(User.find(User.class, "username = ?", user).get(0).getPhotourl())
                     .placeholder(R.drawable.fb)
                     .into(binding.profileImage);
         }
+      //  Log.v("user",user);
+      //  Log.v("user fetch",User.find(User.class,"username = ?",user).size())
 
         Locale[] locale = Locale.getAvailableLocales();
         for( Locale loc : locale ){
@@ -134,15 +136,15 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
                     array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
-                    Log.v("json array", String.valueOf(array));
+                   // Log.v("json array", String.valueOf(array));
                     Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
                     citiesAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,cities);
                     binding.citiesSpinner.setAdapter(citiesAdapter);
                     binding.citiesSpinner.setSelection(0);
-                    Log.v("cities spinner","set");
+                  //  Log.v("cities spinner","set");
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Log.v("json array exception", String.valueOf(e));
+                   // Log.v("json array exception", String.valueOf(e));
                 }
             }
 
@@ -246,7 +248,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
 
         try {
-            Log.v("json","reading");
+           // Log.v("json","reading");
             InputStream is = getAssets().open("countriesToCities.json");
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -254,43 +256,43 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             is.close();
             String json = new String(buffer,"UTF-8");
             obj = new JSONObject(json);
-            Log.v("json ","object");
+          //  Log.v("json ","object");
             array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
-            Log.v("json","array");
+           // Log.v("json","array");
             cities = util.convertToList(array);
             Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
             citiesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,cities);
             binding.citiesSpinner.setAdapter(citiesAdapter);
             binding.citiesSpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
-            Log.v("cities spinner","set");
+           // Log.v("cities spinner","set");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.v("json","error "+e.getMessage());
+           // Log.v("json","error "+e.getMessage());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
 
-    private String loadFromAsset() {
-        String json = null;
-            InputStream is = null;
-            try {
-                Log.v("json","reading");
-                is = getAssets().open("countriesToCities.json");
-                int size = is.available();
-                byte[] buffer = new byte[size];
-                is.read(buffer);
-                is.close();
-                json = new String(buffer,"UTF-8");
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.v("json","error "+e.getMessage());
-                return null;
-            }
-        return json;
-
-    }
+//    private String loadFromAsset() {
+//        String json = null;
+//            InputStream is = null;
+//            try {
+//                Log.v("json","reading");
+//                is = getAssets().open("countriesToCities.json");
+//                int size = is.available();
+//                byte[] buffer = new byte[size];
+//                is.read(buffer);
+//                is.close();
+//                json = new String(buffer,"UTF-8");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                Log.v("json","error "+e.getMessage());
+//                return null;
+//            }
+//        return json;
+//
+//    }
 
     private boolean checkAllFields() {
 
@@ -533,16 +535,18 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setHaircolor_self(binding.hairSpnner.getSelectedItem().toString());
         currentUser.setPhotourl("https://api.backendless.com/648D896E-EDD8-49C8-FF74-2F1C32DB7A00/934C0B5C-A231-E928-FF37-655A05A3AB00/files/"+user+"/1.png");
         currentUser.setIsPremiumMember("no");
-        currentUser.setObjectId(users.get(0).getObjectId());
+       // currentUser.setObjectId(users.get(0).getObjectId());
         currentUser.setDateofBirth(users.get(0).getDateofBirth());
         currentUser.setWho_view_photos("All");
         currentUser.setFriend_requests("All");
         currentUser.setWho_view_friends("All");
-        currentUser.setIncognito_mode("Yes");
+        currentUser.setIncognito_mode("No");
         currentUser.setPackages("None");
         currentUser.setLatitude(String.valueOf(location[0]));
         currentUser.setLongitude(String.valueOf(location[1]));
         currentUser.setVideoUrl("None");
+        currentUser.setIsOnline("Yes");
+        currentUser.setHasPicture(users.get(0).getHasPicture());
 
 
 
@@ -558,7 +562,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             @Override
             public void handleFault(BackendlessFault fault) {
                 dialog.dismiss();
-                Log.v("code",fault.getCode());
+                Log.v("code", String.valueOf(fault));
                 error.setTitleText("Error connecting to VeMeet")
                         .setContentText("The following error has occured while trying to connect to VeMeet\n"
                         +fault.getMessage()+"\n Please try again").show();

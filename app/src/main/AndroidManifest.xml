@@ -38,7 +38,14 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/MainTheme" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".SignInChooserActivity"
             android:theme="@style/MainTheme">
@@ -58,12 +65,12 @@
              <!--</intent-filter>-->
         </activity>
         <activity android:name=".SignupDetailsActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <!-- <activity android:name=".ProfileFragment" /> -->
         <!-- <activity android:name=".SettingsFragment" /> -->

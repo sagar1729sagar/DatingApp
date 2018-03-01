@@ -6,6 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="ssapps.com.datingapp.ProfileFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/profile_image"
                 android:src="@drawable/fb"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -28,7 +33,21 @@
                 android:textColor="@color/white"
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_about_me"
+                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"
+                    />
+            </LinearLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -398,6 +417,6 @@
             android:layout_marginTop="10dp"
             />
 
-
+    </LinearLayout>
     </ScrollView>
 

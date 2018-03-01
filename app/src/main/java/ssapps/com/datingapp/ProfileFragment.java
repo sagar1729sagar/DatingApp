@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.orm.SugarContext;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -52,6 +54,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         Backendless.initApp(getContext(),appId,appKey);
+        SugarContext.init(getContext());
 
         prefs = new Prefs(getContext());
         util = new Util();
@@ -62,9 +65,12 @@ public class ProfileFragment extends Fragment {
         dialog.dismiss();
 
         final List<User> users = User.find(User.class,"username = ?",prefs.getname());
+        Log.v("name",prefs.getname());
+        Log.v("size", String.valueOf(users.size()));
         user = users.get(0);
 
         imageView = (ImageView)view.findViewById(R.id.profile_image);
+        imageView.getLayoutParams().height = (int) (util.getScreenWidth(getContext())/2);
 
         about_me = (EditText) view.findViewById(R.id.abtmeet);
         about_me.setText(user.getAboutme());
@@ -119,6 +125,7 @@ public class ProfileFragment extends Fragment {
 
         haircolor_self = (EditText)view.findViewById(R.id.hairet);
         haircolor_self.setText(user.getHaircolor_self());
+        Log.v("user", user.getHasPicture());
         if (user.getHasPicture().equals("Yes")) {
             Picasso.with(getContext()).load(user.getPhotourl()).into(imageView);
         }
@@ -179,5 +186,11 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SugarContext.terminate();
     }
 }

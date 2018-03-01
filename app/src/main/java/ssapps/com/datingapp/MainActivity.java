@@ -19,6 +19,7 @@ import com.backendless.Backendless;
 import com.backendless.DeviceRegistration;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.orm.SugarContext;
 
 import Models.User;
 import Util.Prefs;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Backendless.initApp(this, appId, appKey);
+        SugarContext.init(this);
 
         util = new Util();
         util.updateOnlineStatus(this, true);
@@ -80,20 +82,21 @@ public class MainActivity extends AppCompatActivity
         drawer.post(new Runnable() {
             @Override
             public void run() {
-                if (getIntent().hasExtra("redirectProfile")) {
-                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
-                        makeScreenTransition(new ProfileFragment());
-                    }
-                } else if (getIntent().hasExtra("SettingsRedirect")) {
-                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
-                        makeScreenTransition(new UpgradePackages());
-                    }
-                } else if (getIntent().hasExtra("chatRedirect")) {
-                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
-                        makeScreenTransition(new ChatListingFragment());
-                    }
-
-                }
+                makeScreenTransition(new ProfileFragment());
+//                if (getIntent().hasExtra("redirectProfile")) {
+//                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
+//                        makeScreenTransition(new ProfileFragment());
+//                    }
+//                } else if (getIntent().hasExtra("SettingsRedirect")) {
+//                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
+//                        makeScreenTransition(new UpgradePackages());
+//                    }
+//                } else if (getIntent().hasExtra("chatRedirect")) {
+//                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
+//                        makeScreenTransition(new ChatListingFragment());
+//                    }
+//
+//                }
             }
         });
     }
@@ -222,6 +225,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
         util.updateOnlineStatus(this, false);
+        SugarContext.terminate();
     }
 
 
