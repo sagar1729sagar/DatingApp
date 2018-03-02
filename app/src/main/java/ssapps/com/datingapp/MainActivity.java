@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity
            //     makeScreenTransition(new ProfileFragment());
                 if (getIntent().hasExtra("redirectProfile")) {
                     if (getIntent().getBooleanExtra("redirectProfile", false)) {
+                        getSupportActionBar().setTitle("My Profile");
                         makeScreenTransition(new ProfileFragment());
                     }
                 } else if (getIntent().hasExtra("SettingsRedirect")) {
@@ -191,6 +192,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_liked_me:
                 break;
             case R.id.nav_my_profile:
+                getSupportActionBar().setTitle("My Profile");
+                makeScreenTransition(new ProfileFragment());
                 break;
             case R.id.nav_upgrade_packages:
                 makeScreenTransition(new UpgradePackages());

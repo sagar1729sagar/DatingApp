@@ -183,6 +183,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private void setSpinner(Spinner spinner, String[] list){
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,list);
+        spinner.setPadding((int) util.convertDpToPixel(10,getContext()),0,0,0);
         spinner.setAdapter(adapter);
         switch (spinner.getId()){
             case R.id.gender_spnner:

@@ -196,6 +196,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
     private void setSpinner(Spinner spinner,String[] list){
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,list);
+       // spinner.setPadding();
+        spinner.setPadding((int) util.convertDpToPixel(10,getApplicationContext()),0,0,0);
         spinner.setAdapter(adapter);
     }
 

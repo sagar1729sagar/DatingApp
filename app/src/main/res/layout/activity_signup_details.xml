@@ -184,6 +184,8 @@
                 android:id="@+id/gender_spnner"
                 android:scrollbars="vertical"
                 android:textSize="12sp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 />
         </LinearLayout>
         <!--<android.support.design.widget.TextInputLayout-->
@@ -226,6 +228,8 @@
                 android:id="@+id/lifestyle_spnner"
                 android:scrollbars="vertical"
                 android:textSize="12sp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 />
         </LinearLayout>
         <!--<android.support.design.widget.TextInputLayout-->
