@@ -34,10 +34,13 @@ public class UpgradePackages extends Fragment {
     private SweetAlertDialog dialog,error;
     private PackagesAdapter adapter;
     private List<Packages> packages = new ArrayList<>();
+    private boolean isFirstTime = false;
+    private boolean isFirtsIteration = false;
+    private List<Packages> temp_packages = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater,R.layout.activity_settings_fragment,container,false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.activity_upgrade_packages,container,false);
         return binding.getRoot();
        // binding.getRoot()
     }
@@ -46,6 +49,7 @@ public class UpgradePackages extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Backendless.initApp(getContext(),appId,appKey);
         dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
+        dialog.setTitleText("Fetching Packages");
         dialog.setCancelable(false);
         error = new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
 
@@ -59,42 +63,105 @@ public class UpgradePackages extends Fragment {
             packages.clear();
             packages.addAll(Packages.listAll(Packages.class));
             adapter.notifyDataSetChanged();
+            binding.packagesList.notifyAll();
+            isFirstTime = false;
+            fetchPackages();
+        } else {
+            isFirstTime = true;
+            fetchPackages();
         }
     }
+    //todo testing paused here
+    private void fetchPackages() {
 
-    private void fetchPackages(){
-        DataQueryBuilder query = DataQueryBuilder.create();
-        query.setPageSize(100);
-        if (Packages.count(Packages.class) == 0){
-            dialog.setTitleText("Fetching information");
+        temp_packages.clear();
+
+        if (isFirstTime){
             dialog.show();
+        } else {
+            temp_packages = Packages.listAll(Packages.class);
         }
 
-        Backendless.Data.find(Packages.class, query, new AsyncCallback<List<Packages>>() {
+        isFirtsIteration = true;
+        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
+        queryBuilder.setPageSize(100);
+        getPackages(queryBuilder);
+
+    }
+
+    private void getPackages(final DataQueryBuilder queryBuilder) {
+
+        Backendless.Data.find(Packages.class, queryBuilder, new AsyncCallback<List<Packages>>() {
             @Override
             public void handleResponse(List<Packages> response) {
-                dialog.dismiss();
-                packages.clear();
-                packages.addAll(response);
-//                for (int i = 0;i<response.size();i++){
-//                    packages.add(response.get(i));
-//                    response.get(i).save();
-//                }
-                adapter.notifyDataSetChanged();
+                if (response.size() != 0){
+                    if (isFirtsIteration){
+                        Packages.deleteAll(Packages.class);
+                    }
+                    Packages.saveInTx(response);
+                    queryBuilder.prepareNextPage();
+                    getPackages(queryBuilder);
+                } else {
+                    dialog.dismiss();
+                    packages.clear();
+                    packages = Packages.listAll(Packages.class);
+                    adapter.notifyDataSetChanged();
+                    binding.packagesList.notifyAll();
+                }
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
-                if (Packages.count(Packages.class) == 0){
+
+                if (!isFirtsIteration){
+                    Packages.deleteAll(Packages.class);
+                    Packages.saveInTx(temp_packages);
                     dialog.dismiss();
+                }
+                if (isFirstTime){
                     error.setTitleText("Cannot connect to VeMeet");
                     error.setContentText("The following error has occured while connecting to VeMeet\n"+fault.getMessage()+"Please tray again later");
                     error.show();
                 }
+
             }
         });
 
     }
+
+//    private void fetchPackages(){
+//        DataQueryBuilder query = DataQueryBuilder.create();
+//        query.setPageSize(100);
+//        if (Packages.count(Packages.class) == 0){
+//            dialog.setTitleText("Fetching information");
+//            dialog.show();
+//        }
+//
+//        Backendless.Data.find(Packages.class, query, new AsyncCallback<List<Packages>>() {
+//            @Override
+//            public void handleResponse(List<Packages> response) {
+//                dialog.dismiss();
+//                packages.clear();
+//                packages.addAll(response);
+////                for (int i = 0;i<response.size();i++){
+////                    packages.add(response.get(i));
+////                    response.get(i).save();
+////                }
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void handleFault(BackendlessFault fault) {
+//                if (Packages.count(Packages.class) == 0){
+//                    dialog.dismiss();
+//                    error.setTitleText("Cannot connect to VeMeet");
+//                    error.setContentText("The following error has occured while connecting to VeMeet\n"+fault.getMessage()+"Please tray again later");
+//                    error.show();
+//                } fetchPackages();
+//            }
+//        });
+//
+//    }
 
 
 }

@@ -13,13 +13,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import Util.Util;
 
 import com.backendless.Backendless;
 import com.backendless.DeviceRegistration;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
+import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.orm.SugarContext;
+import com.squareup.picasso.Picasso;
 
 import Models.User;
 import Util.Prefs;
@@ -35,6 +42,9 @@ public class MainActivity extends AppCompatActivity
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
     private SweetAlertDialog dialog,error;
+    private ImageView fillImage;
+    private RoundedImageView halfImage;
+    private TextView userName,email;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -56,9 +66,7 @@ public class MainActivity extends AppCompatActivity
 
         prefs = new Prefs(this);
 
-        if (!prefs.getname().equals("None")) {
-            checkForPushNotificationsRegistration();
-        }
+
         // updateOnlineStatus();
 
 
@@ -83,6 +91,49 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+        View view = navigationView.getHeaderView(0);
+
+
+        fillImage = (ImageView)view.findViewById(R.id.nav_draw_full_image);
+        halfImage = (RoundedImageView)view.findViewById(R.id.nav_draw_small_Image);
+        userName = (TextView)view.findViewById(R.id.nav_draw_user_name);
+        email = (TextView)view.findViewById(R.id.nav_draw_email);
+
+
+        if (!prefs.getname().equals("None")) {
+            checkForPushNotificationsRegistration();
+            User loggedUser = new User();
+            loggedUser = User.find(User.class,"username = ?",prefs.getname()).get(0);
+            if (loggedUser.getHasPicture() == null){
+                halfImage.setVisibility(View.GONE);
+                userName.setText(loggedUser.getUsername());
+                email.setText(loggedUser.getMailId());
+            } else if (loggedUser.getHasPicture().equals("No")){
+                halfImage.setVisibility(View.GONE);
+                userName.setText(loggedUser.getUsername());
+                email.setText(loggedUser.getMailId());
+            } else {
+                Picasso.with(getApplicationContext()).load(loggedUser.getPhotourl()).into(fillImage);
+           //     Picasso.with(this).load(loggedUser.getPhotourl()).into(halfImage);
+//                Picasso.with(this).load(loggedUser.getPhotourl()).into(halfImage);
+         //       userName.setText(loggedUser.getUsername());
+           //     email.setText(loggedUser.getMailId());
+
+                halfImage.setVisibility(View.GONE);
+                userName.setVisibility(View.GONE);
+                email.setVisibility(View.GONE);
+            }
+        } else {
+            halfImage.setVisibility(View.GONE);
+            userName.setVisibility(View.GONE);
+            email.setVisibility(View.GONE);
+        }
+
+
+
 
 
         drawer.post(new Runnable() {
