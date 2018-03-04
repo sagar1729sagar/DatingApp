@@ -94,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 response.get(0).save();
                 prefs.setName(response.get(0).getUsername());
-
                 goToProfilePage();
 
             }

@@ -501,7 +501,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setUsername(users.get(0).getUsername());
         currentUser.setPassword(users.get(0).getPassword());
         currentUser.setEmail(users.get(0).getEmail());
-        currentUser.setMailId(users.get(0).getMailId());
+        currentUser.setMailId(prefs.getTempEmail());
       //  currentUser.setGender_others(binding.genderEt.getText().toString().trim());
         currentUser.setGender_others(binding.genderSpnner.getSelectedItem().toString());
         currentUser.setAboutme(binding.abtMeEt.getText().toString().trim());

@@ -325,7 +325,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         dialog.setTitleText("Uploading your picture");
         dialog.show();
         String name = "1";
-        Backendless.Files.Android.upload(bitmap, Bitmap.CompressFormat.PNG, 50, name + ".png",
+        Backendless.Files.Android.upload(bitmap, Bitmap.CompressFormat.PNG, 20, name + ".png",
                 binding.username.getText().toString(), true, new AsyncCallback<BackendlessFile>() {
                     @Override
                     public void handleResponse(BackendlessFile response) {

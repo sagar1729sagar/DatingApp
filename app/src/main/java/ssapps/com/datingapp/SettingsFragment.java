@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.orm.SugarContext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,6 +63,7 @@ public class SettingsFragment extends Fragment {
         public void onViewCreated (View view, @Nullable Bundle savedInstanceState){
 
             Backendless.initApp(getContext(), appId, appKey);
+            SugarContext.init(getContext());
             final Util util = new Util();
             photo_spinner_items = Arrays.asList("Only me", "Only friends", "All");
             friend_spinner_items = Arrays.asList("All", "None");
@@ -78,9 +81,10 @@ public class SettingsFragment extends Fragment {
 //        password = (TextView)view.findViewById(R.id.password_et);
             prefs = new Prefs(getContext());
             final User currentUser = User.find(User.class, "username = ?", prefs.getname()).get(0);
+            Log.v("user",currentUser.getMailId());
             binding.userNameEt.setText(currentUser.getUsername());
 
-            binding.emailEt.setText(currentUser.getEmail());
+            binding.emailEt.setText(currentUser.getMailId());
 
             binding.photosSpinner.setItems(photo_spinner_items);
             switch (currentUser.getWho_view_photos()) {
@@ -202,8 +206,10 @@ public class SettingsFragment extends Fragment {
     }
 
 
-
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SugarContext.terminate();
     }
+}
 
