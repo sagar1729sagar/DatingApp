@@ -271,7 +271,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String email = binding.email.getText().toString();
         String password = binding.password.getText().toString();
 
-        Backendless.UserService.login(email, password, new AsyncCallback<BackendlessUser>() {
+        Backendless.UserService.login(binding.username.getText().toString().trim(), password, new AsyncCallback<BackendlessUser>() {
             @Override
             public void handleResponse(BackendlessUser response) {
                 dialog.dismiss();
@@ -325,7 +325,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         dialog.setTitleText("Uploading your picture");
         dialog.show();
         String name = "1";
-        Backendless.Files.Android.upload(bitmap, Bitmap.CompressFormat.PNG, 100, name + ".png",
+        Backendless.Files.Android.upload(bitmap, Bitmap.CompressFormat.PNG, 50, name + ".png",
                 binding.username.getText().toString(), true, new AsyncCallback<BackendlessFile>() {
                     @Override
                     public void handleResponse(BackendlessFile response) {
@@ -362,6 +362,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 //        }
       //  intent.putExtra("user",binding.username.getText().toString());
         pres.setName(binding.username.getText().toString());
+        pres.setTempEmail(binding.email.getText().toString().trim());
         startActivity(intent);
 
     }

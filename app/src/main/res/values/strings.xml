@@ -104,6 +104,8 @@
     <string name="date">Date:</string>
     <string name="loc">Location:</string>
     <string name="posted_by">Posted by</string>
+    <string name="login_with_facebook">Login with facebook</string>
+    <string name="forgot_username_or_password">Forgot username or password?</string>
 
     <string-array name="genderArray">
         <item>@string/female</item>

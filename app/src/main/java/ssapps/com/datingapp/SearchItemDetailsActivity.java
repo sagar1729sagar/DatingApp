@@ -1,5 +1,6 @@
 package ssapps.com.datingapp;
 
+
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;

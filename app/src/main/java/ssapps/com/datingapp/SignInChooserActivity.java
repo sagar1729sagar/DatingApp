@@ -26,6 +26,13 @@ public class SignInChooserActivity extends AppCompatActivity {
             }
         });
 
+        binding.loginChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignInChooserActivity.this,LoginActivity.class));
+            }
+        });
+
 
     }
 }

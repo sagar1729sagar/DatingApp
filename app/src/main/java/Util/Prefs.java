@@ -12,6 +12,7 @@ public class Prefs {
     private static final String PREF_NAME = "VeMeet";
     private static final String USERNAME = "Username";
     private static final String IS_IN_CHAT = "isInChat";
+    private static final String TEMP_EMAIL = "tempEmail";
     public Prefs(Context context){
         this.context=context;
         prefs = context.getSharedPreferences(PREF_NAME,PVT_MODE);
@@ -34,6 +35,15 @@ public class Prefs {
 
     public boolean isInChat(){
         return prefs.getBoolean(IS_IN_CHAT,false);
+    }
+
+    public void setTempEmail(String email){
+        editor.putString(TEMP_EMAIL,email);
+        editor.commit();
+    }
+
+    public String getTempEmail(){
+        return prefs.getString(TEMP_EMAIL,"None");
     }
   
 }
