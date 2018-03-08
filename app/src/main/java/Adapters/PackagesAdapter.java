@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,20 +87,22 @@ public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final Packages myPackage = new Packages();
+       Packages myPackage = new Packages();
+        myPackage = packages.get(position);
         holder.title.setText(myPackage.getPackageName());
         holder.price.setText("("+myPackage.getPrice()+euro+")/month");
-        setTexts(position,myPackage,holder,true);
+        setTexts(position,packages.get(position),holder,true);
 
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.v("item pressed",packages.get(position).getPackageName());
                 if (holder.description.getVisibility() == View.GONE && holder.p0.getVisibility() == View.GONE){
                     holder.arrow.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_up_arrow));
-                    setTexts(position,myPackage,holder,true);
+                    setTexts(position,packages.get(position),holder,true);
                 } else {
                     holder.arrow.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_down_arrow));
-                    setTexts(position,myPackage,holder,false);
+                    setTexts(position,packages.get(position),holder,false);
                 }
             }
         });
@@ -158,72 +161,77 @@ public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyView
 
     private void setTexts(int position, Packages myPackage, MyViewHolder holder,boolean show) {
         if (show) {
-            if (myPackage.getDescription().isEmpty() || myPackage.getDescription().equals("")) {
+            Log.v("set texts","called");
+          //  if (myPackage != null)
+            if (myPackage.getDescription() == null || myPackage.getDescription().equals("")) {
+
                 holder.description.setVisibility(View.GONE);
             } else {
                 holder.description.setVisibility(View.VISIBLE);
                 holder.description.setText(myPackage.getDescription());
             }
-            if (myPackage.getBp0().isEmpty() || myPackage.getBp0().equals("")) {
+            if (myPackage.getBp0() == null || myPackage.getBp0().equals("")) {
                 holder.p0.setVisibility(View.GONE);
             } else {
                 holder.p0.setVisibility(View.VISIBLE);
-                holder.p0.setText(myPackage.getBp0());
+                holder.p0.setText("  -"+myPackage.getBp0());
             }
-            if (myPackage.getBp1().isEmpty() || myPackage.getBp1().equals("")) {
+            if (myPackage.getBp1() == null || myPackage.getBp1().equals("")) {
                 holder.p1.setVisibility(View.GONE);
             } else {
                 holder.p1.setVisibility(View.VISIBLE);
-                holder.p1.setText(myPackage.getBp0());
+                holder.p1.setText(" -"+myPackage.getBp1());
             }
-            if (myPackage.getBp2().isEmpty() || myPackage.getBp2().equals("")) {
+            if (myPackage.getBp2() == null || myPackage.getBp2().equals("")) {
                 holder.p2.setVisibility(View.GONE);
             } else {
                 holder.p2.setVisibility(View.VISIBLE);
-                holder.p2.setText(myPackage.getBp0());
+                holder.p2.setText("  -"+myPackage.getBp2());
             }
-            if (myPackage.getBp3().isEmpty() || myPackage.getBp3().equals("")) {
+            if (myPackage.getBp3() == null || myPackage.getBp3().equals("")) {
                 holder.p3.setVisibility(View.GONE);
             } else {
                 holder.p3.setVisibility(View.VISIBLE);
-                holder.p3.setText(myPackage.getBp0());
+                holder.p3.setText("  -"+myPackage.getBp3());
             }
-            if (myPackage.getBp4().isEmpty() || myPackage.getBp4().equals("")) {
+            if (myPackage.getBp4() == null || myPackage.getBp4().equals("")) {
                 holder.p4.setVisibility(View.GONE);
             } else {
                 holder.p4.setVisibility(View.VISIBLE);
-                holder.p4.setText(myPackage.getBp0());
+                holder.p4.setText("  -"+myPackage.getBp4());
             }
-            if (myPackage.getBp5().isEmpty() || myPackage.getBp5().equals("")) {
+            if (myPackage.getBp5() == null || myPackage.getBp5().equals("")) {
                 holder.p5.setVisibility(View.GONE);
             } else {
                 holder.p5.setVisibility(View.VISIBLE);
-                holder.p5.setText(myPackage.getBp0());
+                holder.p5.setText("  -"+myPackage.getBp5());
             }
-            if (myPackage.getBp6().isEmpty() || myPackage.getBp6().equals("")) {
+            if (myPackage.getBp6() == null|| myPackage.getBp6().equals("")) {
                 holder.p6.setVisibility(View.GONE);
             } else {
                 holder.p6.setVisibility(View.VISIBLE);
-                holder.p6.setText(myPackage.getBp0());
+                holder.p6.setText("  -"+myPackage.getBp6());
             }
-            if (myPackage.getBp7().isEmpty() || myPackage.getBp7().equals("")) {
+            if (myPackage.getBp7() == null || myPackage.getBp7().equals("")) {
                 holder.p7.setVisibility(View.GONE);
             } else {
                 holder.p7.setVisibility(View.VISIBLE);
-                holder.p7.setText(myPackage.getBp0());
+                holder.p7.setText("  -"+myPackage.getBp7());
             }
-            if (myPackage.getBp8().isEmpty() || myPackage.getBp8().equals("")) {
+            if (myPackage.getBp8() == null || myPackage.getBp8().equals("")) {
                 holder.p8.setVisibility(View.GONE);
             } else {
                 holder.p8.setVisibility(View.VISIBLE);
-                holder.p8.setText(myPackage.getBp0());
+                holder.p8.setText("  -"+myPackage.getBp8());
             }
-            if (myPackage.getBp9().isEmpty() || myPackage.getBp9().equals("")) {
+            if (myPackage.getBp9() == null || myPackage.getBp9().equals("")) {
                 holder.p9.setVisibility(View.GONE);
             } else {
                 holder.p9.setVisibility(View.VISIBLE);
-                holder.p9.setText(myPackage.getBp0());
+                holder.p9.setText("  -"+myPackage.getBp9());
             }
+
+            holder.orderButton.setVisibility(View.VISIBLE);
         } else if (!show){
             holder.description.setVisibility(View.GONE);
             holder.p0.setVisibility(View.GONE);
@@ -236,6 +244,7 @@ public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyView
             holder.p7.setVisibility(View.GONE);
             holder.p8.setVisibility(View.GONE);
             holder.p9.setVisibility(View.GONE);
+            holder.orderButton.setVisibility(View.GONE);
         }
     }
 

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
     android:paddingTop="5dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
-    >
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,18 +30,22 @@
                 android:textSize="15sp"
                 android:id="@+id/package_title"
                 android:textColor="@color/white"
-                android:paddingLeft="5dp"
-                android:paddingStart="5dp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
+
                 android:layout_alignParentTop="true"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" 
                 android:layout_below="@id/package_title"
-                android:paddingTop="5dp"
+                android:paddingTop="0dp"
+                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:id="@+id/package_price"
                 android:textSize="12sp"
                 android:textColor="@color/white"
+                android:paddingBottom="5dp"
                 />
             <ImageView
                 android:layout_width="wrap_content"
@@ -48,16 +54,17 @@
                 android:layout_alignParentRight="true"
                 android:paddingRight="10dp"
                 android:paddingEnd="10dp"
-                android:paddingTop="10dp"
+
                 android:scaleType="fitXY"
                 android:id="@+id/package_arrow"
+                android:layout_centerVertical="true"
                 />
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:background="@color/white"
+            android:background="@drawable/border_rect"
             android:orientation="vertical"
             >
             <TextView
@@ -165,7 +172,7 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="@color/leaf_green"
             android:textColor="@color/white"
             android:text="@string/order"

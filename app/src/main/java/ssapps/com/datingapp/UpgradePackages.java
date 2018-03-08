@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.orm.SugarContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +50,16 @@ public class UpgradePackages extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Backendless.initApp(getContext(),appId,appKey);
+        SugarContext.init(getContext());
         dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
         dialog.setTitleText("Fetching Packages");
         dialog.setCancelable(false);
         error = new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
 
-
+        if (Packages.count(Packages.class) != 0){
+            Log.v("package count", String.valueOf(Packages.count(Packages.class)));
+            packages = Packages.listAll(Packages.class);
+        }
         adapter = new PackagesAdapter(getContext(),packages);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         binding.packagesList.setLayoutManager(mLayoutManager);
@@ -63,7 +69,7 @@ public class UpgradePackages extends Fragment {
             packages.clear();
             packages.addAll(Packages.listAll(Packages.class));
             adapter.notifyDataSetChanged();
-            binding.packagesList.notifyAll();
+//            binding.packagesList.notifyAll();
             isFirstTime = false;
             fetchPackages();
         } else {
@@ -73,7 +79,7 @@ public class UpgradePackages extends Fragment {
     }
     //todo testing paused here
     private void fetchPackages() {
-
+        Log.v("fetch packages","called");
         temp_packages.clear();
 
         if (isFirstTime){
@@ -90,13 +96,17 @@ public class UpgradePackages extends Fragment {
     }
 
     private void getPackages(final DataQueryBuilder queryBuilder) {
-
+        Log.v("getting packages","started");
         Backendless.Data.find(Packages.class, queryBuilder, new AsyncCallback<List<Packages>>() {
             @Override
             public void handleResponse(List<Packages> response) {
+                Log.v("getting packages","response recieeved");
+                Log.v("response size", String.valueOf(response.size()));
                 if (response.size() != 0){
                     if (isFirtsIteration){
                         Packages.deleteAll(Packages.class);
+                        isFirtsIteration = false;
+                        Log.v("getting packages","response first iteration");
                     }
                     Packages.saveInTx(response);
                     queryBuilder.prepareNextPage();
@@ -104,15 +114,19 @@ public class UpgradePackages extends Fragment {
                 } else {
                     dialog.dismiss();
                     packages.clear();
-                    packages = Packages.listAll(Packages.class);
+                    Log.v("db count", String.valueOf(Packages.count(Packages.class)));
+                   // packages = Packages.listAll(Packages.class);
+                    packages.addAll(Packages.listAll(Packages.class));
+                    Log.v("list count", String.valueOf(packages.size()));
+                    Log.v("notifying","adapter");
                     adapter.notifyDataSetChanged();
-                    binding.packagesList.notifyAll();
+//                    binding.packagesList.notifyAll();
                 }
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
-
+                    Log.v("error getting pakages", String.valueOf(fault));
                 if (!isFirtsIteration){
                     Packages.deleteAll(Packages.class);
                     Packages.saveInTx(temp_packages);
@@ -164,4 +178,9 @@ public class UpgradePackages extends Fragment {
 //    }
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SugarContext.terminate();
+    }
 }

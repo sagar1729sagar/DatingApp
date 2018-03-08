@@ -139,22 +139,22 @@ public class MainActivity extends AppCompatActivity
         drawer.post(new Runnable() {
             @Override
             public void run() {
-           //     makeScreenTransition(new ProfileFragment());
-                if (getIntent().hasExtra("redirectProfile")) {
-                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
-                        getSupportActionBar().setTitle("My Profile");
-                        makeScreenTransition(new ProfileFragment());
-                    }
-                } else if (getIntent().hasExtra("SettingsRedirect")) {
-                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
-                        makeScreenTransition(new UpgradePackages());
-                    }
-                } else if (getIntent().hasExtra("chatRedirect")) {
-                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
-                        makeScreenTransition(new ChatListingFragment());
-                    }
-
-                }
+                makeScreenTransition(new UpgradePackages());
+//                if (getIntent().hasExtra("redirectProfile")) {
+//                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
+//                        getSupportActionBar().setTitle("My Profile");
+//                        makeScreenTransition(new ProfileFragment());
+//                    }
+//                } else if (getIntent().hasExtra("SettingsRedirect")) {
+//                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
+//                        makeScreenTransition(new UpgradePackages());
+//                    }
+//                } else if (getIntent().hasExtra("chatRedirect")) {
+//                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
+//                        makeScreenTransition(new ChatListingFragment());
+//                    }
+//
+//                }
             }
         });
 
