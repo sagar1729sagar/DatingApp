@@ -116,7 +116,7 @@ public class PackagesAdapter extends RecyclerView.Adapter<PackagesAdapter.MyView
                     information.setContentText("Please login or create a new account to continue");
                     information.show();
                 } else {
-                    //todo initiate order
+
                 }
             }
         });

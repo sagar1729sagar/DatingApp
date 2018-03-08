@@ -77,7 +77,7 @@ public class UpgradePackages extends Fragment {
             fetchPackages();
         }
     }
-    //todo testing paused here
+
     private void fetchPackages() {
         Log.v("fetch packages","called");
         temp_packages.clear();
