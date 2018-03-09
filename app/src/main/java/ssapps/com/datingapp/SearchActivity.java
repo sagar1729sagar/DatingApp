@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -24,6 +26,7 @@ import Models.SavedSearch;
 import Models.SearchResults;
 import Models.User;
 import Util.Prefs;
+import Util.Util;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivitySearchBinding;
 
@@ -36,6 +39,7 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
     private boolean isSearching = false;
     private boolean isFirstTime = true;
     private Prefs prefs;
+    private Util util;
 
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
@@ -78,13 +82,15 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         prefs = new Prefs(getContext());
 
         long count = User.count(User.class);
-        if (count == 0 || count == 1){
-          //  silence = false;
-            isSearching = false;
-            getData();
-        } else {
-            prepareSearchPage();
-        }
+//        if (count == 0 || count == 1){
+//          //  silence = false;
+//            isSearching = false;
+//            getData();
+//        } else {
+//            prepareSearchPage();
+//        }
+
+        prepareSearchPage();
 
         binding.submitButton.setOnClickListener(this);
 
@@ -153,23 +159,24 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
 
     private void prepareData() {
         SavedSearch searchParams = new SavedSearch();
-        searchParams.setGender(genders.get(binding.genderSearchMaterialSpinner.getSelectedIndex()));
-        searchParams.setWho_are(sexual_orientations.get(binding.whoAreMaterialSpinner.getSelectedIndex()));
-        searchParams.setLifestyle(lifestyles.get(binding.lifestyleMaterialSpinner.getSelectedIndex()));
-        searchParams.setStatus(statuses.get(binding.statusMaterialSpinner.getSelectedIndex()));
-        searchParams.setMin_age(min_ages.get(binding.ageMinMaterialSpinner.getSelectedIndex()));
-        searchParams.setMax_age(max_ages.get(binding.ageMaxMaterialSpinner.getSelectedIndex()));
-        searchParams.setCountry(countries.get(binding.countryMaterialSpinner.getSelectedIndex()));
-        searchParams.setCity(cities.get(binding.cityMaterialSpinner.getSelectedIndex()));
-        searchParams.setMiles(binding.milesEt.getText().toString());
-        searchParams.setLooking_for(relationships.get(binding.forMaterialSpinner.getSelectedIndex()));
-        searchParams.setChildren(children.get(binding.childrenMaterialSpinner.getSelectedIndex()));
-        searchParams.setSmoking(smoking.get(binding.smokingMaterialSpinner.getSelectedIndex()));
-        searchParams.setDrinking(drinking.get(binding.drinkingMaterialSpinner.getSelectedIndex()));
-        searchParams.setReligion(religion.get(binding.religionMaterialSpinner.getSelectedIndex()));
-        searchParams.setHeigh(heights.get(binding.heightMaterialSpinner.getSelectedIndex()));
-        searchParams.setHaircolor(haircolor.get(binding.hairColorMaterialSpinner.getSelectedIndex()));
-        searchParams.setEryecolor(eyecolor.get(binding.eyeColorMaterialSpinner.getSelectedIndex()));
+       // searchParams.setGender(genders.get(binding.genderSearchMaterialSpinner.getSelectedIndex()));
+      //  searchParams.setGender(binding.genderSearchMaterialSpinner.getSelectedItem().toString());
+//        searchParams.setWho_are(sexual_orientations.get(binding.whoAreMaterialSpinner.getSelectedIndex()));
+//        searchParams.setLifestyle(lifestyles.get(binding.lifestyleMaterialSpinner.getSelectedIndex()));
+//        searchParams.setStatus(statuses.get(binding.statusMaterialSpinner.getSelectedIndex()));
+//        searchParams.setMin_age(min_ages.get(binding.ageMinMaterialSpinner.getSelectedIndex()));
+//        searchParams.setMax_age(max_ages.get(binding.ageMaxMaterialSpinner.getSelectedIndex()));
+//        searchParams.setCountry(countries.get(binding.countryMaterialSpinner.getSelectedIndex()));
+//        searchParams.setCity(cities.get(binding.cityMaterialSpinner.getSelectedIndex()));
+//        searchParams.setMiles(binding.milesEt.getText().toString());
+//        searchParams.setLooking_for(relationships.get(binding.forMaterialSpinner.getSelectedIndex()));
+//        searchParams.setChildren(children.get(binding.childrenMaterialSpinner.getSelectedIndex()));
+//        searchParams.setSmoking(smoking.get(binding.smokingMaterialSpinner.getSelectedIndex()));
+//        searchParams.setDrinking(drinking.get(binding.drinkingMaterialSpinner.getSelectedIndex()));
+//        searchParams.setReligion(religion.get(binding.religionMaterialSpinner.getSelectedIndex()));
+//        searchParams.setHeigh(heights.get(binding.heightMaterialSpinner.getSelectedIndex()));
+//        searchParams.setHaircolor(haircolor.get(binding.hairColorMaterialSpinner.getSelectedIndex()));
+//        searchParams.setEryecolor(eyecolor.get(binding.eyeColorMaterialSpinner.getSelectedIndex()));
         searchParams.setOnlyOnline(binding.onlyOnlineCheckbox.isChecked());
         searchParams.setOnlyWithPic(binding.onlyPicCheckbox.isChecked());
         searchParams.setWhosNew(binding.whoNewCheckbox.isChecked());
@@ -501,25 +508,34 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
 
         }
 
-        binding.genderSearchMaterialSpinner.setItems(genders);
-        binding.whoAreMaterialSpinner.setItems(sexual_orientations);
-        binding.lifestyleMaterialSpinner.setItems(lifestyles);
-        binding.statusMaterialSpinner.setItems(statuses);
-        binding.ageMinMaterialSpinner.setItems(min_ages);
-        binding.ageMaxMaterialSpinner.setItems(max_ages);
-        binding.countryMaterialSpinner.setItems(countries);
-        binding.cityMaterialSpinner.setItems(cities);
-        binding.forMaterialSpinner.setItems(relationships);
-        binding.childrenMaterialSpinner.setItems(children);
-        binding.smokingMaterialSpinner.setItems(smoking);
-        binding.religionMaterialSpinner.setItems(religion);
-        binding.drinkingMaterialSpinner.setItems(drinking);
-        binding.heightMaterialSpinner.setItems(heights);
-        binding.hairColorMaterialSpinner.setItems(haircolor);
-        binding.eyeColorMaterialSpinner.setItems(eyecolor);
+       // binding.genderSearchMaterialSpinner.setItems(genders);
+
+//        binding.whoAreMaterialSpinner.setItems(sexual_orientations);
+//        binding.lifestyleMaterialSpinner.setItems(lifestyles);
+//        binding.statusMaterialSpinner.setItems(statuses);
+//        binding.ageMinMaterialSpinner.setItems(min_ages);
+//        binding.ageMaxMaterialSpinner.setItems(max_ages);
+//        binding.countryMaterialSpinner.setItems(countries);
+//        binding.cityMaterialSpinner.setItems(cities);
+//        binding.forMaterialSpinner.setItems(relationships);
+//        binding.childrenMaterialSpinner.setItems(children);
+//        binding.smokingMaterialSpinner.setItems(smoking);
+//        binding.religionMaterialSpinner.setItems(religion);
+//        binding.drinkingMaterialSpinner.setItems(drinking);
+//        binding.heightMaterialSpinner.setItems(heights);
+//        binding.hairColorMaterialSpinner.setItems(haircolor);
+//        binding.eyeColorMaterialSpinner.setItems(eyecolor);
 
         dialog.dismiss();
     }
+
+
+//    private void setSpinner(Spinner spinner, String[] list){
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,list);
+//        // spinner.setPadding();
+//        spinner.setPadding((int) util.convertDpToPixel(10,getApplicationContext()),0,0,0);
+//        spinner.setAdapter(adapter);
+//    }
 
 
     @Override

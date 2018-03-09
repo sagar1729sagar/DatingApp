@@ -139,7 +139,8 @@ public class MainActivity extends AppCompatActivity
         drawer.post(new Runnable() {
             @Override
             public void run() {
-                makeScreenTransition(new UpgradePackages());
+             //   makeScreenTransition(new SearchActivity());
+                makeScreenTransition(new SearchActivityNew());
 //                if (getIntent().hasExtra("redirectProfile")) {
 //                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
 //                        getSupportActionBar().setTitle("My Profile");
@@ -213,7 +214,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_search:
-                makeScreenTransition(new SearchActivity());
+               // makeScreenTransition(new SearchActivity());
                 break;
             case R.id.nav_save_search:
                 makeScreenTransition(new SavedSearchActivity());

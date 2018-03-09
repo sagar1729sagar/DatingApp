@@ -20,13 +20,33 @@
             android:textColor="@color/black"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/gender_search_material_spinner"
             android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
+        <!--<Spinner-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:background="@color/black"-->
+            <!--android:layout_marginStart="15dp"-->
+            <!--android:layout_marginEnd="15dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--/>-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,12 +56,20 @@
             android:textColor="@color/black"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/who_are_material_spinner"
             android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -52,12 +80,20 @@
             android:textColor="@color/black"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lifestyle_material_spinner"
             android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -68,23 +104,32 @@
             android:textColor="@color/black"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/status_material_spinner"
             android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_weight="1"
+            android:weightSum="1"
+            android:paddingTop="5dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
+                android:layout_weight="0.35"
                 android:orientation="vertical"
                 >
                 <TextView
@@ -96,18 +141,37 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/age_min_material_spinner"
+                    android:layout_height="50dp"
+                    android:hint="min"
                     android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:id="@+id/age_min_et"
+                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingEnd="5dp"
                     />
+                <!--<Spinner-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/age_min_material_spinner"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--style="@style/Widget.AppCompat.Spinner.Underlined"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:paddingTop="0dp"-->
+                    <!--/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25"
+                android:layout_weight="0.35"
                 android:orientation="vertical"
                 >
                 <TextView
@@ -119,18 +183,37 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/age_max_material_spinner"
+                    android:layout_height="50dp"
+                    android:hint="max"
                     android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:id="@+id/age_max_et"
+                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingEnd="5dp"
                     />
+                <!--<Spinner-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/age_max_material_spinner"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--style="@style/Widget.AppCompat.Spinner.Underlined"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:paddingTop="0dp"-->
+                    <!--/>-->
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:orientation="vertical"
                 >
                 <TextView
@@ -142,12 +225,19 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/country_material_spinner"
                     android:textColor="@color/black"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingTop="0dp"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -160,12 +250,20 @@
             android:textColor="@color/black"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:textStyle="bold"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/city_material_spinner"
             android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
     <LinearLayout
         android:layout_width="match_parent"
@@ -189,22 +287,32 @@
                 android:textColor="@color/black"
                 android:paddingLeft="20dp"
                 android:paddingStart="20dp"
-
+                android:textStyle="bold"
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="53dp"
                 android:hint="distance"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 android:id="@+id/miles_et"
+                android:inputType="number"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 />
+                <!--android:paddingLeft="20dp"-->
+                <!--android:paddingStart="20dp"-->
+                <!--android:paddingRight="5dp"-->
+                <!--android:paddingEnd="5dp"-->
+
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1"
+            android:paddingTop="5dp"
             >
         <TextView
             android:layout_width="wrap_content"
@@ -215,21 +323,28 @@
             android:textColor="@color/black"
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
-
+            android:textStyle="bold"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/for_material_spinner"
             android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
         </LinearLayout>
     </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:weightSum="2"
             android:orientation="horizontal"
+            android:paddingTop="5dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -246,19 +361,26 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/children_material_spinner"
                     android:textColor="@color/black"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingTop="0dp"
                     />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -269,26 +391,34 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/smoking_material_spinner"
                     android:textColor="@color/black"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingTop="0dp"
                     />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -299,19 +429,26 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/drinking_material_spinner"
                     android:textColor="@color/black"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingTop="0dp"
                     />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -322,12 +459,19 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/religion_material_spinner"
                     android:textColor="@color/black"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingTop="0dp"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -335,13 +479,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -352,19 +496,26 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/height_material_spinner"
+                    android:layout_height="50dp"
+                    android:hint="height"
                     android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:id="@+id/height_et"
+                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingEnd="5dp"
                     />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -375,19 +526,26 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/hair_color_material_spinner"
                     android:textColor="@color/black"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingTop="0dp"
                     />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
                 <TextView
                     android:layout_width="wrap_content"
@@ -398,19 +556,26 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"
+                    android:textStyle="bold"
                     />
-                <com.jaredrummler.materialspinner.MaterialSpinner
+                <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/eye_color_material_spinner"
                     android:textColor="@color/black"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:paddingTop="0dp"
                     />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:weightSum="3"
             android:orientation="horizontal"
             >
             <CheckBox
@@ -442,6 +607,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:weightSum="3"
             >
             <CheckBox
                 android:layout_width="match_parent"
@@ -454,7 +620,7 @@
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.33"
+                android:layout_weight="1"
                 android:text="@string/who_new"
                 android:id="@+id/who_new_checkbox"
                 android:checked="false"
