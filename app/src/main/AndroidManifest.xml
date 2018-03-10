@@ -27,11 +27,13 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".MainActivity"
@@ -78,7 +80,7 @@
         <!-- <activity android:name=".SettingsFragment" /> -->
         <!-- <activity android:name=".UpgradePackages" /> -->
         <!-- <activity android:name=".SearchActivity" /> -->
-        <activity android:name=".SearchResultsDisplayActivity" >
+        <activity android:name=".SearchResultsDisplayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -108,7 +110,8 @@
         <activity android:name=".WhosNewActivity" />
         <activity android:name=".InDepthActivity" />
         <activity android:name=".ActivityBaord" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".NormalProfileDisplay"></activity>
     </application>
 
 </manifest>
