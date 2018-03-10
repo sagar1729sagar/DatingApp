@@ -214,6 +214,8 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_search:
+                getSupportActionBar().setTitle("Search");
+                makeScreenTransition(new SearchActivityNew());
                // makeScreenTransition(new SearchActivity());
                 break;
             case R.id.nav_save_search:
