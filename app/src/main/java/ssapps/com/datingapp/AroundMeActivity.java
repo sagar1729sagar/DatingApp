@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,10 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.orm.SugarContext;
 import com.squareup.picasso.Picasso;
+import com.warkiz.widget.Indicator;
+import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.IndicatorSeekBarType;
 import com.warkiz.widget.IndicatorType;
 import com.warkiz.widget.TickType;
@@ -40,7 +44,7 @@ import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivityAroundMeBinding;
 
-public class AroundMeActivity extends Fragment implements View.OnClickListener, SeekBar.OnSeekBarChangeListener{
+public class AroundMeActivity extends Fragment implements View.OnClickListener,IndicatorSeekBar.OnSeekBarChangeListener{
 
     private static final int ACCESS_FINE_LOCATION = 1;
     private static final int LOCATION_HARDWARE = 2;
@@ -57,6 +61,8 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
     private SweetAlertDialog confirm_dialog,progress_dialog,error;
     private boolean isFirst;
     private double[] location;
+    private List<User> temp = new ArrayList<>();
+
 
     @Nullable
     @Override
@@ -68,6 +74,7 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         Backendless.initApp(getContext(),appId,appKey);
+        SugarContext.init(getContext());
             prefs = new Prefs(getContext());
 
             confirm_dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.WARNING_TYPE);
@@ -86,24 +93,45 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
         if (!prefs.getname().equals("None")){
             currentUser = User.find(User.class,"username = ?",prefs.getname()).get(0);
 
-            Picasso.with(getContext()).load(currentUser.getPhotourl()).into(binding.profileImageRounded);
+            if (currentUser.getHasPicture().equals("Yes")) {
+                Picasso.with(getContext()).load(currentUser.getPhotourl()).into(binding.profileImageRounded);
+            }
 
             binding.distanceSeekBar.getBuilder().setMax(100)
                     .setMin(0)
                     .setProgress(10)
                     .setSeekBarType(IndicatorSeekBarType.CONTINUOUS_TEXTS_ENDS)
-                    .setLeftEndText("0")
-                    .setRightEndText("100")
                     .setTickType(TickType.OVAL)
                     .setBackgroundTrackColor(getContext().getResources().getColor(R.color.leaf_green))
-                    .setIndicatorType(IndicatorType.RECTANGLE_ROUNDED_CORNER)
                     .setIndicatorColor(getContext().getResources().getColor(R.color.leaf_green))
+                    .setProgressTrackColor(getContext().getResources().getColor(R.color.leaf_green))
+                    .setThumbColor(getContext().getResources().getColor(R.color.leaf_green))
+                    .setLeftEndText("")
+                    .setRightEndText("")
+                    .clearPadding(true)
                     .apply();
 
+//            binding.distanceSeekBar = new IndicatorSeekBar.Builder(getContext())
+//                    .setMax(100)
+//                    .setMin(0)
+//                    .setProgress(10)
+//                    .setSeekBarType(IndicatorSeekBarType.CONTINUOUS_TEXTS_ENDS)
+//                    .setTickType(TickType.OVAL)
+//                    .setBackgroundTrackColor(getContext().getResources().getColor(R.color.leaf_green))
+//                    .setIndicatorType(IndicatorType.RECTANGLE_ROUNDED_CORNER)
+//                    .setIndicatorColor(getContext().getResources().getColor(R.color.leaf_green))
+//                    .setProgressTrackColor(getContext().getResources().getColor(R.color.leaf_green))
+//                    .setThumbColor(getContext().getResources().getColor(R.color.leaf_green))
+//                    .setIndicatorStay(true)
+//                    .setLeftEndText("")
+//                    .setRightEndText("")
+//                    .clearPadding(true)
+//                    .apply();
+            binding.distanceSeekBar.setPadding(0,0,0,0);
+            binding.distanceSeekBar.getBuilder().showIndicator(true).apply();
             binding.addImage.setOnClickListener(this);
             binding.subImage.setOnClickListener(this);
-
-
+            binding.distanceSeekBar.setOnSeekChangeListener(this);
 
         }
 
@@ -123,6 +151,35 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
                 confirm_dialog.dismiss();
                 progress_dialog.show();
                 isFirst = true;
+
+//                AskForLocation();
+//                currentUser.setLatitude(String.valueOf(location[0]));
+//                currentUser.setLongitude(String.valueOf(location[1]));
+//
+//                Backendless.Data.save(currentUser, new AsyncCallback<User>() {
+//                    @Override
+//                    public void handleResponse(User response) {
+//                        response.save();
+//                        if (checkForGeoPoint(currentUser)) {
+//                            initiateSearch(binding.distanceSeekBar.getProgress());
+//                        } else {
+//                            AskForLocation();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void handleFault(BackendlessFault fault) {
+//                        if (checkForGeoPoint(currentUser)) {
+//                            initiateSearch(binding.distanceSeekBar.getProgress());
+//                        } else {
+//                            AskForLocation();
+//                        }
+//                    }
+//                });
+
+
+
+
                 if (checkForGeoPoint(currentUser)) {
                     initiateSearch(binding.distanceSeekBar.getProgress());
                 } else {
@@ -188,16 +245,24 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
     }
 
     private void sortForIncognitoSetting(int progress, List<User> results) {
+        Log.v("incognito ","called");
+        // ArrayList<User> temp = new ArrayList<>();
+        temp.clear();
         for (User result:results){
             if (result.getIncognito_mode().equals("Yes")){
-                results.remove(result);
+                //results.remove(result);
+                temp.add(result);
             }
         }
-
+        if (temp.size() != 0){
+            results.removeAll(temp);
+        }
+        Log.v("incognito results", String.valueOf(results.size()));
         sortForDistance(progress,results);
     }
 
     private void sortForDistance(int progress, List<User> results) {
+        temp.clear();
         if (!prefs.getname().equals("None")){
             User user = User.find(User.class,"username = ?",prefs.getname()).get(0);
             if (checkForGeoPoint(user)){
@@ -207,13 +272,18 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
                                 Double.parseDouble(user.getLongitude()),Double.parseDouble(result.getLatitude()),
                                 Double.parseDouble(result.getLongitude()));
                         if (distance > Float.parseFloat(String.valueOf(progress))){
-                            results.remove(result);
+                            //results.remove(result);
+                            temp.add(result);
                         }
                     } else {
-                        results.remove(result);
+                       // results.remove(result);
+                        temp.add(result);
                     }
 
 
+                }
+                if (temp.size() != 0){
+                    results.removeAll(temp);
                 }
                 saveResults(results);
             } else {
@@ -274,7 +344,8 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},ACCESS_FINE_LOCATION);
             }
         } else {
-            checkForHardWarePermission();
+           // checkForHardWarePermission();
+            getGPS();
         }
     }
 
@@ -343,10 +414,11 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
         switch (requestCode){
             case ACCESS_FINE_LOCATION:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    checkForHardWarePermission();
+                    getGPS();
+                   // checkForHardWarePermission();
                 } else {
                     Toast.makeText(getContext(),"You need to give permission to access your location for others to find you",Toast.LENGTH_LONG).show();
-                    checkForFineLocationPermision();
+                 //   checkForFineLocationPermision();
                 }
                 break;
             case LOCATION_HARDWARE:
@@ -384,16 +456,18 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
     }
 
     private void setCountDownTimer() {
-        timer = new CountDownTimer(3000,500) {
+        timer = new CountDownTimer(6000,1000) {
             @Override
             public void onTick(long l) {
                 isTimerRunning = true;
+                Log.v("tick","done");
             }
 
             @Override
             public void onFinish() {
-                isTimerRunning = false;
+//                isTimerRunning = false;
                 AskForSearch();
+                Log.v("timer completed","yes");
             }
         };
 
@@ -410,7 +484,15 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
         switch (view.getId()){
             case R.id.add_image:
                 if (!(binding.distanceSeekBar.getProgress() >= 96)){
+                    Log.v("indicator", String.valueOf(binding.distanceSeekBar.getIndicator().isShowing()));
                     binding.distanceSeekBar.setProgress(binding.distanceSeekBar.getProgress() + 5);
+//                    binding.distanceSeekBar.getBuilder()
+//                            .setProgress(binding.distanceSeekBar.getProgress() + 5)
+//                            .showIndicator(true)
+//                            .apply();
+                  //  binding.distanceSeekBar.getBuilder().setIndicatorStay(true).apply();
+                    Log.v("indicator", String.valueOf(binding.distanceSeekBar.getIndicator().isShowing()));
+
                 } else {
                     binding.distanceSeekBar.setProgress(binding.distanceSeekBar.getMax());
                 }
@@ -437,9 +519,33 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
         }
     }
 
+//    @Override
+//    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+//        Log.v("On progress changed","called");
+////        if (isTimerRunning){
+////            timer.cancel();
+////            isTimerRunning = false;
+////        }
+////        if (seekBar.getProgress() != 0) {
+////            setCountDownTimer();
+////            timer.start();
+////        }
+//    }
+//
+//    @Override
+//    public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//    }
+//
+//    @Override
+//    public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//    }
+
     @Override
-    public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-        if (isTimerRunning){
+    public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
+        Log.v("on progress changed","called");
+                if (isTimerRunning){
             timer.cancel();
             isTimerRunning = false;
         }
@@ -450,12 +556,17 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
+    public void onSectionChanged(IndicatorSeekBar seekBar, int thumbPosOnTick, String textBelowTick, boolean fromUserTouch) {
 
     }
 
     @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
+    public void onStartTrackingTouch(IndicatorSeekBar seekBar, int thumbPosOnTick) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
 
     }
 }

@@ -8,10 +8,16 @@
     android:layout_height="match_parent"
     tools:context="ssapps.com.datingapp.AroundMeActivity">
 
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--&gt;-->
+
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:id="@+id/sub_image"
@@ -23,7 +29,7 @@
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:id="@+id/add_image"
@@ -32,27 +38,46 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_toRightOf="@id/sub_image"
+        android:layout_toEndOf="@id/sub_image"
+        android:layout_toLeftOf="@id/add_image"
+        android:layout_toStartOf="@id/add_image"
+        android:layout_alignBottom="@id/sub_image"
+        android:id="@+id/rl_seek_bar"
+        >
     <com.warkiz.widget.IndicatorSeekBar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_height="30dp"
         android:id="@+id/distance_seek_bar"
-        android:layout_alignBottom="@id/add_image"
-        android:layout_alignTop="@id/add_image"
-        android:layout_toRightOf="@id/sub_image"
-        android:layout_toLeftOf="@id/add_image"
-        android:layout_toStartOf="@id/sub_image"
-        android:layout_toEndOf="@id/add_image"
+        android:layout_marginTop="6dp"
+        app:isb_show_indicator="true"
+        app:isb_indicator_stay="true"
+        app:isb_indicator_type="rectangle_rounded_corner"
         />
+    <!--</RelativeLayout>-->
+    </RelativeLayout>
+        <!--android:layout_marginLeft="40dp"-->
+        <!--android:layout_marginStart="40dp"-->
+        <!--android:layout_marginRight="40dp"-->
+        <!--android:layout_marginEnd="40dp"-->
+        <!--android:id="@+id/distance_seek_bar"-->
+        <!--android:layout_alignBottom="@id/add_image"-->
+        <!--android:layout_alignTop="@id/add_image"-->
+        <!--android:layout_toRightOf="@id/sub_image"-->
+        <!--android:layout_toLeftOf="@id/add_image"-->
+        <!--android:layout_toStartOf="@id/sub_image"-->
+        <!--android:layout_toEndOf="@id/add_image"-->
+        <!--/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/distance_seek_bar"
+        android:layout_above="@id/rl_seek_bar"
         android:orientation="vertical"
+        android:gravity="center"
         >
         <com.github.siyamed.shapeimageview.RoundedImageView
             android:layout_width="100dp"
@@ -61,6 +86,7 @@
             app:siBorderColor="@color/leaf_green"
             android:id="@+id/profile_image_rounded"
             android:layout_gravity="center"
+            android:src="@drawable/fb"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -69,6 +95,7 @@
             android:textSize="15sp"
             android:textColor="@color/black"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
             />
     </LinearLayout>
 
