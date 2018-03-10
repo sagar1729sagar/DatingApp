@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private RoundedImageView halfImage;
     private TextView userName,email;
 
+
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -324,7 +325,7 @@ public class MainActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
         util.updateOnlineStatus(this, false);
-        SugarContext.terminate();
+     //   SugarContext.terminate();
     }
 
 

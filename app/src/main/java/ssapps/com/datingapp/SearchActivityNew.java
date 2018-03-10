@@ -564,7 +564,9 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
     private void sortForHeight(SavedSearch searchParams, List<User> results) {
         Float height = Float.valueOf(searchParams.getHeigh());
         temp.clear();
+        Log.v("search height", String.valueOf(height));
         for (User result:results){
+            Log.v("user height",result.getHeight_self());
             if (Float.valueOf(result.getHeight_self()) < height){
                 //results.remove(result);
                 temp.add(result);
@@ -742,4 +744,9 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
         return loc1.distanceTo(loc2);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        SugarContext.init(getContext());
+    }
 }

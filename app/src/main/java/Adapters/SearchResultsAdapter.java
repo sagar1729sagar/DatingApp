@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.siyamed.shapeimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -42,7 +43,7 @@ public class SearchResultsAdapter  extends RecyclerView.Adapter<SearchResultsAda
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         SearchResults result = results.get(position);
-        Picasso.with(context).load(result.getPhotourl()).transform(new CropSquareTransformation())
+        Picasso.with(context).load(result.getPhotourl()).transform(new CropSquareTransformation()).placeholder(context.getResources().getDrawable(R.drawable.fb))
                                 .into(holder.profile_image);
 
         if (result.getIsOnline().equals("Yes")){
@@ -66,12 +67,13 @@ public class SearchResultsAdapter  extends RecyclerView.Adapter<SearchResultsAda
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public ImageView profile_image, online_offline_image,dummy;
+        public ImageView  online_offline_image,dummy;
         public TextView details,online_offilne_text;
+        public RoundedImageView profile_image;
 
         public MyViewHolder(View view ,RecyclerViewClickListener listener){
             super(view);
-            profile_image = (ImageView)view.findViewById(R.id.circle_image);
+            profile_image = (RoundedImageView)view.findViewById(R.id.circle_image);
             online_offline_image = (ImageView)view.findViewById(R.id.online_offline_image);
             details = (TextView)view.findViewById(R.id.name_age_tv);
             online_offilne_text = (TextView)view.findViewById(R.id.online_offline_tv);
