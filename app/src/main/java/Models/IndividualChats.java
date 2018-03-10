@@ -12,8 +12,8 @@ public class IndividualChats extends SugarRecord {
     }
 
     public IndividualChats(Message message){
-        this.from = message.getFrom();
-        this.to = message.getTo();
+        this.from = message.getMessageFromn();
+        this.to = message.getMessageTo();
         this.time = Long.valueOf(message.getTime());
         this.type = message.getType();
         this.chat_message = message.getChat_message();

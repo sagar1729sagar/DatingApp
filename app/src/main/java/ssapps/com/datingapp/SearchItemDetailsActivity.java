@@ -104,8 +104,10 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
         Calendar calendar = Calendar.getInstance();
 
         final Message message = new Message();
-        message.setFrom(prefs.getname());
-        message.setTo(user.getUsername());
+//        message.setFrom(prefs.getname());
+//        message.setTo(user.getUsername());
+        message.setMessageFromn(prefs.getname());
+        message.setMessageTo(user.getUsername());
         message.setTime(String.valueOf(calendar.getTimeInMillis()));
         message.setChat_message("I found your profile interesting. I would like to get to know you more");
 

@@ -87,8 +87,10 @@ public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdap
             final Calendar calendar = Calendar.getInstance();
 
             final Message message = new Message();
-            message.setFrom(prefs.getname());
-            message.setTo(activity.getUser());
+           // message.setFrom(prefs.getname());
+        message.setMessageFromn(prefs.getname());
+         //   message.setTo(activity.getUser());
+        message.setMessageTo(activity.getUser());
             message.setTime(String.valueOf(calendar.getTimeInMillis()));
             message.setChat_message("I found your activity on "+getDate(activity.getTime())+". I would like to be part of it");
 

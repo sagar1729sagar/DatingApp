@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/saved_search_list"
-        android:divider="@color/material_blue_grey_95"
+        android:divider="@color/red"
         android:dividerHeight="3dp"
         />
 

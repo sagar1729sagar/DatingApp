@@ -137,10 +137,10 @@ public class ChatListingFragment extends Fragment{
 
       for (Message message:messageList){
           List<MessagesSorting> sortings = new ArrayList<>();
-          if (message.getFrom().equals(prefs.getname())) {
-              sortings = MessagesSorting.find(MessagesSorting.class, "from = ? or to = ?", message.getTo(), message.getTo());
-          } else if (message.getTo().equals(prefs.getname())){
-              sortings = MessagesSorting.find(MessagesSorting.class,"from = ? or to = ?",message.getFrom(),message.getFrom());
+          if (message.getMessageFromn().equals(prefs.getname())) {
+              sortings = MessagesSorting.find(MessagesSorting.class, "from = ? or to = ?", message.getMessageTo(), message.getMessageTo());
+          } else if (message.getMessageTo().equals(prefs.getname())){
+              sortings = MessagesSorting.find(MessagesSorting.class,"from = ? or to = ?",message.getMessageFromn(),message.getMessageFromn());
           }
               if (sortings.size() == 0){
                   MessagesSorting.save(new MessagesSorting(message));

@@ -154,6 +154,7 @@
                     android:paddingStart="20dp"
                     android:paddingRight="5dp"
                     android:paddingEnd="5dp"
+                    android:inputType="number"
                     />
                 <!--<Spinner-->
                     <!--android:layout_width="match_parent"-->
@@ -196,6 +197,7 @@
                     android:paddingStart="20dp"
                     android:paddingRight="5dp"
                     android:paddingEnd="5dp"
+                    android:inputType="number"
                     />
                 <!--<Spinner-->
                     <!--android:layout_width="match_parent"-->
@@ -509,6 +511,7 @@
                     android:paddingStart="20dp"
                     android:paddingRight="5dp"
                     android:paddingEnd="5dp"
+                    android:inputType="numberDecimal"
                     />
             </LinearLayout>
             <LinearLayout

@@ -179,8 +179,10 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
             binding.sendButton.setEnabled(false);
             if (util.checkEditTextField(binding.messageEt)){
                 Message message = new Message();
-                message.setFrom(loggedUser);
-                message.setTo(otherUser);
+//                message.setFrom(loggedUser);
+//                message.setTo(otherUser);
+                message.setMessageFromn(loggedUser);
+                message.setType(otherUser);
                 message.setChat_message(binding.messageEt.getText().toString());
                 message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));
                 message.setType("Chat");

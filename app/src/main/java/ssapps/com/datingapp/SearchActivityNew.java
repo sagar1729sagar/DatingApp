@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -324,7 +325,9 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
             searchParams.setOnlyWithPic(binding.onlyPicCheckbox.isChecked());
             searchParams.setWhosNew(binding.whoNewCheckbox.isChecked());
             searchParams.setIncognitoSearch(binding.incognitoCheckbox.isChecked());
+           // searchParams.setSaved_time();
             if (binding.saveSearchCheckbox.isChecked()){
+                searchParams.setSaved_time(Calendar.getInstance().getTimeInMillis());
                 searchParams.save();
             }
             sortForIncognitoSetting(searchParams,User.listAll(User.class));

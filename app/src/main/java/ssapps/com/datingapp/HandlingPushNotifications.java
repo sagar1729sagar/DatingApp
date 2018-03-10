@@ -60,8 +60,10 @@ public class HandlingPushNotifications extends BackendlessPushService {
                 Message message = new Message();
                 message.setChat_message(chat_message);
                 message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));
-                message.setTo(prefs.getname());
-                message.setFrom(title_text);
+//                message.setTo(prefs.getname());
+//                message.setFrom(title_text);
+                message.setMessageTo(prefs.getname());
+                message.setMessageFromn(title_text);
                 message.setObjectId(ticker_text);
                 message.setType("Notification");
                 message.save();

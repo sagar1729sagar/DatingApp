@@ -48,6 +48,7 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
             public void onClick(View view, int position) {
                 Log.v("click",results.get(position).getUsername());
                 SearchResults clickedUser = results.get(position);
+                Log.v("packages",clickedUser.getPackages());
                 if (clickedUser.getIsPremiumMember().equals("Yes")){
                     if (clickedUser.getPackages().contains("InDepth") || clickedUser.getPackages().contains("FullMembership")){
                         Log.v("premium ","indepth");
@@ -58,6 +59,9 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
                 } else {
                     //todo take to normal class
                     Log.v("no premium","normal");
+                    Intent i = new Intent(SearchResultsDisplayActivity.this,NormalProfileDisplay.class);
+                    i.putExtra("name",clickedUser.getUsername());
+                    startActivity(i);
                 }
 //                Intent i = new Intent(SearchResultsDisplayActivity.this,SearchItemDetailsActivity.class);
 //                i.putExtra("name",results.get(position).getUsername());
@@ -89,6 +93,8 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SugarContext.terminate();
+        //SugarContext.terminate();
     }
+
+
 }

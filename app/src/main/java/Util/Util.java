@@ -16,6 +16,7 @@ import org.json.JSONException;
 
 import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import Models.User;
 
@@ -28,6 +29,9 @@ public class Util {
 
     public float getScreenWidth(Context context){
         return context.getResources().getDisplayMetrics().widthPixels;
+    }
+    public float getScreenHeight(Context context){
+        return context.getResources().getDisplayMetrics().heightPixels;
     }
 
 
@@ -43,6 +47,41 @@ public class Util {
             return false;
         }
         return true;
+    }
+
+    public static String getTime(long time){
+
+        StringBuilder timeText = new StringBuilder(200);
+
+        Calendar calendar = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
+
+        calendar.setTimeInMillis(time);
+
+        if(calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)
+                && calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH)
+                && calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR)){
+            timeText.append("TODAY  ");
+        } else if (calendar.get(Calendar.DAY_OF_MONTH) == now.get(Calendar.DAY_OF_MONTH)-1
+                && calendar.get(Calendar.MONTH) == now.get(Calendar.MONTH)
+                && calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR)){
+            timeText.append("YESTERDAY  ");
+        }else {
+            timeText.append(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH))+"/"
+                    + String.valueOf(calendar.get(Calendar.MONTH) + 1)+"/"
+                    +String.valueOf(calendar.get(Calendar.YEAR))+"  ");
+        }
+
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= 12){
+
+            timeText.append(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)-12)+":"+String.valueOf(calendar.get(Calendar.MINUTE))+" PM");
+
+        }else{
+            timeText.append(String.valueOf(calendar.get(Calendar.HOUR_OF_DAY))+":"+String.valueOf(calendar.get(Calendar.MINUTE))+" AM");
+        }
+
+        return timeText.toString();
+
     }
 
     public boolean isNetworkAvailable(Context context) {

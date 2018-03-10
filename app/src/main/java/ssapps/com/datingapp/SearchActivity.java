@@ -6,6 +6,7 @@ import android.location.Location;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -183,6 +184,8 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
         searchParams.setIncognitoSearch(binding.incognitoCheckbox.isChecked());
         searchParams.setSaved_time(Calendar.getInstance().getTimeInMillis());
         if (binding.saveSearchCheckbox.isChecked()){
+//            Log.v("current time", String.valueOf(Calendar.getInstance().getTimeInMillis()));
+//            searchParams.setSaved_time(Calendar.getInstance().getTimeInMillis());
             searchParams.save();
         }
 

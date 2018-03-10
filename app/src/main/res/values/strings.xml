@@ -107,6 +107,7 @@
     <string name="login_with_facebook">Login with facebook</string>
     <string name="forgot_username_or_password">Forgot username or password?</string>
     <string name="dummy_name_age">name,age</string>
+    <string name="send_message">Send Message</string>
 
     <string-array name="genderArray">
         <item>@string/female</item>
