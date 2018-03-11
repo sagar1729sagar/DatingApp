@@ -19,6 +19,7 @@ import java.util.List;
 import Adapters.SearchResultsAdapter;
 import Models.SearchResults;
 import Models.User;
+import Util.Prefs;
 import ssapps.com.datingapp.databinding.ActivitySearchResultsDisplayBinding;
 
 public class SearchResultsDisplayActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
     private List<SearchResults> results = new ArrayList<>();
     private SearchResultsAdapter adapter;
     private ActivitySearchResultsDisplayBinding binding;
+    private Prefs prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_search_results_display);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_search_results_display);
         SugarContext.init(this);
+        prefs = new Prefs(this);
+
         ActionBar actionBar = getSupportActionBar();
 
         actionBar.setHomeButtonEnabled(true);
@@ -87,7 +91,12 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        this.finish();
+        if (prefs.isOnlineRedirect()){
+            prefs.setOnlineRedirect(true);
+            startActivity(new Intent(this,MainActivity.class));
+        } else {
+            this.finish();
+        }
     }
 
     @Override

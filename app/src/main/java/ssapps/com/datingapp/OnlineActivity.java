@@ -15,7 +15,9 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.orm.SugarContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Models.SearchResults;
@@ -33,6 +35,9 @@ public class OnlineActivity extends Fragment {
     private boolean isFirstIteration;
     private SweetAlertDialog dialog,error;
     private Prefs prefs;
+    private List<User> temp = new ArrayList<>();
+    private SearchResults result;
+
 
     @Nullable
     @Override
@@ -45,6 +50,7 @@ public class OnlineActivity extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
         Backendless.initApp(getContext(),appId,appKey);
+        SugarContext.init(getContext());
         prefs = new Prefs(getContext());
         dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
         dialog.setCancelable(false);
@@ -52,13 +58,8 @@ public class OnlineActivity extends Fragment {
         error = new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
 
         List<User> allUsers = User.listAll(User.class);
-        if (allUsers.size() >= 3){
-            isFirstTime = false;
-            sortData();
-        } else {
-            isFirstTime = true;
-            getData();
-        }
+       isFirstTime = true;
+        getData();
 
     }
 
@@ -113,18 +114,25 @@ public class OnlineActivity extends Fragment {
 
     private void sortData() {
         List<User> users = User.listAll(User.class);
+        temp.clear();
         for (User user:users){
             if (user.getIncognito_mode().equals("Yes") || user.getIsOnline().equals("No")){
-                users.remove(user);
+                temp.add(user);
             }
         }
+
+        users.removeAll(temp);
 
         SearchResults.deleteAll(SearchResults.class);
 
         for (User user:users){
-            new SearchResults(user).save();
+            //new SearchResults(user).save();
+            result = new SearchResults(user);
+            result.save();
         }
+        prefs.setOnlineRedirect(true);
         dialog.dismiss();
         startActivity(new Intent(getContext(),SearchResultsDisplayActivity.class));
+        getActivity().finish();
     }
 }
