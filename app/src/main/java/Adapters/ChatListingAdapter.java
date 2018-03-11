@@ -18,6 +18,7 @@ import java.util.List;
 import Models.Message;
 import Models.MessagesSorting;
 import Models.User;
+import Util.Prefs;
 import ssapps.com.datingapp.R;
 import ssapps.com.datingapp.RecyclerViewClickListener;
 
@@ -26,6 +27,7 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
     private Context context;
     private RecyclerViewClickListener mListener;
     private List<MessagesSorting> messages = new ArrayList<>();
+    private Prefs prefs;
     //private List<User> users = new ArrayList<>();
 
     public ChatListingAdapter(Context context,List<MessagesSorting> messages,RecyclerViewClickListener listener){
@@ -33,6 +35,7 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
         this.messages = messages;
      //   this.users = users;
         this.mListener = listener;
+        prefs = new Prefs(context);
     }
 
     @Override
@@ -48,25 +51,48 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
 
         MessagesSorting message = messages.get(position);
 
+        User user = new User();
 
+        if (message.getMessage_from().equals(prefs.getname())){
+            user = User.find(User.class,"username = ?",message.getMessage_to()).get(0);
+        } else if (message.getMessage_to().equals(prefs.getname())){
+            user = User.find(User.class,"username = ?",message.getMessage_from()).get(0);
+        }
 
-        User user = User.find(User.class,"username = ?",message.getFrom()).get(0);
         if (user.getHasPicture().equals("Yes")){
             Picasso.with(context).load(user.getPhotourl()).into(holder.profile_image);
         }
-        holder.name_age_tv.setText(user.getUsername()+","+user.getGender_self());
+
+        holder.name_age_tv.setText(user.getUsername());
         holder.last_message_tv.setText(message.getChat_message());
-        if (user.getIsOnline().equals("Yes")){
-            holder.online_offline_tv.setText("online");
-           // holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dot);
+        holder.last_message_time_tv.setText(getTime(message.getTime()));
+
+        if (user.getIsOnline().equals("online")){
+            holder.online_offline_tv.setText("Online");
             holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_online_dot));
-        } else if (user.getIsOnline().equals("No")){
-            holder.online_offline_tv.setText("offline");
-          //  holder.online_offline_image.setImageDrawable(R.drawable.ic_offline_dor);
+        } else  if (user.getIsOnline().equals("offline")){
             holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_offline_dor));
+            holder.online_offline_tv.setText("Offline");
         }
 
-        holder.last_message_time_tv.setText(getTime(message.getTime()));
+//        User user = User.find(User.class,"username = ?",message.getMessage_from()).get(0);
+//        if (user.getHasPicture().equals("Yes")){
+//            Picasso.with(context).load(user.getPhotourl()).into(holder.profile_image);
+//        }
+//        if (message.getMessage_from().equals())
+//        holder.name_age_tv.setText(user.getUsername()+","+user.getGender_self());
+//        holder.last_message_tv.setText(message.getChat_message());
+//        if (user.getIsOnline().equals("Yes")){
+//            holder.online_offline_tv.setText("online");
+//           // holder.online_offline_image.setImageDrawable(R.drawable.ic_online_dot);
+//            holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_online_dot));
+//        } else if (user.getIsOnline().equals("No")){
+//            holder.online_offline_tv.setText("offline");
+//          //  holder.online_offline_image.setImageDrawable(R.drawable.ic_offline_dor);
+//            holder.online_offline_image.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_offline_dor));
+//        }
+//
+//        holder.last_message_time_tv.setText(getTime(message.getTime()));
 
 
     }

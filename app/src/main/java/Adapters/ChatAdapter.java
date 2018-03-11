@@ -60,9 +60,9 @@ public class ChatAdapter extends BaseAdapter {
         toImage.setVisibility(View.GONE);
         fromImage.setVisibility(View.GONE);
         message.setVisibility(View.GONE);
-        User from = User.find(User.class,"username = ?",chat.getFrom()).get(0);
-        User to = User.find(User.class,"username = ?",chat.getTo()).get(0);
-        if (chat.getFrom().equals(prefs.getname())){
+        User from = User.find(User.class,"username = ?",chat.getMessage_from()).get(0);
+        User to = User.find(User.class,"username = ?",chat.getMessage_to()).get(0);
+        if (chat.getMessage_from().equals(prefs.getname())){
             Picasso.with(context).load(from.getPhotourl()).into(fromImage);
             message.setText(chat.getChat_message());
             message.setGravity(Gravity.RIGHT);
@@ -71,7 +71,7 @@ public class ChatAdapter extends BaseAdapter {
             message.setTextColor(R.color.white);
             fromImage.setVisibility(View.VISIBLE);
             message.setVisibility(View.VISIBLE);
-        } else if (chat.getTo().equals(prefs.getname())){
+        } else if (chat.getMessage_to().equals(prefs.getname())){
             Picasso.with(context).load(from.getPhotourl()).into(toImage);
             message.setText(chat.getChat_message());
             message.setGravity(Gravity.LEFT);

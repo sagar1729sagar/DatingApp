@@ -8,27 +8,43 @@ import com.orm.SugarRecord;
 
 public class Message extends SugarRecord {
 
-    private String messageFromn,messageTo,time,type,chat_message,objectId;
+    private String message_from,message_to,time,type,chat_message,objectId;
 
     public Message(){
 
     }
 
-    public String getMessageFromn() {
-        return messageFromn;
+    public String getMessage_from() {
+        return message_from;
     }
 
-    public void setMessageFromn(String messageFromn) {
-        this.messageFromn = messageFromn;
+    public void setMessage_from(String message_from) {
+        this.message_from = message_from;
     }
 
-    public String getMessageTo() {
-        return messageTo;
+    public String getMessage_to() {
+        return message_to;
     }
 
-    public void setMessageTo(String messageTo) {
-        this.messageTo = messageTo;
+    public void setMessage_to(String message_to) {
+        this.message_to = message_to;
     }
+
+    //    public String getMessageFromn() {
+//        return messageFromn;
+//    }
+//
+//    public void setMessageFromn(String messageFromn) {
+//        this.messageFromn = messageFromn;
+//    }
+//
+//    public String getMessageTo() {
+//        return messageTo;
+//    }
+//
+//    public void setMessageTo(String messageTo) {
+//        this.messageTo = messageTo;
+//    }
 
     //    public String getFrom() {
 //        return from;

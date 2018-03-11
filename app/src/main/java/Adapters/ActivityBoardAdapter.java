@@ -88,9 +88,9 @@ public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdap
 
             final Message message = new Message();
            // message.setFrom(prefs.getname());
-        message.setMessageFromn(prefs.getname());
+        message.setMessage_from(prefs.getname());
          //   message.setTo(activity.getUser());
-        message.setMessageTo(activity.getUser());
+        message.setMessage_to(activity.getUser());
             message.setTime(String.valueOf(calendar.getTimeInMillis()));
             message.setChat_message("I found your activity on "+getDate(activity.getTime())+". I would like to be part of it");
 

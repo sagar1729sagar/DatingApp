@@ -7,12 +7,19 @@
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_chat"
+        >
 
     <com.github.siyamed.shapeimageview.RoundedImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
         app:siBorderAlpha="0"
         android:id="@+id/profile_image_friend"
+        android:src="@drawable/fb"
+        android:layout_centerVertical="true"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -23,56 +30,60 @@
         android:layout_toRightOf="@id/profile_image_friend"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:layout_toStartOf="@id/profile_image_friend"
+        android:layout_toEndOf="@id/profile_image_friend"
+        android:text="@string/user_name"
+        android:paddingTop="5dp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/online_offline_tv"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:textColor="@color/black"
         android:textSize="12sp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
+        android:text="@string/online"
         />
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_alignTop="@id/online_offline_tv"
         android:layout_alignBottom="@id/online_offline_tv"
-        android:scaleType="fitXY"
-        android:layout_marginRight="2dp"
-        android:layout_marginEnd="2dp"
+        android:scaleType="fitCenter"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
         android:id="@+id/online_offline_image"
         android:layout_toLeftOf="@id/online_offline_tv"
+        android:layout_toStartOf="@id/online_offline_tv"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_online_dot"
+
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/profile_image_friend"
-        android:layout_toLeftOf="@id/online_offline_image"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginRight="15dp"
         android:layout_marginEnd="15dp"
         android:layout_below="@id/name_age_friend_tv"
-        android:paddingTop="5dp"
         android:id="@+id/last_message_tv"
         android:textSize="12sp"
         android:textColor="@color/black"
+        android:text="This was the last Message"
+        android:layout_alignLeft="@id/name_age_friend_tv"
+        android:layout_toLeftOf="@id/online_offline_image"
+        android:layout_toStartOf="@id/online_offline_image"
         />
+    </RelativeLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/last_message_time_tv"
         android:textSize="12sp"
-        android:layout_toLeftOf="@id/online_offline_image"
-        android:layout_toEndOf="@id/online_offline_image"
-        android:layout_toRightOf="@id/last_message_tv"
-        android:layout_toStartOf="@id/last_message_tv"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignTop="@id/last_message_tv"
+        android:layout_below="@id/rl_chat"
+        android:layout_centerHorizontal="true"
+        android:text="just now"
+        android:paddingBottom="10dp"
         />
 </RelativeLayout>

@@ -115,9 +115,9 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
 
         final Message message = new Message();
      //   message.setFrom(prefs.getname());
-        message.setMessageFromn(prefs.getname());
+        message.setMessage_from(prefs.getname());
        // message.setTo(currentUser.getUsername());
-        message.setMessageTo(currentUser.getUsername());
+        message.setMessage_to(currentUser.getUsername());
         message.setTime(String.valueOf(calendar.getTimeInMillis()));
         message.setChat_message("I found your profile interesting. I would like to get to know you more");
 

@@ -181,7 +181,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                 Message message = new Message();
 //                message.setFrom(loggedUser);
 //                message.setTo(otherUser);
-                message.setMessageFromn(loggedUser);
+                message.setMessage_from(loggedUser);
                 message.setType(otherUser);
                 message.setChat_message(binding.messageEt.getText().toString());
                 message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));

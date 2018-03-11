@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
              //   makeScreenTransition(new SearchActivity());
-                makeScreenTransition(new AroundMeActivity());
+              //  makeScreenTransition(new ChatListingFragment());
 //                if (getIntent().hasExtra("redirectProfile")) {
 //                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
 //                        getSupportActionBar().setTitle("My Profile");
