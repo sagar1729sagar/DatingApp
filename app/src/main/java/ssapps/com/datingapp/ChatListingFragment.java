@@ -99,7 +99,7 @@ public class ChatListingFragment extends Fragment{
     private void getData() {
 
         isFirstIteration = true;
-     //   String whereClause = "messageFromn = '"+prefs.getname()+"' OR messageTo = '"+prefs.getname()+"'";
+        String whereClause = "messageFromn = '"+prefs.getname()+"' OR messageTo = '"+prefs.getname()+"'";
         DataQueryBuilder query = DataQueryBuilder.create();
         query.setPageSize(100);
      //   query.setWhereClause(whereClause);
@@ -141,6 +141,7 @@ public class ChatListingFragment extends Fragment{
 
             @Override
             public void handleFault(BackendlessFault fault) {
+                Log.v("getting chats error",fault.toString());
                 if (isFirstTime){
                     dialog.dismiss();
                     error.setTitleText("Error fetching data");
@@ -287,21 +288,29 @@ public class ChatListingFragment extends Fragment{
     }
 
     private void fetchUserInfo(ArrayList<String> userList) {
+        for (String user:userList){
+            Log.v("users to be fetched",user);
+        }
         isUserFirstIteration = true;
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setPageSize(100);
 
+
         String clause = "username in (";
-        for (int i=0;i<userList.size()-1;i++){
-            if (i == 0){
-                clause = clause + "'"+userList.get(i)+"'";
-            } else if (i == userList.size()-1){
+        for (int i=0;i<userList.size();i++){
+            if (i == 0 && i == userList.size()-1 ){
+                clause = clause + "'"+userList.get(i)+"')";
+            } else if (i == 0){
+                clause = clause + "'"+userList.get(i)+"')";
+            }
+              else if (i == userList.size()-1){
                 clause = clause + ",'"+userList.get(i)+"')";
             } else {
                 clause = clause + ",'"+userList.get(i)+"'";
             }
         }
 
+        Log.v("whereclause",clause);
         queryBuilder.setWhereClause(clause);
 
         pullUserData(queryBuilder);
@@ -314,13 +323,18 @@ public class ChatListingFragment extends Fragment{
         Backendless.Data.find(User.class, queryBuilder, new AsyncCallback<List<User>>() {
             @Override
             public void handleResponse(List<User> response) {
+                Log.v("rresponse received", String.valueOf(response.size()));
                 if (isUserFirstIteration)  {
+                    User loggedUser = User.find(User.class,"username = ?",prefs.getname()).get(0);
                     intr_users = User.listAll(User.class);
                     User.deleteAll(User.class);
+                    loggedUser.save();
                     isUserFirstIteration = false;
                 }
                 if (response.size() != 0){
                     User.saveInTx(response);
+                    Log.v("saved user",response.get(0).getUsername());
+                    Log.v("user count", String.valueOf(User.count(User.class)));
                     queryBuilder.prepareNextPage();
                     pullUserData(queryBuilder);
                 } else {
@@ -333,6 +347,7 @@ public class ChatListingFragment extends Fragment{
 
             @Override
             public void handleFault(BackendlessFault fault) {
+                Log.v("fetching users error",fault.toString());
                 if (isFirstTime){
                     dialog.dismiss();
                     error.show();
@@ -360,13 +375,18 @@ public class ChatListingFragment extends Fragment{
                 @Override
                 public void onClick(View view, int position) {
                     Log.v("get position", String.valueOf(position));
-//                    Intent i = new Intent(getContext(),ChatActivity.class);
+                    Intent i = new Intent(getContext(),ChatActivity.class);
+                    if (messages.get(position).getMessage_from().equals(prefs.getname())){
+                        i.putExtra("user",messages.get(position).getMessage_to());
+                    } else {
+                        i.putExtra("user",messages.get(position).getMessage_from());
+                    }
 //                    if (messages.get(position).getMessageFromn().equals(prefs.getname())){
 //                        i.putExtra("user",messages.get(position).getMessageTo());
 //                    } else if (messages.get(position).getMessageTo().equals(prefs.getname())){
 //                        i.putExtra("user",messages.get(position).getMessageFromn());
 //                    }
-//                    startActivity(i);
+                    startActivity(i);
                 }
             };
 

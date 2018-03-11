@@ -5,7 +5,7 @@ import com.orm.SugarRecord;
 import java.util.List;
 
 public class IndividualChats extends SugarRecord {
-    private String message_from,message_to,type,chat_message,object_id;
+    private String message_from,message_to,type,chat_message,objectId;
     Long time;
     public IndividualChats(){
 
@@ -17,7 +17,7 @@ public class IndividualChats extends SugarRecord {
         this.time = Long.valueOf(message.getTime());
         this.type = message.getType();
         this.chat_message = message.getChat_message();
-        this.object_id = message.getObjectId();
+        this.objectId = message.getObjectId();
     }
 
     public String getMessage_from() {
@@ -68,13 +68,21 @@ public class IndividualChats extends SugarRecord {
         this.chat_message = chat_message;
     }
 
-    public String getObject_id() {
-        return object_id;
+    public String getObjectId() {
+        return objectId;
     }
 
-    public void setObject_id(String object_id) {
-        this.object_id = object_id;
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
     }
+
+    //    public String getObject_id() {
+//        return object_id;
+//    }
+//
+//    public void setObject_id(String object_id) {
+//        this.object_id = object_id;
+//    }
 
     public Long getTime() {
         return time;

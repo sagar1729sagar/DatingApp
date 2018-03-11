@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.siyamed.shapeimageview.BubbleImageView;
@@ -57,29 +58,42 @@ public class ChatAdapter extends BaseAdapter {
         BubbleImageView toImage = (BubbleImageView)view.findViewById(R.id.to_image);
         BubbleImageView fromImage = (BubbleImageView)view.findViewById(R.id.from_image);
         TextView message = (TextView)view.findViewById(R.id.chat_tv);
-        toImage.setVisibility(View.GONE);
-        fromImage.setVisibility(View.GONE);
+        RelativeLayout rl = (RelativeLayout)view.findViewById(R.id.tv_rl);
+        toImage.setVisibility(View.INVISIBLE);
+        fromImage.setVisibility(View.INVISIBLE);
         message.setVisibility(View.GONE);
+        rl.setVisibility(View.GONE);
         User from = User.find(User.class,"username = ?",chat.getMessage_from()).get(0);
         User to = User.find(User.class,"username = ?",chat.getMessage_to()).get(0);
         if (chat.getMessage_from().equals(prefs.getname())){
-            Picasso.with(context).load(from.getPhotourl()).into(fromImage);
+            if (from.getHasPicture().equals("Yes")) {
+                Picasso.with(context).load(from.getPhotourl()).into(fromImage);
+            }
             message.setText(chat.getChat_message());
-            message.setGravity(Gravity.RIGHT);
-            message.setGravity(Gravity.END);
-            message.setBackgroundColor(R.color.leaf_green);
-            message.setTextColor(R.color.white);
+            rl.setGravity(Gravity.RIGHT);
+            rl.setGravity(Gravity.END);
+//            message.setGravity(Gravity.LEFT);
+//            message.setGravity(Gravity.START);
+//            message.setGravity(Gravity.RIGHT);
+//            message.setGravity(Gravity.END);
+          //  message.setBackgroundColor(context.getResources().getColor(R.color.leaf_green));
+            message.setTextColor(context.getResources().getColor(R.color.black));
             fromImage.setVisibility(View.VISIBLE);
             message.setVisibility(View.VISIBLE);
+            rl.setVisibility(View.VISIBLE);
         } else if (chat.getMessage_to().equals(prefs.getname())){
-            Picasso.with(context).load(from.getPhotourl()).into(toImage);
+            if (to.getHasPicture().equals("Yes")) {
+                Picasso.with(context).load(from.getPhotourl()).into(toImage);
+            }
             message.setText(chat.getChat_message());
-            message.setGravity(Gravity.LEFT);
-            message.setGravity(Gravity.START);
-            message.setBackgroundColor(R.color.white);
-            message.setTextColor(R.color.black);
+//            message.setGravity(Gravity.LEFT);
+//            message.setGravity(Gravity.START);
+            rl.setGravity(Gravity.LEFT);
+            rl.setGravity(Gravity.START);
+            message.setTextColor(context.getResources().getColor(R.color.black));
             toImage.setVisibility(View.VISIBLE);
             message.setVisibility(View.VISIBLE);
+            rl.setVisibility(View.VISIBLE);
         }
 
         return view;

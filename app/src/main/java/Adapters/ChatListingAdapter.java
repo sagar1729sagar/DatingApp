@@ -2,6 +2,7 @@ package Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
         User user = new User();
 
         if (message.getMessage_from().equals(prefs.getname())){
+            Log.v("user to find",message.getMessage_to());
             user = User.find(User.class,"username = ?",message.getMessage_to()).get(0);
         } else if (message.getMessage_to().equals(prefs.getname())){
             user = User.find(User.class,"username = ?",message.getMessage_from()).get(0);
