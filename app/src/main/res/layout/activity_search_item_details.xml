@@ -98,7 +98,7 @@
         android:background="@color/leaf_green"
         android:textSize="15sp"
         android:textColor="@color/white"
-
+        android:text="Contact"
         />
 
     <Button

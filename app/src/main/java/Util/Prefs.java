@@ -15,6 +15,7 @@ public class Prefs {
     private static final String TEMP_EMAIL = "tempEmail";
     private static final  String SEARCH_REDIRECT = "searchRedirect";
     private static final String ONLINE_REDIRECT = "onlineRedirect";
+    private static final String IN_DEPTH_REDIRECT = "indepthRedrect";
     public Prefs(Context context){
         this.context=context;
         prefs = context.getSharedPreferences(PREF_NAME,PVT_MODE);
@@ -64,5 +65,13 @@ public class Prefs {
 
     public boolean isOnlineRedirect(){
         return prefs.getBoolean(ONLINE_REDIRECT,false);
+    }
+    public void  setIndepthRedirect(boolean redirect){
+        editor.putBoolean(IN_DEPTH_REDIRECT,false);
+        editor.commit();
+    }
+
+    public boolean isIndeothRedirect(){
+        return  prefs.getBoolean(IN_DEPTH_REDIRECT,true);
     }
 }

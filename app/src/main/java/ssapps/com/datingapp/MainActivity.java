@@ -141,21 +141,24 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run() {
              //   makeScreenTransition(new SearchActivity());
-              //  makeScreenTransition(new ChatListingFragment());
-//                if (getIntent().hasExtra("redirectProfile")) {
-//                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
-//                        getSupportActionBar().setTitle("My Profile");
-//                        makeScreenTransition(new ProfileFragment());
-//                    }
-//                } else if (getIntent().hasExtra("SettingsRedirect")) {
-//                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
-//                        makeScreenTransition(new UpgradePackages());
-//                    }
-//                } else if (getIntent().hasExtra("chatRedirect")) {
-//                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
-//                        makeScreenTransition(new ChatListingFragment());
-//                    }
-//
+                //makeScreenTransition(new InDepthActivity());
+                if (getIntent().hasExtra("redirectProfile")) {
+                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
+                        getSupportActionBar().setTitle("My Profile");
+                        makeScreenTransition(new ProfileFragment());
+                    }
+                } else if (getIntent().hasExtra("SettingsRedirect")) {
+                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
+                        makeScreenTransition(new UpgradePackages());
+                    }
+                } else if (getIntent().hasExtra("chatRedirect")) {
+                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
+                        makeScreenTransition(new ChatListingFragment());
+                    } else if(prefs.isIndeothRedirect()){
+                    makeScreenTransition(new InDepthActivity());
+                    }
+                }
+
 //                }
             }
         });

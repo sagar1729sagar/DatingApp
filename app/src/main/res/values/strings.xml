@@ -108,6 +108,17 @@
     <string name="forgot_username_or_password">Forgot username or password?</string>
     <string name="dummy_name_age">name,age</string>
     <string name="send_message">Send Message</string>
+    <string name="h">Left header</string>
+    <string name="headiing">headiing</string>
+    <string name="basib_intro">basib intro</string>
+    <string name="random">do wyou wan tt o kno</string>
+    <string name="vid">video</string>
+    <string name="contact">Contact</string>
+    <string name="newvid">add new video</string>
+    <string name="v">Add a video</string>
+    <string name="new_vid">Add a new video</string>
+    <string name="please_upload_your_video_to_youtube_and_enter_copy_paste_the_url_in_the_box_below">Please upload your video to youTube and enter(COPY/PASTE) the URL in the box below</string>
+
 
     <string-array name="genderArray">
         <item>@string/female</item>
