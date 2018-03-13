@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity
         util.updateOnlineStatus(this, true);
 
         prefs = new Prefs(this);
+
 
 
         // updateOnlineStatus();
@@ -142,6 +144,7 @@ public class MainActivity extends AppCompatActivity
             public void run() {
              //   makeScreenTransition(new SearchActivity());
                 //makeScreenTransition(new InDepthActivity());
+                Log.v("Indepth redirecrt", String.valueOf(prefs.isIndeothRedirect()));
                 if (getIntent().hasExtra("redirectProfile")) {
                     if (getIntent().getBooleanExtra("redirectProfile", false)) {
                         getSupportActionBar().setTitle("My Profile");
@@ -154,9 +157,13 @@ public class MainActivity extends AppCompatActivity
                 } else if (getIntent().hasExtra("chatRedirect")) {
                     if (getIntent().getBooleanExtra("chatRedirect", false)) {
                         makeScreenTransition(new ChatListingFragment());
-                    } else if(prefs.isIndeothRedirect()){
-                    makeScreenTransition(new InDepthActivity());
                     }
+                } else if(prefs.isIndeothRedirect()){
+                    prefs.setIndepthRedirect(false);
+                    makeScreenTransition(new InDepthActivity());
+                }
+                else {
+                    makeScreenTransition(new SearchActivityNew());
                 }
 
 //                }
@@ -200,7 +207,24 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        switch (id){
+            case R.id.add_new:
+                //todo intent to a new page to add new activity
+                break;
+            case R.id.refresh_activities:
+                //todo refresh user activities
+                break;
+            case R.id.saved_activities:
+                //todo display saved activities
+                break;
+            case R.id.search_activities:
+                //todo go to search page
+                break;
+        }
 
+//        if (id == R.id.add_new){
+//            Log.v("add new","clicked");
+//        } else
         //noinspection SimplifiableIfStatement
 //        if (id == R.id.action_settings) {
 //            return true;
@@ -215,6 +239,13 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        if (item.getItemId() == R.id.nav_activity_board){
+            prefs.setActivity_Redirect(true);
+            supportInvalidateOptionsMenu();
+        } else {
+            prefs.setActivity_Redirect(false);
+            supportInvalidateOptionsMenu();
+        }
 
         switch (id){
             case R.id.nav_search:
@@ -362,5 +393,21 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
 
+        if (prefs.isActivityRedirect()){
+            menu.findItem(R.id.add_new).setVisible(true);
+            menu.findItem(R.id.refresh_activities).setVisible(true);
+            menu.findItem(R.id.saved_activities).setVisible(true);
+            menu.findItem(R.id.search_activities).setVisible(true);
+        } else {
+            menu.findItem(R.id.add_new).setVisible(false);
+            menu.findItem(R.id.refresh_activities).setVisible(false);
+            menu.findItem(R.id.saved_activities).setVisible(false);
+            menu.findItem(R.id.search_activities).setVisible(false);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
 }

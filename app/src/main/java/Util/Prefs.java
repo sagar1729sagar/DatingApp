@@ -3,6 +3,8 @@ package Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import Models.SearchResults;
+
 public class Prefs {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
@@ -16,6 +18,7 @@ public class Prefs {
     private static final  String SEARCH_REDIRECT = "searchRedirect";
     private static final String ONLINE_REDIRECT = "onlineRedirect";
     private static final String IN_DEPTH_REDIRECT = "indepthRedrect";
+    private static final String ACTIVITY_REDIRECT= "activityRedirect";
     public Prefs(Context context){
         this.context=context;
         prefs = context.getSharedPreferences(PREF_NAME,PVT_MODE);
@@ -67,11 +70,21 @@ public class Prefs {
         return prefs.getBoolean(ONLINE_REDIRECT,false);
     }
     public void  setIndepthRedirect(boolean redirect){
-        editor.putBoolean(IN_DEPTH_REDIRECT,false);
+        editor.putBoolean(IN_DEPTH_REDIRECT,redirect);
         editor.commit();
     }
 
     public boolean isIndeothRedirect(){
-        return  prefs.getBoolean(IN_DEPTH_REDIRECT,true);
+        return  prefs.getBoolean(IN_DEPTH_REDIRECT,false);
     }
+
+    public void setActivity_Redirect(boolean redirect){
+        editor.putBoolean(ACTIVITY_REDIRECT,redirect);
+        editor.commit();
+    }
+
+    public boolean isActivityRedirect(){
+        return prefs.getBoolean(ACTIVITY_REDIRECT,false);
+    }
+
 }

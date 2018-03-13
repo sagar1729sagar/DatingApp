@@ -118,6 +118,8 @@
     <string name="v">Add a video</string>
     <string name="new_vid">Add a new video</string>
     <string name="please_upload_your_video_to_youtube_and_enter_copy_paste_the_url_in_the_box_below">Please upload your video to youTube and enter(COPY/PASTE) the URL in the box below</string>
+    <string name="add_activity">Add activity</string>
+    <string name="refrest_activities">refrest_activities</string>
 
 
     <string-array name="genderArray">

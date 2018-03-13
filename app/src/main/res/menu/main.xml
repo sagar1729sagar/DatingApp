@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!--<item-->
-        <!--android:id="@+id/action_settings"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:title="@string/action_settings"-->
-        <!--app:showAsAction="never" />-->
+
+    <item
+        android:id="@+id/search_activities"
+        android:orderInCategory="0"
+        android:title="@string/refrest_activities"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_search_activity"
+        />
+
+    <item
+        android:id="@+id/saved_activities"
+        android:orderInCategory="0"
+        android:title="@string/refrest_activities"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_saved_activites"
+        />
+    <item
+        android:id="@+id/refresh_activities"
+        android:orderInCategory="0"
+        android:title="@string/refrest_activities"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_refresh"
+        />
+    <item android:id="@+id/add_new"
+        android:orderInCategory="0"
+        android:title="@string/add_activity"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_add_activity"
+        />
+
 </menu>

@@ -60,6 +60,8 @@ public class InDepthActivity extends Fragment implements YouTubePlayer.OnInitial
         prefs = new Prefs(getContext());
         util = new Util();
 
+
+
         error = new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
         dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
         dialog.setCancelable(false);
@@ -141,7 +143,8 @@ public class InDepthActivity extends Fragment implements YouTubePlayer.OnInitial
                 dialog.dismiss();
                 loggedUser.update();
                 Log.v("user check",User.find(User.class,"username = ?",prefs.getname()).get(0).getVideoUrl());
-                prefs.setOnlineRedirect(true);
+                prefs.setIndepthRedirect(true);
+                Log.v("indepth redirect", String.valueOf(prefs.isIndeothRedirect()));
                 startActivity(new Intent(getContext(),MainActivity.class));
             }
 

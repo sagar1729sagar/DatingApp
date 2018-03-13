@@ -4,7 +4,7 @@ import com.orm.SugarRecord;
 
 public class Activity extends SugarRecord {
 
-    private String subject,date,postedTime,location,description,user,objectId,hasPicture,pictureUrl;
+    private String subject,date,postedTime,location,description,user,hasPicture,pictureUrl,objectId;
     private Long time;
 
     public Activity(){
@@ -90,4 +90,6 @@ public class Activity extends SugarRecord {
     public void setTime(Long time) {
         this.time = time;
     }
+
+
 }
