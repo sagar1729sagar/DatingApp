@@ -28,24 +28,22 @@
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
-             <!--<intent-filter>-->
-             <!--<action android:name="android.intent.action.MAIN" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-             <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/MainTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-
-
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SignInChooserActivity"
@@ -81,11 +79,13 @@
         <!-- <activity android:name=".UpgradePackages" /> -->
         <!-- <activity android:name=".SearchActivity" /> -->
         <activity android:name=".SearchResultsDisplayActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".SearchItemDetailsActivity" />
 
@@ -111,7 +111,8 @@
         <activity android:name=".InDepthActivity" />
         <activity android:name=".ActivityBaord" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".NormalProfileDisplay"></activity>
+        <activity android:name=".NormalProfileDisplay" />
+        <activity android:name=".ActivitySearch"></activity>
     </application>
 
 </manifest>

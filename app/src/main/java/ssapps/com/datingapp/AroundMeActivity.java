@@ -516,7 +516,10 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener,I
                     binding.distanceSeekBar.setProgress(binding.distanceSeekBar.getMin());
                 }
                 break;
+
+
         }
+
     }
 
 //    @Override
