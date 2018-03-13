@@ -2,6 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -122,6 +125,7 @@
             android:text="@string/please_upload_your_video_to_youtube_and_enter_copy_paste_the_url_in_the_box_below"
             android:textColor="@color/black"
             android:textSize="12sp"
+            android:visibility="gone"
             />
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -130,6 +134,10 @@
             android:layout_below="@id/instruction_tv"
             android:id="@+id/url_layout"
             android:visibility="gone"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
             >
             <EditText
                 android:layout_width="match_parent"
@@ -175,4 +183,5 @@
 
 
     </RelativeLayout>
+    </ScrollView>
 </layout>

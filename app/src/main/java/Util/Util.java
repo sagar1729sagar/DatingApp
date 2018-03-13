@@ -168,4 +168,11 @@ public class Util {
         return px;
     }
 
+    public String extractYouTubeURL(String url){
+
+        int stasrtIndex = url.indexOf("?v=");
+       // return String.valueOf(stasrtIndex);
+        return url.substring(stasrtIndex+3);
+    }
+
 }

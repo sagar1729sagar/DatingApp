@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,14 +106,18 @@ public class InDepthActivity extends Fragment implements YouTubePlayer.OnInitial
             binding.addVideoButtom.setText(R.string.v);
         }
 
+
+
         binding.addVideoButtom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (binding.urlLayout.getVisibility() == View.GONE) {
                     binding.urlLayout.setVisibility(View.VISIBLE);
+                    binding.instructionTv.setVisibility(View.VISIBLE);
                     binding.addVideoButtom.setText(R.string.save);
                 } else {
                     if (util.checkEditTextField(binding.urlEt)){
+                        Log.v("extracted String",util.extractYouTubeURL(binding.urlEt.getText().toString().trim()));
                         saveData();
                     } else {
                         Toast.makeText(getContext(),"Please enter the video url",Toast.LENGTH_SHORT).show();
@@ -127,19 +132,22 @@ public class InDepthActivity extends Fragment implements YouTubePlayer.OnInitial
 
         dialog.setTitle("Saving...");
         dialog.show();
-        loggedUser.setVideoUrl(binding.urlEt.getText().toString().trim());
+        loggedUser.setVideoUrl(util.extractYouTubeURL(binding.urlEt.getText().toString()));
        // loggedUser.update();
         Backendless.Data.save(loggedUser, new AsyncCallback<User>() {
             @Override
             public void handleResponse(User response) {
+                Log.v("user","updated");
                 dialog.dismiss();
                 loggedUser.update();
+                Log.v("user check",User.find(User.class,"username = ?",prefs.getname()).get(0).getVideoUrl());
                 prefs.setOnlineRedirect(true);
                 startActivity(new Intent(getContext(),MainActivity.class));
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
+                Log.v("user","update failed" + fault.toString());
                 dialog.dismiss();
                 error.setTitle("Cannot save data");
                 error.setContentText("The following error has occured while saving user data \n"+fault.getMessage()+"\n Please try again");
