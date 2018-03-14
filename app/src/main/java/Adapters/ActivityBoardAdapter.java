@@ -68,116 +68,149 @@ public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdap
         holder.date.setText(getDate(activity.getTime()));
         holder.location.setText(activity.getCity()+","+activity.getCountry());
         if (activity.getHasPicture().equals("Yes")){
-            Picasso.with(context).load(activity.getPictureUrl()).into(holder.picture);
+            Picasso.with(context).load(activity.getPictureUrl()).placeholder(context.getResources().getDrawable(R.drawable.fb)).into(holder.picture);
         }
         holder.description.setText(activity.getDescription());
         holder.owner.setText(activity.getUser());
 
-        holder.contact_Button.setOnClickListener(new View.OnClickListener() {
+        holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                contactPerson(activity);
+                removeItem(activity);
             }
         });
+
+
+
+//        holder.contact_Button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                contactPerson(activity);
+//            }
+//        });
     }
 
-    private void contactPerson(final Activity activity) {
+    private void removeItem(final Activity activity) {
+        dialog.setTitle("Removing activity");
+        dialog.show();
 
-
-            final Calendar calendar = Calendar.getInstance();
-
-            final Message message = new Message();
-           // message.setFrom(prefs.getname());
-        message.setMessage_from(prefs.getname());
-         //   message.setTo(activity.getUser());
-        message.setMessage_to(activity.getUser());
-            message.setTime(String.valueOf(calendar.getTimeInMillis()));
-            message.setChat_message("I found your activity on "+getDate(activity.getTime())+". I would like to be part of it");
-
-           // dialog.setTitleText("Sending message...");
-            dialog.show();
-
-            Backendless.Data.save(message, new AsyncCallback<Message>() {
-                @Override
-                public void handleResponse(Message response) {
-                   //  dialog.dismiss();
-                    response.save();
-                    contact_message = response;
-                    //sendNotification(activity);
-                    checkPushNotificationRegistration(activity);
-                   // Toast.makeText(context,"Notification sent sucessfully. Please check in chats",Toast.LENGTH_LONG).show();
-                }
-
-                @Override
-                public void handleFault(BackendlessFault fault) {
-                    dialog.dismiss();
-                    error.setTitleText("Error sending messge");
-                    error.setContentText("The following error has occured while sending message\n"+
-                            fault.getMessage()+"\n Please try again");
-                    error.show();
-                }
-            });
-
-
-    }
-
-    private void checkPushNotificationRegistration(final Activity activity) {
-        Backendless.Messaging.getDeviceRegistration(new AsyncCallback<DeviceRegistration>() {
+        Backendless.Persistence.of(Activity.class).remove(activity, new AsyncCallback<Long>() {
             @Override
-            public void handleResponse(DeviceRegistration response) {
-                if (response.getChannels().contains(prefs.getname())){
-                    sendNotification(activity);
-                } else {
-                    registerDevice(activity);
-                }
+            public void handleResponse(Long response) {
+                dialog.dismiss();
+                activity.delete();
+                activities.remove(activity);
+                notifyDataSetChanged();
             }
 
             @Override
             public void handleFault(BackendlessFault fault) {
-                //do nothing
                 dialog.dismiss();
-                Toast.makeText(context,"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+                error.setTitle("Error occured");
+                error.setContentText("The following error occured while trying to remove the object\n"+fault.getMessage()+"\n Please try again");
+                error.show();
             }
         });
+
     }
 
-    private void registerDevice(final Activity activity) {
-        Backendless.Messaging.registerDevice(GCM_SENDER_ID, prefs.getname(), new AsyncCallback<Void>() {
-            @Override
-            public void handleResponse(Void response) {
-                sendNotification(activity);
-            }
+//    private void contactPerson(final Activity activity) {
+//
+//
+//            final Calendar calendar = Calendar.getInstance();
+//
+//            final Message message = new Message();
+//           // message.setFrom(prefs.getname());
+//        message.setMessage_from(prefs.getname());
+//         //   message.setTo(activity.getUser());
+//        message.setMessage_to(activity.getUser());
+//            message.setTime(String.valueOf(calendar.getTimeInMillis()));
+//            message.setChat_message("I found your activity on "+getDate(activity.getTime())+". I would like to be part of it");
+//
+//           // dialog.setTitleText("Sending message...");
+//            dialog.show();
+//
+//            Backendless.Data.save(message, new AsyncCallback<Message>() {
+//                @Override
+//                public void handleResponse(Message response) {
+//                   //  dialog.dismiss();
+//                    response.save();
+//                    contact_message = response;
+//                    //sendNotification(activity);
+//                    checkPushNotificationRegistration(activity);
+//                   // Toast.makeText(context,"Notification sent sucessfully. Please check in chats",Toast.LENGTH_LONG).show();
+//                }
+//
+//                @Override
+//                public void handleFault(BackendlessFault fault) {
+//                    dialog.dismiss();
+//                    error.setTitleText("Error sending messge");
+//                    error.setContentText("The following error has occured while sending message\n"+
+//                            fault.getMessage()+"\n Please try again");
+//                    error.show();
+//                }
+//            });
+//
+//
+//    }
 
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                //do nothing
-                dialog.dismiss();
-                Toast.makeText(context,"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+//    private void checkPushNotificationRegistration(final Activity activity) {
+//        Backendless.Messaging.getDeviceRegistration(new AsyncCallback<DeviceRegistration>() {
+//            @Override
+//            public void handleResponse(DeviceRegistration response) {
+//                if (response.getChannels().contains(prefs.getname())){
+//                    sendNotification(activity);
+//                } else {
+//                    registerDevice(activity);
+//                }
+//            }
+//
+//            @Override
+//            public void handleFault(BackendlessFault fault) {
+//                //do nothing
+//                dialog.dismiss();
+//                Toast.makeText(context,"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
-    private void sendNotification(Activity activity) {
-        PublishOptions publishOptions = new PublishOptions();
-        publishOptions.putHeader("android-ticker-text", contact_message.getObjectId());
-        publishOptions.putHeader("android-content-title", prefs.getname());
-        publishOptions.putHeader("android-content-text", "About activity on "+getDate(activity.getTime()));
+//    private void registerDevice(final Activity activity) {
+//        Backendless.Messaging.registerDevice(GCM_SENDER_ID, prefs.getname(), new AsyncCallback<Void>() {
+//            @Override
+//            public void handleResponse(Void response) {
+//                sendNotification(activity);
+//            }
+//
+//            @Override
+//            public void handleFault(BackendlessFault fault) {
+//                //do nothing
+//                dialog.dismiss();
+//                Toast.makeText(context,"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
-        Backendless.Messaging.publish(prefs.getname(), "message", publishOptions, new AsyncCallback<MessageStatus>() {
-            @Override
-            public void handleResponse(MessageStatus response) {
-                dialog.dismiss();
-                Toast.makeText(context,"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                //do nothing
-                dialog.dismiss();
-                Toast.makeText(context,"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
-            }
-        });
-    }
+//    private void sendNotification(Activity activity) {
+//        PublishOptions publishOptions = new PublishOptions();
+//        publishOptions.putHeader("android-ticker-text", contact_message.getObjectId());
+//        publishOptions.putHeader("android-content-title", prefs.getname());
+//        publishOptions.putHeader("android-content-text", "About activity on "+getDate(activity.getTime()));
+//
+//        Backendless.Messaging.publish(prefs.getname(), "message", publishOptions, new AsyncCallback<MessageStatus>() {
+//            @Override
+//            public void handleResponse(MessageStatus response) {
+//                dialog.dismiss();
+//                Toast.makeText(context,"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void handleFault(BackendlessFault fault) {
+//                //do nothing
+//                dialog.dismiss();
+//                Toast.makeText(context,"Message sent successfully. Please check in chats",Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
 
     private String getDate(Long time) {
@@ -195,8 +228,8 @@ public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdap
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         public TextView subject,date,location,description,owner;
-        public ImageView picture;
-        public Button contact_Button;
+        public ImageView picture,remove;
+       // public Button contact_Button;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -207,7 +240,8 @@ public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdap
             picture = (ImageView)itemView.findViewById(R.id.activiy_picture);
             description = (TextView)itemView.findViewById(R.id.acitivity_description);
             owner = (TextView)itemView.findViewById(R.id.activity_owner);
-            contact_Button = (Button)itemView.findViewById(R.id.contact_button);
+            remove = (ImageView)itemView.findViewById(R.id.remoove_button);
+           // contact_Button = (Button)itemView.findViewById(R.id.contact_button);
         }
     }
 

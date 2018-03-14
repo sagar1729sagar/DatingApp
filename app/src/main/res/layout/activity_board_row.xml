@@ -3,13 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="@color/white"
     android:clickable="true"
     android:focusable="true"
     android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
+    android:layout_margin="5dp"
     >
     <TextView
         android:layout_width="wrap_content"
@@ -32,6 +30,9 @@
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/subject_name"
         android:layout_toEndOf="@id/subject_name"
+        android:text="@string/picnic"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -55,6 +56,10 @@
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/date_name"
         android:layout_toEndOf="@id/date_name"
+        android:text="@string/date"
+        android:layout_below="@id/subject_tv"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -78,17 +83,23 @@
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/location_name"
         android:layout_toEndOf="@id/location_name"
+        android:layout_below="@id/date_name"
+        android:text="@string/loc"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
         />
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:scaleType="fitXY"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="5dp"
         android:layout_marginEnd="5dp"
         android:id="@+id/activiy_picture"
+        android:src="@drawable/fb"
+        android:layout_marginTop="10dp"
         />
 
     <TextView
@@ -101,6 +112,8 @@
         android:layout_below="@id/activiy_picture"
         android:textSize="15sp"
         android:textColor="@color/black"
+        android:text="@string/desc"
+
         />
 
     <TextView
@@ -113,6 +126,7 @@
         android:layout_marginStart="3dp"
         android:id="@+id/activity_owner"
         android:layout_alignParentEnd="true"
+        android:layout_below="@id/acitivity_description"
         />
 
     <TextView
@@ -123,17 +137,64 @@
         android:layout_toLeftOf="@id/activity_owner"
         android:layout_alignTop="@id/activity_owner"
         android:text="@string/posted_by"
+        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:id="@+id/poseted_by"
         />
 
-    <Button
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit"
-        android:textColor="@color/white"
-        android:background="@color/leaf_green"
-        android:layout_margin="10dp"
-        android:layout_below="@id/activity_owner"
-        android:id="@+id/contact_button"
+        android:src="@drawable/ic_remove"
+        android:layout_below="@id/poseted_by"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/remoove_button"
+        android:layout_marginTop="10dp"
         />
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_below="@id/poseted_by"-->
+        <!--android:weightSum="1"-->
+        <!--&gt;-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:background="@color/leaf_green"-->
+            <!--android:text="@string/contact"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:id="@+id/contact_button"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_marginEnd="5dp"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:background="@color/leaf_green"-->
+            <!--android:text="save for alter"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:id="@+id/save_button"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--/>-->
+    <!--</LinearLayout>-->
+
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/submit"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:background="@color/leaf_green"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:layout_below="@id/activity_owner"-->
+        <!--android:id="@+id/contact_button"-->
+        <!--/>-->
 
 </RelativeLayout>

@@ -319,6 +319,8 @@ public class ChatListingFragment extends Fragment{
     }
 
     private void pullUserData(final DataQueryBuilder queryBuilder) {
+        dialog.setTitle("Getting user info");
+        dialog.show();
 
         Backendless.Data.find(User.class, queryBuilder, new AsyncCallback<List<User>>() {
             @Override
@@ -338,6 +340,7 @@ public class ChatListingFragment extends Fragment{
                     queryBuilder.prepareNextPage();
                     pullUserData(queryBuilder);
                 } else {
+                    dialog.dismiss();
                     intr_users.clear();
                   //  sortChatsWithTime();
                     buildView();
@@ -348,6 +351,10 @@ public class ChatListingFragment extends Fragment{
             @Override
             public void handleFault(BackendlessFault fault) {
                 Log.v("fetching users error",fault.toString());
+                error.setTitle("Poor internet connection");
+                error.setContentText("Cannot pull all user data.Please visit this page again when you have good internet connection to avoid unwanted crashes");
+                error.show();
+                dialog.dismiss();
                 if (isFirstTime){
                     dialog.dismiss();
                     error.show();

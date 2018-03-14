@@ -174,7 +174,8 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 } else if (!util.checkEditTextField(binding.descriptionEt)){
                     binding.descriptionLayout.setError("Please enter a descriotn of the activity you are planning");
                 } else if (!isDateSelected){
-                    Toast.makeText(getApplicationContext(),"Please select a date",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Pl" +
+                            "ease select a date",Toast.LENGTH_LONG).show();
                 } else if (bitmap == null && firstPress){
                     firstPress = false;
                     Toast.makeText(getApplicationContext(),"You didnot select a picture.If you wish to continue without picture, please submit again",Toast.LENGTH_LONG).show();
@@ -220,7 +221,8 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         activity.setDescription(binding.descriptionEt.getText().toString());
         if (hasPicture){
             activity.setHasPicture("Yes");
-            activity.setPictureUrl("https://api.backendless.com/"+appId+"/v1/files/activities/"+picName+".png");
+            activity.setPictureUrl("https://api.backendless.com/"+appId+"/934C0B5C-A231-E928-FF37-655A05A3AB00/files/activities/"+picName+".png");
+          //  currentuser.setPhotourl("https://api.backendless.com/648D896E-EDD8-49C8-FF74-2F1C32DB7A00/934C0B5C-A231-E928-FF37-655A05A3AB00/files/"+binding.username.getText().toString()+"/1.png");
         } else {
             activity.setHasPicture("No");
             activity.setPictureUrl("None");

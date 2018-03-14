@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -50,6 +51,14 @@ public class ActivityBaord extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        activities.clear();
+        activities.addAll(Activity.listAll(Activity.class));
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         dialog = new SweetAlertDialog(getContext(),SweetAlertDialog.PROGRESS_TYPE);
         dialog.setTitleText("Contacting...");
@@ -57,6 +66,20 @@ public class ActivityBaord extends Fragment {
         error = new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
         Backendless.initApp(getContext(),appId,appKey);
         SugarContext.init(getContext());
+
+        if (Activity.count(Activity.class) == 0){
+            Toast.makeText(getContext(),"No activites by you",Toast.LENGTH_LONG).show();
+        } else {
+            activities = Activity.listAll(Activity.class);
+            adapter = new ActivityBoardAdapter(getContext(),activities);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+            binding.activityList.setLayoutManager(layoutManager);
+            binding.activityList.setItemAnimator(new DefaultItemAnimator());
+            binding.activityList.setAdapter(adapter);
+        }
+
+
+
 
 //        if (Activity.count(Activity.class) == 0){
 //            isFirstTime = true;
@@ -70,72 +93,72 @@ public class ActivityBaord extends Fragment {
 //        }
 
     }
-
-    private void getData() {
-        isFirstIteration = true;
-        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
-        queryBuilder.setWhereClause("time after "+Calendar.getInstance().getTimeInMillis());
-        queryBuilder.setPageSize(100);
-        pullData(queryBuilder);
-    }
-
-    private void pullData(final DataQueryBuilder queryBuilder) {
-        Backendless.Data.find(Activity.class, queryBuilder, new AsyncCallback<List<Activity>>() {
-            @Override
-            public void handleResponse(List<Activity> response) {
-                if (isFirstIteration){
-                    intr_activites = Activity.listAll(Activity.class);
-                    Activity.deleteAll(Activity.class);
-                    isFirstIteration = false;
-                }
-                if (response.size() != 0){
-                    Activity.saveInTx(response);
-                    queryBuilder.prepareNextPage();
-                    pullData(queryBuilder);
-                } else {
-                    intr_activites.clear();
-                    intr_activites = Activity.listAll(Activity.class);
-                    activities.clear();
-                    activities = Activity.findWithQuery(Activity.class, "SELECT * FROM Activity " +
-                            "WHERE time > " + Calendar.getInstance().getTimeInMillis() + " ORDER BY time DESC");
-                    setView();
-                }
-            }
-
-            @Override
-            public void handleFault(BackendlessFault fault) {
-                if (isFirstTime){
-                    dialog.dismiss();
-                    error.setTitleText("Error fetching data");
-                    error.setContentText("The foloowing error occured while fetching data\n"+fault.getMessage()+"\n Please try again");
-                    error.show();
-                } else if (!isFirstTime && !isFirstIteration){
-                    Activity.deleteAll(Activity.class);
-                    Activity.saveInTx(intr_activites);
-                    activities.clear();
-                    activities = Activity.findWithQuery(Activity.class, "SELECT * FROM Activity " +
-                            "WHERE time > " + Calendar.getInstance().getTimeInMillis() + " ORDER BY time DESC");
-                    setView();
-                }
-            }
-        });
-    }
-
-    private void setView() {
-        if (isFirstTime) {
-            activities = Activity.findWithQuery(Activity.class, "SELECT * FROM Activity " +
-                    "WHERE time > " + Calendar.getInstance().getTimeInMillis() + " ORDER BY time DESC");
-            adapter = new ActivityBoardAdapter(getContext(), activities);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-            binding.activityList.setLayoutManager(layoutManager);
-            binding.activityList.setItemAnimator(new DefaultItemAnimator());
-            binding.activityList.setAdapter(adapter);
-        } else {
-            activities.clear();
-            activities = Activity.findWithQuery(Activity.class, "SELECT * FROM Activity " +
-                    "WHERE time > " + Calendar.getInstance().getTimeInMillis() + " ORDER BY time DESC");
-            adapter.notifyDataSetChanged();
-            binding.activityList.notify();
-        }
-    }
+//
+//    private void getData() {
+//        isFirstIteration = true;
+//        DataQueryBuilder queryBuilder = DataQueryBuilder.create();
+//        queryBuilder.setWhereClause("time after "+Calendar.getInstance().getTimeInMillis());
+//        queryBuilder.setPageSize(100);
+//        pullData(queryBuilder);
+//    }
+//
+//    private void pullData(final DataQueryBuilder queryBuilder) {
+//        Backendless.Data.find(Activity.class, queryBuilder, new AsyncCallback<List<Activity>>() {
+//            @Override
+//            public void handleResponse(List<Activity> response) {
+//                if (isFirstIteration){
+//                    intr_activites = Activity.listAll(Activity.class);
+//                    Activity.deleteAll(Activity.class);
+//                    isFirstIteration = false;
+//                }
+//                if (response.size() != 0){
+//                    Activity.saveInTx(response);
+//                    queryBuilder.prepareNextPage();
+//                    pullData(queryBuilder);
+//                } else {
+//                    intr_activites.clear();
+//                    intr_activites = Activity.listAll(Activity.class);
+//                    activities.clear();
+//                    activities = Activity.findWithQuery(Activity.class, "SELECT * FROM Activity " +
+//                            "WHERE time > " + Calendar.getInstance().getTimeInMillis() + " ORDER BY time DESC");
+//                    setView();
+//                }
+//            }
+//
+//            @Override
+//            public void handleFault(BackendlessFault fault) {
+//                if (isFirstTime){
+//                    dialog.dismiss();
+//                    error.setTitleText("Error fetching data");
+//                    error.setContentText("The foloowing error occured while fetching data\n"+fault.getMessage()+"\n Please try again");
+//                    error.show();
+//                } else if (!isFirstTime && !isFirstIteration){
+//                    Activity.deleteAll(Activity.class);
+//                    Activity.saveInTx(intr_activites);
+//                    activities.clear();
+//                    activities = Activity.findWithQuery(Activity.class, "SELECT * FROM Activity " +
+//                            "WHERE time > " + Calendar.getInstance().getTimeInMillis() + " ORDER BY time DESC");
+//                    setView();
+//                }
+//            }
+//        });
+//    }
+//
+//    private void setView() {
+//        if (isFirstTime) {
+//            activities = Activity.findWithQuery(Activity.class, "SELECT * FROM Activity " +
+//                    "WHERE time > " + Calendar.getInstance().getTimeInMillis() + " ORDER BY time DESC");
+//            adapter = new ActivityBoardAdapter(getContext(), activities);
+//            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+//            binding.activityList.setLayoutManager(layoutManager);
+//            binding.activityList.setItemAnimator(new DefaultItemAnimator());
+//            binding.activityList.setAdapter(adapter);
+//        } else {
+//            activities.clear();
+//            activities = Activity.findWithQuery(Activity.class, "SELECT * FROM Activity " +
+//                    "WHERE time > " + Calendar.getInstance().getTimeInMillis() + " ORDER BY time DESC");
+//            adapter.notifyDataSetChanged();
+//            binding.activityList.notify();
+//        }
+//    }
 }
