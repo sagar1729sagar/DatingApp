@@ -115,7 +115,7 @@
         <activity android:name=".ActivitySearch" />
         <activity android:name=".AddActivity" />
         <activity android:name=".RefreshActivitiesActivity" />
-        <activity android:name=".SearchActivityResultsDisplay"></activity>
+        <activity android:name=".ActivitiesResults"></activity>
     </application>
 
 </manifest>

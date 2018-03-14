@@ -278,7 +278,7 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void geToNextPage() {
-        startActivity(new Intent(ActivitySearch.this,SearchActivityResultsDisplay.class));
+        startActivity(new Intent(ActivitySearch.this,ActivitiesResults.class));
     }
 
     private void displayDatePicker() {
