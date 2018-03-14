@@ -113,7 +113,8 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".NormalProfileDisplay" />
         <activity android:name=".ActivitySearch" />
-        <activity android:name=".AddActivity"></activity>
+        <activity android:name=".AddActivity" />
+        <activity android:name=".RefreshActivitiesActivity"></activity>
     </application>
 
 </manifest>
