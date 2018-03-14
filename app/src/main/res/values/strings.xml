@@ -125,6 +125,9 @@
     <string name="or_select_date">..or select date</string>
     <string name="rad">Radius</string>
     <string name="select_date">Select Date</string>
+    <string name="picnic">Picnic</string>
+    <string name="desc">Description</string>
+    <string name="select_a_picture">Select a picture</string>
 
 
     <string-array name="genderArray">
