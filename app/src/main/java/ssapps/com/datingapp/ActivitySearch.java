@@ -1,8 +1,10 @@
 package ssapps.com.datingapp;
 
 import android.databinding.DataBindingUtil;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -61,16 +63,30 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
             loggedUser = User.find(User.class,"username = ?",prefs.getname()).get(0);
         }
 
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
         setCountrySpinner();
         setCitiesSpinner();
         binding.countrySpinner.setOnItemSelectedListener(this);
         setSeekbar();
+
+        binding.seekBar.setPadding(0,0,0,0);
+        binding.seekBar.getBuilder().showIndicator(true).apply();
 
 
         Calendar c = Calendar.getInstance();
         day = c.get(Calendar.DAY_OF_MONTH);
         month = c.get(Calendar.MONTH);
         year = c.get(Calendar.YEAR);
+
+        binding.addImage.setOnClickListener(this);
+        binding.subImage.setOnClickListener(this);
+        binding.selectDateButton.setOnClickListener(this);
+        binding.searchButton.setOnClickListener(this);
 
     }
 
@@ -160,14 +176,14 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
                     binding.seekBar.setProgress(binding.seekBar.getMax());
                 }
                 break;
-            case R.is.sub_image:
+            case R.id.sub_image:
                 if (!(binding.seekBar.getProgress() <= 4)){
                     binding.seekBar.setProgress(binding.seekBar.getProgress() - 5);
                 } else {
                     binding.seekBar.setProgress(binding.seekBar.getMin());
                 }
                 break;
-            case R.id.select_date_button :
+            case R.id.select_date_Button :
                 displayDatePicker();
                 break;
             case R.id.search_button:
@@ -180,10 +196,10 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
     private void displayDatePicker() {
         new SpinnerDatePickerDialogBuilder()
                 .context(this)
-                .callback(ActivitySearch.this)
-                .spinnerTheme(R.style.spinnerTheme)
-                .maxDate(day,month,year+5)
-                .minDate(day,month,year)
+                .callback(this)
+                .spinnerTheme(R.style.NumberPickerStyle)
+                .maxDate(year+5,month,day)
+                .minDate(year,month,day)
                 .build()
                 .show();
 
@@ -192,6 +208,7 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
+        Log.v("On date set","called");
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
         calendar.set(Calendar.MONTH,monthOfYear);
@@ -202,7 +219,22 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
 
         time = calendar.getTimeInMillis();
 
+        binding.dateDisplayTv.setText(String.valueOf(dayOfMonth)+"/"+String.valueOf(monthOfYear+1)+"/"+String.valueOf(year));
 
 
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

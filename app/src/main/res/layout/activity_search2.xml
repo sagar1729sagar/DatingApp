@@ -70,6 +70,7 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         android:id="@+id/all_checkbox"
+        android:layout_below="@id/date_tv"
         />
 
     <TextView
@@ -107,6 +108,8 @@
       android:textColor="@color/white"
       android:background="@color/leaf_green"
       android:id="@+id/select_date_Button"
+     android:paddingLeft="10dp"
+     android:paddingRight="10dp"
      />
   <TextView
       android:layout_width="wrap_content"
@@ -118,6 +121,8 @@
       android:id="@+id/date_display_tv"
       android:textColor="@color/black"
       android:textSize="15sp"
+      android:text="@string/dd_mm_yyyy"
+      android:layout_centerVertical="true"
       />
  </RelativeLayout>
   <TextView
@@ -177,6 +182,7 @@
         app:isb_indicator_type="rectangle_rounded_corner"
         app:isb_indicator_text_color="@color/white"
         app:isb_indicator_color="@color/leaf_green"
+        app:isb_track_progress_bar_color="@color/leaf_green"
         app:isb_min="0"
         app:isb_max="100"
         app:isb_thumb_color="@color/leaf_green"
@@ -197,6 +203,7 @@
        android:background="@color/leaf_green"
        android:layout_below="@id/seek_rl"
        android:id="@+id/search_button"
+       android:layout_marginTop="15dp"
        />
 
 </RelativeLayout>

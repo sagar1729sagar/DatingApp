@@ -128,6 +128,11 @@
     <string name="picnic">Picnic</string>
     <string name="desc">Description</string>
     <string name="select_a_picture">Select a picture</string>
+    <string name="refresh_activities">Refresh activities</string>
+    <string name="saved_activities">Saved activities</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="select_pic">Select pic</string>
+    <string name="subject_like_picnic">Subject (like picnic)</string>
 
 
     <string-array name="genderArray">

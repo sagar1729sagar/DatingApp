@@ -5,7 +5,7 @@
     <item
         android:id="@+id/search_activities"
         android:orderInCategory="0"
-        android:title="@string/refrest_activities"
+        android:title="@string/search"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_search_activity"
         />
@@ -13,14 +13,14 @@
     <item
         android:id="@+id/saved_activities"
         android:orderInCategory="0"
-        android:title="@string/refrest_activities"
+        android:title="@string/saved_activities"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_saved_activites"
         />
     <item
         android:id="@+id/refresh_activities"
         android:orderInCategory="0"
-        android:title="@string/refrest_activities"
+        android:title="@string/refresh_activities"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_refresh"
         />

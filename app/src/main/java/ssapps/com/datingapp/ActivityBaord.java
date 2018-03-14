@@ -16,6 +16,7 @@ import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
+import com.orm.SugarContext;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -55,17 +56,18 @@ public class ActivityBaord extends Fragment {
         dialog.setCancelable(false);
         error = new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
         Backendless.initApp(getContext(),appId,appKey);
+        SugarContext.init(getContext());
 
-        if (Activity.count(Activity.class) == 0){
-            isFirstTime = true;
-            getData();
-        } else {
-            isFirstTime = false;
-            setView();
-
-
-
-        }
+//        if (Activity.count(Activity.class) == 0){
+//            isFirstTime = true;
+//            getData();
+//        } else {
+//            isFirstTime = false;
+//            setView();
+//
+//
+//
+//        }
 
     }
 

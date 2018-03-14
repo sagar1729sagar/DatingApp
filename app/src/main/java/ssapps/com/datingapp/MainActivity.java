@@ -142,6 +142,17 @@ public class MainActivity extends AppCompatActivity
         drawer.post(new Runnable() {
             @Override
             public void run() {
+
+//                if (item.getItemId() == R.id.nav_activity_board){
+//                    prefs.setActivity_Redirect(true);
+//                    supportInvalidateOptionsMenu();
+//                } else {
+//                    prefs.setActivity_Redirect(false);
+//                    supportInvalidateOptionsMenu();
+//                }
+
+                prefs.setActivity_Redirect(false);
+                supportInvalidateOptionsMenu();
              //   makeScreenTransition(new SearchActivity());
                 //makeScreenTransition(new InDepthActivity());
                 Log.v("Indepth redirecrt", String.valueOf(prefs.isIndeothRedirect()));
@@ -210,15 +221,18 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.add_new:
                 //todo intent to a new page to add new activity
+                startActivity(new Intent(MainActivity.this,AddActivity.class));
                 break;
             case R.id.refresh_activities:
                 //todo refresh user activities
                 break;
             case R.id.saved_activities:
                 //todo display saved activities
+
                 break;
             case R.id.search_activities:
                 //todo go to search page
+                startActivity(new Intent(MainActivity.this,ActivitySearch.class));
                 break;
         }
 

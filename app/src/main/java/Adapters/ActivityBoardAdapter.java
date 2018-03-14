@@ -66,7 +66,7 @@ public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdap
         final Activity activity = activities.get(position);
         holder.subject.setText(activity.getSubject());
         holder.date.setText(getDate(activity.getTime()));
-        holder.location.setText(activity.getLocation());
+        holder.location.setText(activity.getCity()+","+activity.getCountry());
         if (activity.getHasPicture().equals("Yes")){
             Picasso.with(context).load(activity.getPictureUrl()).into(holder.picture);
         }

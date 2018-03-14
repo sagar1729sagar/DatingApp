@@ -4,7 +4,7 @@ import com.orm.SugarRecord;
 
 public class Activity extends SugarRecord {
 
-    private String subject,date,postedTime,location,description,user,hasPicture,pictureUrl,objectId;
+    private String subject,dateActivity,postedTime,city,country,description,user,hasPicture,pictureUrl,objectId;
     private Long time;
 
     public Activity(){
@@ -19,12 +19,21 @@ public class Activity extends SugarRecord {
         this.subject = subject;
     }
 
-    public String getDate() {
-        return date;
+//    public String getDate() {
+//        return date;
+//    }
+//
+//    public void setDate(String date) {
+//        this.date = date;
+//    }
+
+
+    public String getDateActivity() {
+        return dateActivity;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateActivity(String dateActivity) {
+        this.dateActivity = dateActivity;
     }
 
     public String getPostedTime() {
@@ -35,12 +44,29 @@ public class Activity extends SugarRecord {
         this.postedTime = postedTime;
     }
 
-    public String getLocation() {
-        return location;
+//    public String getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(String location) {
+//        this.location = location;
+//    }
+
+
+    public String getCity() {
+        return city;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getDescription() {
