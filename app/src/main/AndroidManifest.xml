@@ -114,7 +114,8 @@
         <activity android:name=".NormalProfileDisplay" />
         <activity android:name=".ActivitySearch" />
         <activity android:name=".AddActivity" />
-        <activity android:name=".RefreshActivitiesActivity"></activity>
+        <activity android:name=".RefreshActivitiesActivity" />
+        <activity android:name=".SearchActivityResultsDisplay"></activity>
     </application>
 
 </manifest>

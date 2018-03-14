@@ -62,6 +62,7 @@ public class RefreshActivitiesActivity extends AppCompatActivity {
                 if (isFIrstIteration){
                     activities = Activity.listAll(Activity.class);
                     Activity.deleteAll(Activity.class);
+                    isFIrstIteration = false;
                 }
                 if (response.size() != 0){
                     Activity.saveInTx(response);
