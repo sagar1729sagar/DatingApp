@@ -2,6 +2,7 @@ package ssapps.com.datingapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -48,6 +49,7 @@ public class RefreshActivitiesActivity extends AppCompatActivity {
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setPageSize(100);
         queryBuilder.setWhereClause("user = '"+prefs.getname()+"'");
+        queryBuilder.addSortBy("time DESC");
 
         pullData(queryBuilder);
 
@@ -65,10 +67,17 @@ public class RefreshActivitiesActivity extends AppCompatActivity {
                     isFIrstIteration = false;
                 }
                 if (response.size() != 0){
-                    Activity.saveInTx(response);
+                    Log.v("response size", String.valueOf(response.size()));
+                    for (Activity activity:response){
+                        activity.setId(Activity.count(Activity.class)+1);
+                        activity.save();
+                    }
+                  //  Activity.saveInTx(response);
+                    Log.v("activity count", String.valueOf(Activity.count(Activity.class)));
                     queryBuilder.prepareNextPage();
                     pullData(queryBuilder);
                 } else {
+                    Log.v("response size", String.valueOf(response.size()));
                     finish();
                 }
             }

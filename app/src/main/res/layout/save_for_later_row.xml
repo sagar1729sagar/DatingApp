@@ -143,58 +143,69 @@
         />
 
     <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/ic_remove"-->
-        <!--android:layout_below="@id/poseted_by"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:layout_marginEnd="10dp"-->
-        <!--android:id="@+id/remoove_button"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--/>-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@drawable/ic_remove"-->
+    <!--android:layout_below="@id/poseted_by"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginEnd="10dp"-->
+    <!--android:id="@+id/remoove_button"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--/>-->
 
-    <LinearLayout
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_below="@id/poseted_by"-->
+        <!--android:weightSum="1"-->
+        <!--&gt;-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:background="@color/leaf_green"-->
+            <!--android:text="@string/contact"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:id="@+id/contact_button"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_marginEnd="5dp"-->
+            <!--/>-->
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:background="@color/leaf_green"-->
+            <!--android:text="save for alter"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:id="@+id/save_button"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--/>-->
+    <!--</LinearLayout>-->
+
+    <Button
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="horizontal"
-    android:layout_below="@id/poseted_by"
-    android:weightSum="1"
-    >
-    <Button
-    android:layout_width="wrap_content"
-    android:layout_height="35dp"
-    android:layout_weight="0.5"
-    android:background="@color/leaf_green"
     android:text="@string/contact"
     android:textColor="@color/white"
-    android:id="@+id/contact_button"
-    android:layout_marginRight="5dp"
-    android:layout_marginEnd="5dp"
-    />
-    <Button
-    android:layout_width="wrap_content"
-    android:layout_height="35dp"
-    android:layout_weight="0.5"
     android:background="@color/leaf_green"
-    android:text="save for alter"
-    android:textColor="@color/white"
-    android:id="@+id/save_button"
-    android:layout_marginLeft="5dp"
-    android:layout_marginStart="5dp"
+    android:layout_margin="10dp"
+    android:layout_below="@id/activity_owner"
+    android:id="@+id/contact_button"
     />
-    </LinearLayout>
-
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="@string/submit"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:background="@color/leaf_green"-->
-    <!--android:layout_margin="10dp"-->
-    <!--android:layout_below="@id/activity_owner"-->
-    <!--android:id="@+id/contact_button"-->
-    <!--/>-->
+    <ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_remove"
+    android:layout_below="@id/contact_button"
+    android:layout_alignParentRight="true"
+    android:layout_marginRight="10dp"
+    android:layout_marginEnd="10dp"
+    android:id="@+id/remoove_button"
+    android:layout_marginTop="10dp"
+    />
 
 </RelativeLayout>

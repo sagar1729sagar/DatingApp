@@ -69,6 +69,8 @@ public class ActivityBoardAdapter extends RecyclerView.Adapter<ActivityBoardAdap
         holder.location.setText(activity.getCity()+","+activity.getCountry());
         if (activity.getHasPicture().equals("Yes")){
             Picasso.with(context).load(activity.getPictureUrl()).placeholder(context.getResources().getDrawable(R.drawable.fb)).into(holder.picture);
+        } else {
+            holder.picture.setImageDrawable(context.getResources().getDrawable(R.drawable.fb));
         }
         holder.description.setText(activity.getDescription());
         holder.owner.setText(activity.getUser());

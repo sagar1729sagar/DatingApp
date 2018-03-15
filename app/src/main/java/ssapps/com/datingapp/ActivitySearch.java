@@ -219,8 +219,17 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
         dialog.show();
         DataQueryBuilder query = DataQueryBuilder.create();
         query.setPageSize(100);
-        query.setWhereClause("city = '"+binding.citySpinner.getSelectedItem().toString()+"' and country = '"
-                +binding.countrySpinner.getSelectedItem().toString()+"' and time after "+time);
+        if (binding.allCheckbox.isChecked()) {
+            query.setWhereClause("city = '" + binding.citySpinner.getSelectedItem().toString() + "' and country = '"
+                    + binding.countrySpinner.getSelectedItem().toString() + "' and time >= " + Calendar.getInstance().getTimeInMillis());
+        } else {
+        query.setWhereClause("city = '" + binding.citySpinner.getSelectedItem().toString() + "' and country = '"
+                + binding.countrySpinner.getSelectedItem().toString() + "' and time >= " + time);
+    }
+      //  query.setWhereClause("country = '"+binding.countrySpinner.getSelectedItem().toString()+"' and city = '"
+       //         +binding.citySpinner.getSelectedItem().toString()+"'");
+      //  query.setWhereClause("time after "+time);
+        Log.v("query",query.getWhereClause());
         pullData(query,true);
     }
 
@@ -231,6 +240,7 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
                 if (isFIrstIteration){
                     SearchedActivities.deleteAll(SearchedActivities.class);
                 }
+                Log.v("response size", String.valueOf(response.size()));
                 if (response.size() != 0){
                     for (Activity activity:response){
                         temp = new SearchedActivities(activity);
@@ -278,6 +288,7 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void geToNextPage() {
+        dialog.dismiss();
         startActivity(new Intent(ActivitySearch.this,ActivitiesResults.class));
     }
 

@@ -18,6 +18,7 @@ import com.backendless.async.callback.AsyncCallback;
 import com.backendless.exceptions.BackendlessFault;
 import com.backendless.persistence.DataQueryBuilder;
 import com.orm.SugarContext;
+import com.orm.query.Select;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,6 +42,7 @@ public class ActivityBaord extends Fragment {
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
     private boolean isFirstTime,isFirstIteration;
     private List<Activity> intr_activites = new ArrayList<>();
+    private boolean isAffliated = false;
 
     @Nullable
     @Override
@@ -55,7 +57,15 @@ public class ActivityBaord extends Fragment {
         super.onResume();
         activities.clear();
         activities.addAll(Activity.listAll(Activity.class));
-        adapter.notifyDataSetChanged();
+        if (isAffliated) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isAffliated = true;
     }
 
     @Override
@@ -69,7 +79,14 @@ public class ActivityBaord extends Fragment {
 
         if (Activity.count(Activity.class) == 0){
             Toast.makeText(getContext(),"No activites by you",Toast.LENGTH_LONG).show();
+            activities = Activity.listAll(Activity.class);
+            adapter = new ActivityBoardAdapter(getContext(),activities);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+            binding.activityList.setLayoutManager(layoutManager);
+            binding.activityList.setItemAnimator(new DefaultItemAnimator());
+            binding.activityList.setAdapter(adapter);
         } else {
+           // activities = Select.from(Activity.class).orderBy("time DESC").list();
             activities = Activity.listAll(Activity.class);
             adapter = new ActivityBoardAdapter(getContext(),activities);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

@@ -29,6 +29,20 @@ public class SavedActivities extends SugarRecord {
         this.time = activity.getTime();
     }
 
+    public SavedActivities(SearchedActivities activity){
+        this.subject = activity.getSubject();
+        this.dateActivity = activity.getDateActivity();
+        this.postedTime = activity.getPostedTime();
+        this.city = activity.getCity();
+        this.country = activity.getCountry();
+        this.description = activity.getDescription();
+        this.user = activity.getUser();
+        this.hasPicture = activity.getHasPicture();
+        this.pictureUrl = activity.getPictureUrl();
+        this.objectId = activity.getObjectId();
+        this.time = activity.getTime();
+    }
+
     public String getSubject() {
         return subject;
     }
