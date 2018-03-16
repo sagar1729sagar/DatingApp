@@ -140,7 +140,8 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
                         newMessage.setType("chat");
                         newMessage.setTime(String.valueOf(response.get(i).getTimestamp()));
                         newMessage.setChat_message(response.get(i).getHeaders().get(ANDROID_CONTENT_TEXT));
-                        newMessage.setObjectId(response.get(i).getData().toString());
+                        newMessage.setObjectId(response.get(i).getData().toString().substring(response.get(i).getData().toString().indexOf(",")+1));
+                        Log.v("obj",response.get(i).getData().toString().substring(response.get(i).getData().toString().indexOf(",")+1));
 
                         newMessage.save();
 
@@ -369,7 +370,7 @@ public class ChatActivity extends AppCompatActivity implements View.OnClickListe
         publishOptions.putHeader("android-content-title", otherUser);
         publishOptions.putHeader("android-content-text", message.getChat_message());
 
-        Backendless.Messaging.publish(otherUser, message.getObjectId(), publishOptions, new AsyncCallback<MessageStatus>() {
+        Backendless.Messaging.publish(otherUser, "chat,"+message.getObjectId(), publishOptions, new AsyncCallback<MessageStatus>() {
             @Override
             public void handleResponse(MessageStatus response) {
                 //do nothing

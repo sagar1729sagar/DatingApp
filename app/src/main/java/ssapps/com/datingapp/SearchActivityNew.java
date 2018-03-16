@@ -229,6 +229,7 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
         Backendless.Data.find(User.class, query, new AsyncCallback<List<User>>() {
             @Override
             public void handleResponse(List<User> response) {
+                Log.v("response size", String.valueOf(response.size()));
                 if (isFirstIteration){
                     isFirstIteration = false;
                     if (prefs.getname().equals("None")){
@@ -241,7 +242,11 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
                 }
 
                 if (response.size() != 0){
-                    User.saveInTx(response);
+                    for (User person:response){
+                        person.setId(User.count(User.class) + 1);
+                        person.save();
+                    }
+                   // User.saveInTx(response);
                     query.prepareNextPage();
                     pullData(query);
                 } else {

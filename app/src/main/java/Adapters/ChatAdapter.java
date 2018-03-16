@@ -2,6 +2,7 @@ package Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +64,7 @@ public class ChatAdapter extends BaseAdapter {
         fromImage.setVisibility(View.INVISIBLE);
         message.setVisibility(View.GONE);
         rl.setVisibility(View.GONE);
+        Log.v("user chat",chat.getMessage_from());
         User from = User.find(User.class,"username = ?",chat.getMessage_from()).get(0);
         User to = User.find(User.class,"username = ?",chat.getMessage_to()).get(0);
         if (chat.getMessage_from().equals(prefs.getname())){

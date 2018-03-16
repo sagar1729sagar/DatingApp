@@ -99,10 +99,11 @@ public class ChatListingFragment extends Fragment{
     private void getData() {
 
         isFirstIteration = true;
-        String whereClause = "messageFromn = '"+prefs.getname()+"' OR messageTo = '"+prefs.getname()+"'";
+        String whereClause = "message_from = '"+prefs.getname()+"' or message_to = '"+prefs.getname()+"'";
         DataQueryBuilder query = DataQueryBuilder.create();
         query.setPageSize(100);
-     //   query.setWhereClause(whereClause);
+       query.setWhereClause(whereClause);
+       Log.v("chats clause",whereClause);
 
         pullData(query);
 
@@ -294,19 +295,22 @@ public class ChatListingFragment extends Fragment{
         isUserFirstIteration = true;
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
         queryBuilder.setPageSize(100);
+        String clause;
 
-
-        String clause = "username in (";
-        for (int i=0;i<userList.size();i++){
-            if (i == 0 && i == userList.size()-1 ){
-                clause = clause + "'"+userList.get(i)+"')";
-            } else if (i == 0){
-                clause = clause + "'"+userList.get(i)+"')";
-            }
-              else if (i == userList.size()-1){
-                clause = clause + ",'"+userList.get(i)+"')";
-            } else {
-                clause = clause + ",'"+userList.get(i)+"'";
+        if (userList.size() == 1){
+            clause = "username = '"+userList.get(0)+"'";
+        } else {
+            clause = "username in (";
+            for (int i = 0; i < userList.size(); i++) {
+                if (i == 0 && i == userList.size() - 1) {
+                    clause = clause + "'" + userList.get(i) + "')";
+                } else if (i == 0) {
+                    clause = clause + "'" + userList.get(i) + "'";
+                } else if (i == userList.size() - 1) {
+                    clause = clause + ",'" + userList.get(i) + "')";
+                } else {
+                    clause = clause + ",'" + userList.get(i) + "'";
+                }
             }
         }
 
@@ -334,7 +338,11 @@ public class ChatListingFragment extends Fragment{
                     isUserFirstIteration = false;
                 }
                 if (response.size() != 0){
-                    User.saveInTx(response);
+                    for (User person:response){
+                        person.setId(User.count(User.class)+1);
+                        person.save();
+                    }
+                   // User.saveInTx(response);
                     Log.v("saved user",response.get(0).getUsername());
                     Log.v("user count", String.valueOf(User.count(User.class)));
                     queryBuilder.prepareNextPage();

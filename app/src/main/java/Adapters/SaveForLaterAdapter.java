@@ -45,6 +45,7 @@ public class SaveForLaterAdapter extends RecyclerView.Adapter<SaveForLaterAdapte
     private static final String GCM_SENDER_ID = "57050948456";
     private Message contact_message;
 
+
     public SaveForLaterAdapter(Context context, List<SavedActivities> activities) {
         this.context = context;
         this.activities = activities;
@@ -132,6 +133,7 @@ public class SaveForLaterAdapter extends RecyclerView.Adapter<SaveForLaterAdapte
             @Override
             public void handleResponse(Message response) {
                 //  dialog.dismiss();
+                response.setId(Message.count(Message.class));
                 response.save();
                 contact_message = response;
                 //sendNotification(activity);
@@ -189,11 +191,11 @@ public class SaveForLaterAdapter extends RecyclerView.Adapter<SaveForLaterAdapte
 
     private void sendNotification(SavedActivities activity) {
         PublishOptions publishOptions = new PublishOptions();
-        publishOptions.putHeader("android-ticker-text", contact_message.getObjectId());
-        publishOptions.putHeader("android-content-title", prefs.getname());
+        publishOptions.putHeader("android-ticker-text", prefs.getname());
+        publishOptions.putHeader("android-content-title", activity.getUser());
         publishOptions.putHeader("android-content-text", "About activity on "+activity.getDateActivity());
 
-        Backendless.Messaging.publish(prefs.getname(), "message", publishOptions, new AsyncCallback<MessageStatus>() {
+        Backendless.Messaging.publish(prefs.getname(), "chat,"+contact_message.getObjectId(), publishOptions, new AsyncCallback<MessageStatus>() {
             @Override
             public void handleResponse(MessageStatus response) {
                 dialog.dismiss();

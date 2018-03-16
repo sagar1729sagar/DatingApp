@@ -22,6 +22,7 @@ public class ActivitiesResults extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activities_results);
+        //binding = DataBindingUtil.setContentView(this,R.layout.activities_results);
         binding = DataBindingUtil.setContentView(this,R.layout.activities_results);
 
         ActionBar actionBar = getSupportActionBar();

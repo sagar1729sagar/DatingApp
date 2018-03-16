@@ -116,7 +116,8 @@
         <activity android:name=".AddActivity" />
         <activity android:name=".RefreshActivitiesActivity" />
         <activity android:name=".ActivitiesResults" />
-        <activity android:name=".SaveForLaterActivities"></activity>
+        <activity android:name=".SaveForLaterActivities" />
+        <activity android:name=".FriendsFragment"></activity>
     </application>
 
 </manifest>

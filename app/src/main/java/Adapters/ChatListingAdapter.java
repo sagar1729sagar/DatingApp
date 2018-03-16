@@ -53,17 +53,26 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
         MessagesSorting message = messages.get(position);
 
         User user = new User();
-
+        Log.v("message from",message.getMessage_from());
+        Log.v("message to",message.getMessage_to());
         if (message.getMessage_from().equals(prefs.getname())){
             Log.v("user to find",message.getMessage_to());
+            Log.v("user find", String.valueOf(User.count(User.class,"username = ?", new String[]{message.getMessage_to()})));
             user = User.find(User.class,"username = ?",message.getMessage_to()).get(0);
+            Log.v("has pic",user.getHasPicture());
         } else if (message.getMessage_to().equals(prefs.getname())){
+            Log.v("else if","called");
             user = User.find(User.class,"username = ?",message.getMessage_from()).get(0);
         }
-
+        Log.v("session user",user.getUsername());
+        Log.v("war",user.getHasPicture());
         if (user.getHasPicture().equals("Yes")){
-            Picasso.with(context).load(user.getPhotourl()).into(holder.profile_image);
+            Picasso.with(context).load(user.getPhotourl()).placeholder(context.getResources().getDrawable(R.drawable.fb)).into(holder.profile_image);
         }
+        Log.v("pic setting","finished");
+//        if (user.getHasPicture().equals("Yes")){
+//            Picasso.with(context).load(user.getPhotourl()).into(holder.profile_image);
+//        }
 
         holder.name_age_tv.setText(user.getUsername());
         holder.last_message_tv.setText(message.getChat_message());

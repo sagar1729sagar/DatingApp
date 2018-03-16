@@ -34,9 +34,13 @@ public class HandlingPushNotifications extends BackendlessPushService {
 
         prefs = new Prefs(context);
         //displayNotification();
-        displayNotification(context,intent.getStringExtra(PublishOptions.ANDROID_TICKER_TEXT_TAG),
-                intent.getStringExtra(PublishOptions.ANDROID_CONTENT_TITLE_TAG),intent.getStringExtra(PublishOptions.ANDROID_CONTENT_TEXT_TAG),
-                intent.getStringExtra("message"));
+        if (intent.getStringExtra("message").contains("chat")) {
+            displayNotification(context, intent.getStringExtra(PublishOptions.ANDROID_TICKER_TEXT_TAG),
+                    intent.getStringExtra(PublishOptions.ANDROID_CONTENT_TITLE_TAG), intent.getStringExtra(PublishOptions.ANDROID_CONTENT_TEXT_TAG),
+                    intent.getStringExtra("message"));
+
+        }
+
         return false;
     }
 
@@ -47,8 +51,8 @@ public class HandlingPushNotifications extends BackendlessPushService {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, prefs.getname());
 
-            builder.setTicker("Message from " + title_text);
-            builder.setContentTitle(title_text);
+            builder.setTicker("New Message");
+            builder.setContentTitle("Message from " + ticker_text);
             builder.setContentText(chat_message);
             builder.setSmallIcon(R.drawable.fb);
 
@@ -62,9 +66,9 @@ public class HandlingPushNotifications extends BackendlessPushService {
                 message.setTime(String.valueOf(Calendar.getInstance().getTimeInMillis()));
 //                message.setTo(prefs.getname());
 //                message.setFrom(title_text);
-                message.setMessage_to(prefs.getname());
-                message.setMessage_from(title_text);
-                message.setObjectId(ticker_text);
+                message.setMessage_to(title_text);
+                message.setMessage_from(ticker_text);
+                message.setObjectId(type.substring(type.indexOf(",")+1));
                 message.setType("Notification");
                 message.save();
 
