@@ -118,7 +118,8 @@
         <activity android:name=".ActivitiesResults" />
         <activity android:name=".SaveForLaterActivities" />
         <activity android:name=".FriendsFragment" />
-        <activity android:name=".FavouritesList"></activity>
+        <activity android:name=".FavouritesList" />
+        <activity android:name=".LikedList"></activity>
     </application>
 
 </manifest>

@@ -297,6 +297,7 @@ public class MainActivity extends AppCompatActivity
                 makeScreenTransition(new FavouritesList());
                 break;
             case R.id.nav_liked_me:
+                makeScreenTransition(new LikedList());
                 break;
             case R.id.nav_my_profile:
                 getSupportActionBar().setTitle("My Profile");
