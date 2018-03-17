@@ -42,9 +42,18 @@
                         android:orientation="horizontal">
 
                         <net.steamcrafted.materialiconlib.MaterialIconView
+                            android:id="@+id/like_icon"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            app:materialIcon="thumb_up_outline"
+                            app:materialIconColor="@color/leaf_green" />
+
+                        <net.steamcrafted.materialiconlib.MaterialIconView
                             android:id="@+id/stact_chat_icon"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             app:materialIcon="comment_processing_outline"
                             app:materialIconColor="@color/leaf_green" />
 

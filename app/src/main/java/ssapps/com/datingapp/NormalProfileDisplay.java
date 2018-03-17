@@ -49,6 +49,7 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
     private static final String friend = "Friends";
     private static final String contact = "contact";
     private static final String block = "Blocked";
+    private static final String liked = "Liked";
 
 //   class Favourites{
 //        String time,name;
@@ -120,6 +121,7 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
             binding.favouriteAddIcon.setOnClickListener(this);
             binding.addFriendIcon.setOnClickListener(this);
             binding.blockUserIcon.setOnClickListener(this);
+            binding.likeIcon.setOnClickListener(this);
         }
 
     }
@@ -157,8 +159,53 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
             case R.id.block_user_icon:
                 blockUser();
                 break;
+            case R.id.like_icon:
+                likeUser();
+                break;
             //todo
         }
+    }
+
+    private void likeUser() {
+        confirmDialog = new SweetAlertDialog(this,SweetAlertDialog.NORMAL_TYPE);
+        confirmDialog.setConfirmButton("Like", new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                Log.v("confirmed",currentUser.getUsername());
+                confirmLike(currentUser.getUsername());
+                confirmDialog.dismiss();
+            }
+        });
+        confirmDialog.setCancelButton("Later", new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                confirmDialog.dismiss();
+            }
+        });
+        confirmDialog.setTitle("Confirm?");
+        confirmDialog.setContentText("Are you sure you want to like "+currentUser.getUsername());
+
+        confirmDialog.show();
+    }
+
+    private void confirmLike(String username) {
+        dialog.setTitle("Liking...");
+        dialog.show();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child(prefs.getname()).child(liked).child(username).setValue(Calendar.getInstance().getTimeInMillis(), new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    dialog.dismiss();
+                    error.setTitle("Error adding like");
+                    error.setContentText(databaseError.getMessage() + "\n Please try again");
+                } else {
+                    dialog.dismiss();
+                     checkPushNotificationRegistration(liked);
+                  //  Toast.makeText(getApplicationContext(),"User liked ",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void blockUser() {
@@ -196,8 +243,8 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
                     error.setContentText(databaseError.getMessage() + "\n Please try again");
                 } else {
                     dialog.dismiss();
-                   // checkPushNotificationRegistration(friend);
-                     Toast.makeText(getApplicationContext(),"User blocked",Toast.LENGTH_LONG).show();
+                    checkPushNotificationRegistration(block);
+                  //   Toast.makeText(getApplicationContext(),"User blocked",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -367,6 +414,8 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
                 } else if (type.equals(friend)){
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(),"Friend added successfully",Toast.LENGTH_LONG).show();
+                } else if (type.equals(liked)){
+                    Toast.makeText(getApplicationContext(),"Liked successfully",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -392,6 +441,8 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
                 } else if (type.equals(friend)){
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(),"Friend added successfully",Toast.LENGTH_LONG).show();
+                } else if (type.equals(liked)){
+                    Toast.makeText(getApplicationContext(),"Liked successfully",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -455,6 +506,25 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
                 public void handleFault(BackendlessFault fault) {
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(),"Friend added successfully",Toast.LENGTH_LONG).show();
+                }
+            });
+        } else if (type.equals(liked)){
+            PublishOptions publishOptions = new PublishOptions();
+            publishOptions.putHeader("android-ticker-text", "You are added as friend");
+            publishOptions.putHeader("android-content-title", "VeMeet");
+            publishOptions.putHeader("android-content-text", prefs.getname()+" liked you");
+
+            Backendless.Messaging.publish(currentUser.getUsername(), "frnd", publishOptions, new AsyncCallback<MessageStatus>() {
+                @Override
+                public void handleResponse(MessageStatus response) {
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"Liked successfully",Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void handleFault(BackendlessFault fault) {
+                    dialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"Liked successfully",Toast.LENGTH_LONG).show();
                 }
             });
         }

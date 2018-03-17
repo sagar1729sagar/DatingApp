@@ -117,7 +117,8 @@
         <activity android:name=".RefreshActivitiesActivity" />
         <activity android:name=".ActivitiesResults" />
         <activity android:name=".SaveForLaterActivities" />
-        <activity android:name=".FriendsFragment"></activity>
+        <activity android:name=".FriendsFragment" />
+        <activity android:name=".FavouritesList"></activity>
     </application>
 
 </manifest>

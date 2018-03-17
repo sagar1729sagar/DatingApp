@@ -294,6 +294,7 @@ public class MainActivity extends AppCompatActivity
                 makeScreenTransition(new FriendsFragment());
                 break;
             case R.id.favourites:
+                makeScreenTransition(new FavouritesList());
                 break;
             case R.id.nav_liked_me:
                 break;
