@@ -58,6 +58,15 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
                         Log.v("premium ","indepth");
                         if (!clickedUser.getVideoUrl().equals("None")){
                             //todo take to indepth profile
+                            Log.v("no premium","normal");
+                            Intent i = new Intent(SearchResultsDisplayActivity.this,SearchItemDetailsActivity.class);
+                            i.putExtra("name",clickedUser.getUsername());
+                            startActivity(i);
+                        } else {
+                            Log.v("no premium","normal");
+                            Intent i = new Intent(SearchResultsDisplayActivity.this,NormalProfileDisplay.class);
+                            i.putExtra("name",clickedUser.getUsername());
+                            startActivity(i);
                         }
                     }
                 } else {

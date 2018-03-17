@@ -2,122 +2,368 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="ssapps.com.datingapp.SearchItemDetailsActivity">
-
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/left_header_tv"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/heading"
-        android:layout_marginEnd="10dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/heading"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:id="@+id/ll"
-        >
-        <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:id="@+id/profile_image"
-            android:scaleType="fitXY"
-            android:layout_marginRight="5dp"
-            />
+        android:layout_height="match_parent">
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context="ssapps.com.datingapp.InDepthActivity">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="3"
+                android:id="@+id/left_header_tv"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                android:id="@+id/basic_intro_tv"
+                android:textSize="15sp"
+                android:textStyle="normal"
+                android:text="@string/h"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="3"
+                android:id="@+id/heading"
+                android:layout_marginEnd="10dp"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
-                android:textSize="12sp"
-                android:id="@+id/about_me_tv"
-                android:paddingTop="10dp"
-                android:layout_below="@id/basic_intro_tv"
+                android:textSize="18sp"
+                android:text="@string/headiing"
+                android:layout_below="@id/left_header_tv"
+                android:layout_marginTop="15dp"
+                android:textStyle="bold"
                 />
-            <TextView
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/heading"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/ll"
+                android:layout_marginTop="10dp"
+                >
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:id="@+id/profile_image"
+                    android:scaleType="fitCenter"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/fb"
+                    />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center_vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:id="@+id/basic_intro_tv"
+                        android:text="@string/basib_intro"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:id="@+id/about_me_tv"
+                        android:paddingTop="20dp"
+                        android:layout_below="@id/basic_intro_tv"
+                        android:text="@string/random"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="5"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+                        android:id="@+id/about_video_tv"
+                        android:paddingTop="20dp"
+                        android:layout_below="@id/about_me_tv"
+                        android:text="@string/vid"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <com.google.android.youtube.player.YouTubePlayerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll"
+            android:layout_margin="10dp"
+            android:id="@+id/youtube_player"
+            />
+            <!--<FrameLayout-->
+                <!--android:id="@+id/youtube_fragment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:visibility="visible"-->
+                <!--android:layout_below="@id/ll"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/youtube_player"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:id="@+id/instruction_tv"-->
+                <!--android:text="@string/please_upload_your_video_to_youtube_and_enter_copy_paste_the_url_in_the_box_below"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="12sp"-->
+                <!--android:visibility="gone"-->
+                <!--/>-->
+            <!--<android.support.design.widget.TextInputLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_below="@id/instruction_tv"-->
+                <!--android:id="@+id/url_layout"-->
+                <!--android:visibility="gone"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginStart="10dp"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--&gt;-->
+                <!--<EditText-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="URL"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--android:id="@+id/url_et"-->
+                    <!--android:inputType="textUri"-->
+                    <!--/>-->
+            <!--</android.support.design.widget.TextInputLayout>-->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/contact_button"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/leaf_green"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:text="@string/contact"
+                android:layout_below="@id/youtube_player"
+                />
+
+            <!--<Button-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/go_back_button"-->
+            <!--android:layout_below="@id/contact_button"-->
+            <!--android:layout_marginTop="15dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:background="@color/leaf_green"-->
+            <!--android:textSize="15sp"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:text="@string/back"-->
+            <!--/>-->
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="5"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:id="@+id/about_video_tv"
-                android:paddingTop="10dp"
-                android:layout_below="@id/about_me_tv"
-                />
+                android:layout_centerHorizontal="true"
+                android:layout_margin="30dp"
+                android:orientation="horizontal"
+                android:layout_below="@id/contact_button"
+                >
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/like_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:materialIcon="thumb_up_outline"
+                    app:materialIconColor="@color/leaf_green" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/stact_chat_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    app:materialIcon="comment_processing_outline"
+                    app:materialIconColor="@color/leaf_green" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/favourite_add_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    app:materialIcon="star"
+                    app:materialIconColor="@color/leaf_green" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/add_friend_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    app:materialIcon="account_multiple"
+                    app:materialIconColor="@color/leaf_green" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/report_user_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    app:materialIcon="alert"
+                    app:materialIconColor="#e9e10e" />
+
+                <net.steamcrafted.materialiconlib.MaterialIconView
+                    android:id="@+id/block_user_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    app:materialIcon="block_helper"
+                    app:materialIconColor="@android:color/holo_red_dark" />
+            </LinearLayout>
+
 
         </RelativeLayout>
-    </LinearLayout>
+    </ScrollView>
+<!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--tools:context="ssapps.com.datingapp.SearchItemDetailsActivity">-->
 
-    <com.google.android.youtube.player.YouTubePlayerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll"
-        android:layout_margin="10dp"
-        android:id="@+id/youtube_player"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/contact_button"
-        android:layout_below="@id/youtube_player"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@color/leaf_green"
-        android:textSize="15sp"
-        android:textColor="@color/white"
-        android:text="Contact"
-        />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/left_header_tv"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="12sp"-->
+        <!--android:textStyle="bold"-->
+        <!--/>-->
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/heading"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="15sp"-->
+        <!--/>-->
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/go_back_button"
-        android:layout_below="@id/contact_button"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@color/leaf_green"
-        android:textSize="15sp"
-        android:textColor="@color/white"
-        android:text="@string/back"
-        />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/heading"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:id="@+id/ll"-->
+        <!--&gt;-->
+        <!--<ImageView-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="150dp"-->
+            <!--android:id="@+id/profile_image"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--/>-->
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:maxLines="3"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="12sp"-->
+                <!--android:id="@+id/basic_intro_tv"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:maxLines="3"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="12sp"-->
+                <!--android:id="@+id/about_me_tv"-->
+                <!--android:paddingTop="10dp"-->
+                <!--android:layout_below="@id/basic_intro_tv"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:maxLines="5"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textSize="12sp"-->
+                <!--android:id="@+id/about_video_tv"-->
+                <!--android:paddingTop="10dp"-->
+                <!--android:layout_below="@id/about_me_tv"-->
+                <!--/>-->
+
+        <!--</RelativeLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--<com.google.android.youtube.player.YouTubePlayerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/ll"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:id="@+id/youtube_player"-->
+        <!--/>-->
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/contact_button"-->
+        <!--android:layout_below="@id/youtube_player"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:background="@color/leaf_green"-->
+        <!--android:textSize="15sp"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:text="Contact"-->
+        <!--/>-->
+    <!---->
+    <!---->
+
+    <!--&lt;!&ndash;<Button&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/go_back_button"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_below="@id/contact_button"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginTop="15dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginLeft="10dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginStart="10dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginRight="10dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_marginEnd="10dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:background="@color/leaf_green"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textSize="15sp"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:textColor="@color/white"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:text="@string/back"&ndash;&gt;-->
+        <!--&lt;!&ndash;/>&ndash;&gt;-->
 
 
 
-</RelativeLayout>
+<!--</RelativeLayout>-->
 </layout>
