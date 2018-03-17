@@ -1,46 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    >
 
     <com.mcxtzhang.swipemenulib.SwipeMenuLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
         >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            >
 
+        <com.github.siyamed.shapeimageview.RoundedImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="10dp"
+            android:src="@drawable/fb"
+            android:scaleType="fitXY"
+            android:id="@+id/profile_image"
+            />
         <TextView
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:text="项目中我是任意复杂的原ContentItem布局"/>
+            android:layout_centerVertical="true"
+            android:textColor="@color/black"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            android:layout_toRightOf="@id/profile_image"
+            android:layout_toEndOf="@id/profile_image"
+            android:text="name,age"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:text="@string/offline"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/online_offline_text"
+                />
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/ic_offline_dor"
+                android:layout_toLeftOf="@id/online_offline_text"
+                android:layout_toStartOf="@id/online_offline_text"
+                android:layout_centerVertical="true"
+                android:id="@+id/online_offline_image"
+                />
+
+        </RelativeLayout>
 
         <!-- 以下都是侧滑菜单的内容依序排列 -->
         <Button
-            android:id="@+id/btnTop"
-            android:layout_width="60dp"
+            android:id="@+id/delete_button"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:background="#d9dee4"
-            android:text="置顶"
-            android:textColor="@android:color/white"/>
+            android:background="@color/leaf_green"
+            android:text="Delete"
+            android:textColor="@android:color/white"
+            tools:ignore="HardcodedText"
+            android:drawableLeft="@drawable/ic_remove"
+            android:drawableTint="@color/white"
+            android:backgroundTintMode="src_atop"
+            />
 
-        <Button
-            android:id="@+id/btnUnRead"
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:background="#ecd50a"
-            android:clickable="true"
-            android:text="标记未读"
-            android:textColor="@android:color/white"/>
-
-        <Button
-            android:id="@+id/btnDelete"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:background="@color/red"
-            android:text="删除"
-            android:textColor="@android:color/white"/>
 
     </com.mcxtzhang.swipemenulib.SwipeMenuLayout>
 

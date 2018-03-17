@@ -38,10 +38,10 @@ public class HandlingPushNotifications extends BackendlessPushService {
             displayNotification(context, intent.getStringExtra(PublishOptions.ANDROID_TICKER_TEXT_TAG),
                     intent.getStringExtra(PublishOptions.ANDROID_CONTENT_TITLE_TAG), intent.getStringExtra(PublishOptions.ANDROID_CONTENT_TEXT_TAG),
                     intent.getStringExtra("message"));
-
+            return false;
         }
 
-        return false;
+        return true;
     }
 
 

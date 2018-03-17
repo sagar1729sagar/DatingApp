@@ -45,6 +45,7 @@ public class FriendsFragment extends Fragment{
     private DatabaseReference mDatabase;
     private Prefs prefs;
     private ArrayList<String> friends = new ArrayList<>();
+    private ArrayList<String> allFriends = new ArrayList<>();
 
     @Nullable
     @Override
@@ -83,10 +84,13 @@ public class FriendsFragment extends Fragment{
                 Set<String> set = map.keySet();
                 friends.clear();
                 friends.addAll(set);
+                allFriends.clear();
+                allFriends.addAll(set);
                 for (String friend:friends){
                     Log.v("friends",friend);
-                   getUsers(friends);
+                  // getUsers(friends);
                 }
+                getUsers(friends);
 
             }
 
@@ -101,35 +105,47 @@ public class FriendsFragment extends Fragment{
 
     }
 
-    private void getUsers(ArrayList<String> friends) {
+    private void getUsers(ArrayList<String> friendsInList) {
         String where="";
         ArrayList<String> finalUSers = new ArrayList<>();
-        finalUSers = friends;
-        for(String friend:friends){
+       // finalUSers = friends;
+        for(String friend:friendsInList){
             if (User.count(User.class,"username = ?", new String[]{friend}) > 0 ){
-                finalUSers.remove(friend);
+                finalUSers.add(friend);
+                Log.v("final users called for",friend);
             }
         }
-        if (finalUSers.size() == 1){
-            where = "username = '"+finalUSers.get(0)+"'";
-        } else {
-            for (int i=0;i<finalUSers.size();i++){
-                if (i == 0){
-                    where = "username in ("+finalUSers.get(i);
-                } else if (i == finalUSers.size() -1){
-                    where = where + ","+finalUSers.get(i)+")";
-                } else {
-                    where = where+","+finalUSers.get(i);
+        Log.v("friends",friendsInList.toString());
+        friendsInList.removeAll(finalUSers);
+        Log.v("friends",friendsInList.toString());
+
+        if (friendsInList.size() != 0) {
+
+            if (friendsInList.size() == 1) {
+                where = "username = '" + friendsInList.get(0) + "'";
+            } else {
+                for (int i = 0; i < friendsInList.size(); i++) {
+                    if (i == 0) {
+                        where = "username in (" + friendsInList.get(i);
+                    } else if (i == friendsInList.size() - 1) {
+                        where = where + "," + friendsInList.get(i) + ")";
+                    } else {
+                        where = where + "," + friendsInList.get(i);
+                    }
                 }
             }
+
+            Log.v("where caluse", where);
+
+            DataQueryBuilder query = DataQueryBuilder.create();
+            query.setPageSize(100);
+            query.setWhereClause(where);
+
+            pullData(query, true);
+        } else {
+            dialog.dismiss();
+            generateList();
         }
-
-        Log.v("where caluse",where);
-
-        DataQueryBuilder query = DataQueryBuilder.create();
-        query.setPageSize(100);
-
-        pullData(query,true);
     }
 
     private void pullData(final DataQueryBuilder query, final boolean isFirstIteration) {
@@ -148,6 +164,7 @@ public class FriendsFragment extends Fragment{
                 }  else {
                     dialog.dismiss();;
                     generateList();
+
                 }
             }
 
@@ -163,8 +180,23 @@ public class FriendsFragment extends Fragment{
     }
 
     private void generateList() {
-        if (User.count(User.class) > 1) {
-            FriendsListAdapter adapter = new FriendsListAdapter(getContext(), User.listAll(User.class));
+//        String[] us;
+//        for (String friend:friends){
+//        us = friends.toArray(new String[0])
+//        if (User.count(User.class) > 1) {
+//            List<User> users = new ArrayList<>();
+//            users.addAll(User.find(User.class,"username = ?",));
+//            for (String friend:friends){
+//               // users.addAll(User.find(User.class),"uusername = ?",friends);
+//            }
+        Log.v("friends size", String.valueOf(allFriends.size()));
+        List<User> users = new ArrayList<>();
+        for (String friend:allFriends){
+            Log.v("friend",friend);
+            users.add(User.find(User.class,"username = ?",friend).get(0));
+        }
+
+            FriendsListAdapter adapter = new FriendsListAdapter(getContext(), users);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
             binding.friendsList.setLayoutManager(layoutManager);
             binding.friendsList.setItemAnimator(new DefaultItemAnimator());
@@ -173,4 +205,4 @@ public class FriendsFragment extends Fragment{
     }
 
 
-}
+

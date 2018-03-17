@@ -444,7 +444,7 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
             publishOptions.putHeader("android-content-title", "VeMeet");
             publishOptions.putHeader("android-content-text", prefs.getname()+" added you as a friend");
 
-            Backendless.Messaging.publish(currentUser.getUsername(), "fav", publishOptions, new AsyncCallback<MessageStatus>() {
+            Backendless.Messaging.publish(currentUser.getUsername(), "frnd", publishOptions, new AsyncCallback<MessageStatus>() {
                 @Override
                 public void handleResponse(MessageStatus response) {
                     dialog.dismiss();
