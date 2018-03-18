@@ -56,6 +56,9 @@
         app:isb_show_indicator="true"
         app:isb_indicator_stay="true"
         app:isb_indicator_type="rectangle_rounded_corner"
+        app:isb_track_progress_bar_color="@color/leaf_green"
+        app:isb_thumb_color="@color/leaf_green"
+        app:isb_indicator_color="@color/leaf_green"
         />
     <!--</RelativeLayout>-->
     </RelativeLayout>
@@ -79,15 +82,39 @@
         android:orientation="vertical"
         android:gravity="center"
         >
-        <com.github.siyamed.shapeimageview.RoundedImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:siBorderWidth="2dp"
-            app:siBorderColor="@color/leaf_green"
-            android:id="@+id/profile_image_rounded"
-            android:layout_gravity="center"
-            android:src="@drawable/fb"
-            />
+        <!--<com.github.siyamed.shapeimageview.RoundedImageView-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--app:siBorderWidth="2dp"-->
+            <!--app:siBorderColor="@color/leaf_green"-->
+            <!--android:id="@+id/profile_image_rounded"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:src="@drawable/fb"-->
+            <!--/>-->
+        <pl.bclogic.pulsator4droid.library.PulsatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:pulse_count="1"
+            app:pulse_duration="2000"
+            app:pulse_repeat="0"
+            app:pulse_color="@color/leaf_green"
+            app:pulse_startFromScratch="false"
+            app:pulse_interpolator="Linear"
+            android:id="@+id/pulsator"
+            >
+
+            <com.github.siyamed.shapeimageview.RoundedImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:siBorderWidth="2dp"
+                app:siBorderColor="@color/leaf_green"
+                android:id="@+id/profile_image_rounded"
+                android:src="@drawable/fb"
+                android:scaleType="fitXY"
+                android:foregroundGravity="center"
+                android:layout_centerInParent="true"
+                />
+        </pl.bclogic.pulsator4droid.library.PulsatorLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

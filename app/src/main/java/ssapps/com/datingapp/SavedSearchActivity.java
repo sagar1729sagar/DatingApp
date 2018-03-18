@@ -79,6 +79,10 @@ public class SavedSearchActivity extends Fragment {
             }
         };
 
+//        if(prefs.getname().equals("None")){
+//            binding\
+//        }
+
         searches = SavedSearch.listAll(SavedSearch.class);
         adapter = new SavedSearchAdapter(searches,listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -384,12 +388,13 @@ public class SavedSearchActivity extends Fragment {
 
 
     private void sortForHeight(SavedSearch searchParams, List<User> results) {
-        Float height = Float.valueOf(searchParams.getHeigh());
+        Float height_max = Float.valueOf(searchParams.getHeight_max());
+        Float height_min = Float.valueOf(searchParams.getHeight_min());
         temp.clear();
-        Log.v("search height", String.valueOf(height));
+      //  Log.v("search height", String.valueOf(height));
         for (User result:results){
-            Log.v("user height",result.getHeight_self());
-            if (Float.valueOf(result.getHeight_self()) < height){
+         //   Log.v("user height",result.getHeight_self());
+            if (Float.valueOf(result.getHeight_self()) > height_max && Float.valueOf(result.getHeight_self()) < height_min){
                 //results.remove(result);
                 temp.add(result);
             }

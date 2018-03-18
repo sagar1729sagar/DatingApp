@@ -4,6 +4,7 @@ package ssapps.com.datingapp;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -65,6 +66,8 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
 
         prefs = new Prefs(this);
 
+
+
         if (getIntent().hasExtra("name")){
             String userName = getIntent().getStringExtra("name");
 
@@ -92,7 +95,11 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
             binding.contactButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    contactPerson();
+                    if (prefs.getname().equals("None")){
+                        Toast.makeText(getApplicationContext(),"Please register or login to contact "+user.getUsername(),Toast.LENGTH_LONG).show();
+                    } else {
+                        contactPerson(contact);
+                    }
 
                 }
             });
@@ -122,6 +129,8 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
 
     private void contactPerson(){
 
+        dialog.setTitle("Contacting");
+        dialog.show();
         Calendar calendar = Calendar.getInstance();
 
         final Message message = new Message();
@@ -259,22 +268,42 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.stact_chat_icon:
-                Log.v("start chat with",user.getUsername());
-                Intent i = new Intent(SearchItemDetailsActivity.this,ChatActivity.class);
-                i.putExtra("user",user.getUsername());
-                startActivity(i);
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to chat with "+user.getUsername(),Toast.LENGTH_LONG).show();
+                } else {
+                    Log.v("start chat with", user.getUsername());
+                    Intent i = new Intent(SearchItemDetailsActivity.this, ChatActivity.class);
+                    i.putExtra("user", user.getUsername());
+                    startActivity(i);
+                }
                 break;
             case R.id.favourite_add_icon:
-                addFavourite();
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to add "+user.getUsername()+" as your favourite",Toast.LENGTH_LONG).show();
+                } else {
+                    addFavourite();
+                }
                 break;
             case R.id.add_friend_icon:
-                addFriend();
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to add "+user.getUsername()+" as your friend",Toast.LENGTH_LONG).show();
+                } else {
+                    addFriend();
+                }
                 break;
             case R.id.block_user_icon:
-                blockUser();
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to block "+user.getUsername(),Toast.LENGTH_LONG).show();
+                } else {
+                    blockUser();
+                }
                 break;
             case R.id.like_icon:
-                likeUser();
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to show your interest on "+user.getUsername(),Toast.LENGTH_LONG).show();
+                } else {
+                    likeUser();
+                }
                 break;
             //todo
         }
@@ -644,5 +673,6 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
         }
 
     }
+
 
 }

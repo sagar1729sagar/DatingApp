@@ -4,7 +4,7 @@ import com.orm.SugarRecord;
 
 public class SavedSearch extends SugarRecord {
 
-    private String gender,who_are,lifestyle,Status,country,city,looking_for,children,min_age,max_age,miles,drinking,religion,heigh,eryecolor,haircolor,smoking;
+    private String gender,who_are,lifestyle,Status,country,city,looking_for,children,min_age,max_age,miles,drinking,religion,height_min,height_max,eryecolor,haircolor,smoking;
     private boolean onlyOnline,onlyWithPic,WhosNew,incognitoSearch;
     private long saved_time;
 
@@ -116,12 +116,29 @@ public class SavedSearch extends SugarRecord {
         this.religion = religion;
     }
 
-    public String getHeigh() {
-        return heigh;
+//    public String getHeigh() {
+//        return heigh;
+//    }
+//
+//    public void setHeigh(String heigh) {
+//        this.heigh = heigh;
+//    }
+
+
+    public String getHeight_min() {
+        return height_min;
     }
 
-    public void setHeigh(String heigh) {
-        this.heigh = heigh;
+    public void setHeight_min(String height_min) {
+        this.height_min = height_min;
+    }
+
+    public String getHeight_max() {
+        return height_max;
+    }
+
+    public void setHeight_max(String height_max) {
+        this.height_max = height_max;
     }
 
     public String getEryecolor() {

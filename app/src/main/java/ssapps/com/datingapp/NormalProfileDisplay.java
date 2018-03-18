@@ -142,25 +142,51 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.contact_button:
-                contactPerson(contact);
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to contact "+currentUser.getUsername(),Toast.LENGTH_LONG).show();
+                } else {
+                    contactPerson(contact);
+                }
+              //  contactPerson(contact);
                 break;
             case R.id.stact_chat_icon:
-                Log.v("start chat with",currentUser.getUsername());
-                Intent i = new Intent(NormalProfileDisplay.this,ChatActivity.class);
-                i.putExtra("user",currentUser.getUsername());
-                startActivity(i);
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to chat with "+currentUser.getUsername(),Toast.LENGTH_LONG).show();
+                } else {
+                    Log.v("start chat with",currentUser.getUsername());
+                    Intent i = new Intent(NormalProfileDisplay.this,ChatActivity.class);
+                    i.putExtra("user",currentUser.getUsername());
+                    startActivity(i);
+                }
+
                 break;
             case R.id.favourite_add_icon:
-                addFavourite();
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to add "+currentUser.getUsername()+" as your favourite",Toast.LENGTH_LONG).show();
+                } else {
+                    addFavourite();
+                }
                 break;
             case R.id.add_friend_icon:
-                addFriend();
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to add "+currentUser.getUsername()+" as your friend",Toast.LENGTH_LONG).show();
+                } else {
+                    addFriend();
+                }
                 break;
             case R.id.block_user_icon:
-                blockUser();
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to block "+currentUser.getUsername(),Toast.LENGTH_LONG).show();
+                } else {
+                    blockUser();
+                }
                 break;
             case R.id.like_icon:
-                likeUser();
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please register or login to show your interest on "+currentUser.getUsername(),Toast.LENGTH_LONG).show();
+                } else {
+                    likeUser();
+                }
                 break;
             //todo
         }

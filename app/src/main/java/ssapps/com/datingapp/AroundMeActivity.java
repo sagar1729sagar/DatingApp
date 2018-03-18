@@ -90,6 +90,8 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener,I
             error = new SweetAlertDialog(getContext(),SweetAlertDialog.ERROR_TYPE);
 
 
+            binding.pulsator.start();
+
         if (!prefs.getname().equals("None")){
             currentUser = User.find(User.class,"username = ?",prefs.getname()).get(0);
 
@@ -148,9 +150,15 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener,I
         confirm_dialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override
             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                confirm_dialog.dismiss();
-                progress_dialog.show();
-                isFirst = true;
+
+                if (prefs.getname().equals("None")){
+                    confirm_dialog.dismiss();
+                    Toast.makeText(getContext(),"Please login or register to search",Toast.LENGTH_LONG).show();
+                } else {
+
+                    confirm_dialog.dismiss();
+                    progress_dialog.show();
+                    isFirst = true;
 
 //                AskForLocation();
 //                currentUser.setLatitude(String.valueOf(location[0]));
@@ -178,17 +186,19 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener,I
 //                });
 
 
-
-
-                if (checkForGeoPoint(currentUser)) {
-                    initiateSearch(binding.distanceSeekBar.getProgress());
-                } else {
-                    AskForLocation();
+                    if (checkForGeoPoint(currentUser)) {
+                        initiateSearch(binding.distanceSeekBar.getProgress());
+                    } else {
+                        AskForLocation();
+                    }
                 }
             }
         });
 
 
+        binding.distanceSeekBar.setOnSeekChangeListener(this);
+        binding.addImage.setOnClickListener(this);
+        binding.subImage.setOnClickListener(this);
 
     }
 
@@ -456,7 +466,7 @@ public class AroundMeActivity extends Fragment implements View.OnClickListener,I
     }
 
     private void setCountDownTimer() {
-        timer = new CountDownTimer(6000,1000) {
+        timer = new CountDownTimer(3000,1000) {
             @Override
             public void onTick(long l) {
                 isTimerRunning = true;

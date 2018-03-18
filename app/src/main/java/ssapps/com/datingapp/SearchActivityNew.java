@@ -84,6 +84,11 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
 
         util = new Util();
 
+        if (prefs.getname().equals("None")){
+            binding.saveSearchCheckbox.setVisibility(View.GONE);
+            binding.incognitoCheckbox.setVisibility(View.GONE);
+        }
+
         //        binding.whoAreMaterialSpinner.setItems(sexual_orientations);
 //        binding.lifestyleMaterialSpinner.setItems(lifestyles);
 //        binding.statusMaterialSpinner.setItems(statuses);
@@ -297,7 +302,11 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
             Toast.makeText(getContext(),"Search distance is to be entered",Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!util.checkEditTextField(binding.heightEt)){
+        if (!util.checkEditTextField(binding.heightMaxEt)){
+            Toast.makeText(getContext(),"Maximum height information is required",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (!util.checkEditTextField(binding.heightMinEt)){
             Toast.makeText(getContext(),"Minimum height information is required",Toast.LENGTH_LONG).show();
             return false;
         }
@@ -323,7 +332,9 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
             searchParams.setSmoking(binding.smokingMaterialSpinner.getSelectedItem().toString());
             searchParams.setDrinking(binding.drinkingMaterialSpinner.getSelectedItem().toString());
             searchParams.setReligion(binding.religionMaterialSpinner.getSelectedItem().toString());
-            searchParams.setHeigh(binding.heightEt.getText().toString().trim());
+            searchParams.setHeight_max(binding.heightMaxEt.getText().toString());
+            searchParams.setHeight_min(binding.heightMinEt.getText().toString());
+           // searchParams.setHeigh(binding.heightEt.getText().toString().trim());
             searchParams.setHaircolor(binding.hairColorMaterialSpinner.getSelectedItem().toString());
             searchParams.setEryecolor(binding.eyeColorMaterialSpinner.getSelectedItem().toString());
             searchParams.setOnlyOnline(binding.onlyOnlineCheckbox.isChecked());
@@ -570,12 +581,15 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
     }
 
     private void sortForHeight(SavedSearch searchParams, List<User> results) {
-        Float height = Float.valueOf(searchParams.getHeigh());
+        Float height_max = Float.valueOf(searchParams.getHeight_max());
+        Float height_min = Float.valueOf(searchParams.getHeight_min());
         temp.clear();
-        Log.v("search height", String.valueOf(height));
+        Log.v("height max",searchParams.getHeight_max());
+        Log.v("Height min",searchParams.getHeight_min());
+      //  Log.v("search height", String.valueOf(height));
         for (User result:results){
             Log.v("user height",result.getHeight_self());
-            if (Float.valueOf(result.getHeight_self()) < height){
+            if (Float.valueOf(result.getHeight_self()) > height_max && Float.valueOf(result.getHeight_self()) < height_min){
                 //results.remove(result);
                 temp.add(result);
             }

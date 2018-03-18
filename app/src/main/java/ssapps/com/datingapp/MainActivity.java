@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import Util.Util;
 
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity
                 email.setText(loggedUser.getMailId());
             } else {
                 Picasso.with(getApplicationContext()).load(loggedUser.getPhotourl()).into(fillImage);
+
            //     Picasso.with(this).load(loggedUser.getPhotourl()).into(halfImage);
 //                Picasso.with(this).load(loggedUser.getPhotourl()).into(halfImage);
          //       userName.setText(loggedUser.getUsername());
@@ -130,10 +132,17 @@ public class MainActivity extends AppCompatActivity
                 email.setVisibility(View.GONE);
             }
         } else {
+            navigationView.getMenu().findItem(R.id.nav_save_search).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_whos_new).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_in_depth).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_activity_board).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_settings).setVisible(false);
             halfImage.setVisibility(View.GONE);
             userName.setVisibility(View.GONE);
             email.setVisibility(View.GONE);
         }
+
+
 
 
 
@@ -163,17 +172,25 @@ public class MainActivity extends AppCompatActivity
                     }
                 } else if (getIntent().hasExtra("SettingsRedirect")) {
                     if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
+                        getSupportActionBar().setTitle("Upgrades");
                         makeScreenTransition(new UpgradePackages());
                     }
                 } else if (getIntent().hasExtra("chatRedirect")) {
                     if (getIntent().getBooleanExtra("chatRedirect", false)) {
-                        makeScreenTransition(new ChatListingFragment());
+                        if (prefs.getname().equals("None")){
+                            Toast.makeText(getApplicationContext(),"Please login or regiter to continue",Toast.LENGTH_LONG).show();
+                        } else {
+                            getSupportActionBar().setTitle("Chat");
+                            makeScreenTransition(new ChatListingFragment());
+                        }
                     }
                 } else if(prefs.isIndeothRedirect()){
                     prefs.setIndepthRedirect(false);
+                    getSupportActionBar().setTitle("In depth");
                     makeScreenTransition(new InDepthActivity());
                 }
                 else {
+                    getSupportActionBar().setTitle("Search");
                     makeScreenTransition(new SearchActivityNew());
                 }
 
@@ -270,45 +287,77 @@ public class MainActivity extends AppCompatActivity
                // makeScreenTransition(new SearchActivity());
                 break;
             case R.id.nav_save_search:
+                getSupportActionBar().setTitle("Saved search");
                 makeScreenTransition(new SavedSearchActivity());
                 break;
             case R.id.nav_around_me:
+                getSupportActionBar().setTitle("Around me");
                 makeScreenTransition(new AroundMeActivity());
                 break;
             case R.id.nav_chat_messages:
-                makeScreenTransition(new ChatListingFragment());
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please login or register to continue",Toast.LENGTH_LONG).show();
+                } else {
+                    getSupportActionBar().setTitle("Chat");
+                    makeScreenTransition(new ChatListingFragment());
+                }
                 break;
             case R.id.nav_online:
+                getSupportActionBar().setTitle("Online");
                 makeScreenTransition(new OnlineActivity());
                 break;
             case R.id.nav_whos_new:
+                getSupportActionBar().setTitle("Who's new");
                 makeScreenTransition(new WhosNewActivity());
                 break;
             case R.id.nav_in_depth:
+                getSupportActionBar().setTitle("Indepth");
                 makeScreenTransition(new InDepthActivity());
                 break;
             case R.id.nav_activity_board:
+                getSupportActionBar().setTitle("Activity Board");
                 makeScreenTransition(new ActivityBaord());
                 break;
             case R.id.nav_friends:
-                makeScreenTransition(new FriendsFragment());
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please login or register to continue",Toast.LENGTH_LONG).show();
+                } else {
+                    getSupportActionBar().setTitle("Friends");
+                    makeScreenTransition(new FriendsFragment());
+                }
                 break;
             case R.id.favourites:
-                makeScreenTransition(new FavouritesList());
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please login or register to continue",Toast.LENGTH_LONG).show();
+                } else {
+                    getSupportActionBar().setTitle("Favourites");
+                    makeScreenTransition(new FavouritesList());
+                }
                 break;
             case R.id.nav_liked_me:
-                makeScreenTransition(new LikedList());
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please login or register to continue",Toast.LENGTH_LONG).show();
+                } else {
+                    getSupportActionBar().setTitle("I liked");
+                    makeScreenTransition(new LikedList());
+                }
                 break;
             case R.id.nav_my_profile:
-                getSupportActionBar().setTitle("My Profile");
-                makeScreenTransition(new ProfileFragment());
+                if (prefs.getname().equals("None")){
+                    Toast.makeText(getApplicationContext(),"Please login or register to continue",Toast.LENGTH_LONG).show();
+                } else {
+                    getSupportActionBar().setTitle("My Profile");
+                    makeScreenTransition(new ProfileFragment());
+                }
                 break;
             case R.id.nav_upgrade_packages:
+                getSupportActionBar().setTitle("Upgrades");
                 makeScreenTransition(new UpgradePackages());
                 break;
             case R.id.nav_terms_of_use:
                 break;
             case R.id.nav_settings:
+                getSupportActionBar().setTitle("Settings");
                 makeScreenTransition(new SettingsFragment());
                 break;
             case R.id.nav_logout:

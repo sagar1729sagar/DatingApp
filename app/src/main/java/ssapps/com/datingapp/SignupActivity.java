@@ -630,6 +630,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SugarContext.terminate();
+       // SugarContext.terminate();
     }
 }

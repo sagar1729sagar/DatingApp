@@ -352,7 +352,7 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
     }
 
     private void sortForHeight(SavedSearch searchParams, List<User> results) {
-        String height = searchParams.getHeigh();
+        String height = searchParams.getHeight_max();
         for (User result:results){
             if (!result.getHeight_self().equals(height)){
                 results.remove(result);

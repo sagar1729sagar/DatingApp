@@ -80,10 +80,15 @@ public class OnlineActivity extends Fragment {
             @Override
             public void handleResponse(List<User> response) {
                 if (isFirstIteration){
-                    User currentUser = User.find(User.class,"username = ?",prefs.getname()).get(0);
-                    User.deleteAll(User.class);
-                    currentUser.save();
-                    isFirstIteration = false;
+                    if (User.count(User.class,"username = ?", new String[]{prefs.getname()}) > 0) {
+                        User currentUser = User.find(User.class, "username = ?", prefs.getname()).get(0);
+                        User.deleteAll(User.class);
+                        currentUser.save();
+                        isFirstIteration = false;
+                    } else {
+                        User.deleteAll(User.class);
+                        isFirstIteration = false;
+                    }
                 }
                 if (response.size() != 0){
                     User.saveInTx(response);
