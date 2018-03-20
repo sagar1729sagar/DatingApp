@@ -1,5 +1,6 @@
 package ssapps.com.datingapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
@@ -7,11 +8,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -33,7 +38,7 @@ import ssapps.com.datingapp.databinding.ActivitySearchBinding;
 
 
 
-public class SearchActivity extends Fragment implements View.OnClickListener{
+public class SearchActivity extends Fragment implements View.OnClickListener,EditText.OnEditorActionListener{
     ActivitySearchBinding binding;
    // private Boolean silence = true;
     private SweetAlertDialog error,dialog;
@@ -572,4 +577,10 @@ public class SearchActivity extends Fragment implements View.OnClickListener{
     }
 
 
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.ageMinEt.getWindowToken(), 0);
+        return true;
+    }
 }

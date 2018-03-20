@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 <ScrollView
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -145,7 +145,7 @@
                     />
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:hint="min"
                     android:textColor="@color/black"
                     android:textSize="15sp"
@@ -155,6 +155,7 @@
                     android:paddingRight="5dp"
                     android:paddingEnd="5dp"
                     android:inputType="number"
+                    android:imeOptions="actionDone"
                     />
                 <!--<Spinner-->
                     <!--android:layout_width="match_parent"-->
@@ -188,7 +189,7 @@
                     />
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:hint="max"
                     android:textColor="@color/black"
                     android:textSize="15sp"
@@ -198,6 +199,7 @@
                     android:paddingRight="5dp"
                     android:paddingEnd="5dp"
                     android:inputType="number"
+                    android:imeOptions="actionDone"
                     />
                 <!--<Spinner-->
                     <!--android:layout_width="match_parent"-->
@@ -229,18 +231,28 @@
                     android:paddingStart="20dp"
                     android:textStyle="bold"
                     />
-                <Spinner
+                <AutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/country_material_spinner"
+                    android:inputType="textImeMultiLine"
+                    android:hint="@string/country"
                     android:textColor="@color/black"
-                    style="@style/Widget.AppCompat.Spinner.Underlined"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:paddingTop="0dp"
+                    android:textSize="12sp"
+                    android:id="@+id/country_auto"
+                    android:imeOptions="actionDone"
                     />
+                <!--<Spinner-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/country_material_spinner"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--style="@style/Widget.AppCompat.Spinner.Underlined"-->
+                    <!--android:layout_marginLeft="10dp"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_marginEnd="10dp"-->
+                    <!--android:paddingTop="0dp"-->
+                    <!--/>-->
             </LinearLayout>
         </LinearLayout>
         <TextView
@@ -255,18 +267,30 @@
             android:paddingTop="5dp"
             android:textStyle="bold"
             />
-        <Spinner
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/city_material_spinner"
+            android:inputType="textImeMultiLine"
+            android:hint="@string/city"
             android:textColor="@color/black"
-            style="@style/Widget.AppCompat.Spinner.Underlined"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:paddingTop="0dp"
+            android:textSize="12sp"
+            android:id="@+id/city_auto"
+            android:imeOptions="actionDone"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             />
+        <!--<Spinner-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/city_material_spinner"-->
+            <!--android:textColor="@color/black"-->
+            <!--style="@style/Widget.AppCompat.Spinner.Underlined"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:paddingTop="0dp"-->
+            <!--/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -293,7 +317,7 @@
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="53dp"
+                android:layout_height="43dp"
                 android:hint="distance"
                 android:textColor="@color/black"
                 android:textSize="15sp"
@@ -301,6 +325,7 @@
                 android:inputType="number"
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
+                android:imeOptions="actionDone"
                 />
                 <!--android:paddingLeft="20dp"-->
                 <!--android:paddingStart="20dp"-->
@@ -508,7 +533,7 @@
                     >
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:hint="min"
                         android:textColor="@color/black"
                         android:textSize="15sp"
@@ -518,11 +543,13 @@
                         android:paddingRight="5dp"
                         android:paddingEnd="5dp"
                         android:layout_weight="1"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionDone"
                         />
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:hint="max"
                     android:textColor="@color/black"
                     android:textSize="15sp"
@@ -532,6 +559,8 @@
                     android:paddingRight="5dp"
                     android:paddingEnd="5dp"
                     android:layout_weight="1"
+                    android:inputType="numberDecimal"
+                    android:imeOptions="actionDone"
                     />
                 </LinearLayout>
             </LinearLayout>
@@ -650,9 +679,47 @@
                 android:checked="false"
                 />
         </LinearLayout>
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/only_online_rl"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/only_online"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp"
+                    />
+                <com.nightonke.jellytogglebutton.JellyToggleButton
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_centerVertical="true"
+                    app:jtbLeftBackgroundColor="@color/gray_btn_bg_color"
+                    app:jtbRightBackgroundColor="@color/colorAccent"
+                    app:jtbLeftThumbColor="@color/gray_btn_bg_pressed_color"
+                    app:jtbRightThumbColor="@color/leaf_green"
+                    android:id="@+id/only_online_toggle"
+                    app:jtbThumbRadius="13dp"
+
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
             android:layout_margin="10dp"
             android:background="@color/leaf_green"
             android:textColor="@color/white"

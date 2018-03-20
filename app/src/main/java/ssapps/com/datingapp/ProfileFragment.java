@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ import Util.Util;
 import ssapps.com.datingapp.databinding.ActivitySignupDetailsBinding;
 
 
-public class ProfileFragment extends Fragment implements View.OnClickListener{
+public class ProfileFragment extends Fragment implements View.OnClickListener,EditText.OnEditorActionListener{
 
     private Prefs prefs;
     private ImageView imageView;
@@ -127,7 +128,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }
         Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,countries);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg1,countries);
         binding.countiresEtAuto.setText(loggedUser.getCountry_self());
     //    binding.countriesSpnner.setAdapter(spinnerAdapter);
        // binding.countriesSpnner.setSelection(spinnerAdapter.getPosition("India"));
@@ -145,7 +146,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                     array = obj.getJSONArray(String.valueOf(binding.countiresEtAuto.getText().toString()));
                     cities = util.convertToList(array);
                     Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-                    citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,cities);
+                    citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg1,cities);
                     binding.cityEtAuto.setAdapter(citiesAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -211,7 +212,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setSpinner(Spinner spinner, String[] list){
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg1,list);
         spinner.setPadding((int) util.convertDpToPixel(10,getContext()),0,0,0);
         spinner.setAdapter(adapter);
         switch (spinner.getId()){
@@ -276,7 +277,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             // Log.v("json","array");
             cities = util.convertToList(array);
             Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-            citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,cities);
+            citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg1,cities);
             binding.cityEtAuto.setText(loggedUser.getCity_self());
            // binding.citiesSpinner.setAdapter(citiesAdapter);
          //ee   binding.citiesSpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
@@ -702,5 +703,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         });
 
 
+    }
+
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+        return false;
     }
 }

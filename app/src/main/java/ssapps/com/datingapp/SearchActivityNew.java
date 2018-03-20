@@ -1,5 +1,6 @@
 package ssapps.com.datingapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -128,34 +130,61 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
         }
         Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,countries);
-        binding.countryMaterialSpinner.setAdapter(spinnerAdapter);
-        binding.countryMaterialSpinner.setSelection(spinnerAdapter.getPosition("India"));
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg1,countries);
+        binding.countryAuto.setAdapter(spinnerAdapter);
+       // binding.countryMaterialSpinner.setAdapter(spinnerAdapter);
+      //  binding.countryMaterialSpinner.setSelection(spinnerAdapter.getPosition("India"));
         initialiseLocationSpinners();
 
-
-        binding.countryMaterialSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.countryAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.countryAuto.getWindowToken(), 0);
+
                 try {
-                array = obj.getJSONArray(String.valueOf(binding.countryMaterialSpinner.getSelectedItem()));
-                // Log.v("json array", String.valueOf(array));
-                Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-                citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,cities);
-                binding.cityMaterialSpinner.setAdapter(citiesAdapter);
-                binding.cityMaterialSpinner.setSelection(0);
-                //  Log.v("cities spinner","set");
-            } catch (JSONException e) {
-                e.printStackTrace();
-                // Log.v("json array exception", String.valueOf(e));
-            }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+                    array = obj.getJSONArray(String.valueOf(binding.countryAuto.getText().toString()));
+                    cities = util.convertToList(array);
+                    Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+                    citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg1,cities);
+                    binding.cityAuto.setAdapter(citiesAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
+
+        binding.cityAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.cityAuto.getWindowToken(), 0);
+            }
+        });
+
+
+//        binding.countryMaterialSpinner.setOnIteimSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                try {
+//                array = obj.getJSONArray(String.valueOf(binding.countryMaterialSpinner.getSelectedItem()));
+//                // Log.v("json array", String.valueOf(array));
+//                Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+//                citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,cities);
+//                binding.cityMaterialSpinner.setAdapter(citiesAdapter);
+//                binding.cityMaterialSpinner.setSelection(0);
+//                //  Log.v("cities spinner","set");
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//                // Log.v("json array exception", String.valueOf(e));
+//            }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
 
         binding.submitButton.setOnClickListener(this);
@@ -175,13 +204,14 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
             String json = new String(buffer,"UTF-8");
             obj = new JSONObject(json);
             //  Log.v("json ","object");
-            array = obj.getJSONArray(String.valueOf(binding.countryMaterialSpinner.getSelectedItem()));
+            array = obj.getJSONArray(String.valueOf(binding.countryAuto.getText().toString()));
             // Log.v("json","array");
             cities = util.convertToList(array);
             Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-            citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,cities);
-            binding.cityMaterialSpinner.setAdapter(citiesAdapter);
-            binding.cityMaterialSpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
+            citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg1,cities);
+            binding.cityAuto.setAdapter(citiesAdapter);
+          //  binding.cityMaterialSpinner.setAdapter(citiesAdapter);
+           // binding.cityMaterialSpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
             // Log.v("cities spinner","set");
         } catch (IOException e) {
             e.printStackTrace();
@@ -324,8 +354,10 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
             searchParams.setStatus(binding.statusMaterialSpinner.getSelectedItem().toString());
             searchParams.setMin_age(binding.ageMinEt.getText().toString().trim());
             searchParams.setMax_age(binding.ageMaxEt.getText().toString().trim());
-            searchParams.setCountry(binding.countryMaterialSpinner.getSelectedItem().toString());
-            searchParams.setCity(binding.cityMaterialSpinner.getSelectedItem().toString());
+          //  searchParams.setCountry(binding.countryMaterialSpinner.getSelectedItem().toString());
+            searchParams.setCountry(binding.countryAuto.getText().toString());
+          //  searchParams.setCity(binding.cityMaterialSpinner.getSelectedItem().toString());
+            searchParams.setCity(binding.cityAuto.getText().toString());
             searchParams.setMiles(binding.milesEt.getText().toString().trim());
             searchParams.setLooking_for(binding.forMaterialSpinner.getSelectedItem().toString());
             searchParams.setChildren(binding.childrenMaterialSpinner.getSelectedItem().toString());
