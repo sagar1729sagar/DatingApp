@@ -132,6 +132,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
+
+             <AutoCompleteTextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="10dp"
+                 android:layout_marginLeft="10dp"
+                 android:hint="@string/country"
+                 android:textColor="@color/black"
+                 android:textSize="12sp"
+                 android:id="@+id/countires_et_auto"
+                 android:imeOptions="actionDone"
+                 />
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

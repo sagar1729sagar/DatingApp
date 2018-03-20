@@ -17,10 +17,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -101,6 +105,8 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
         user = prefs.getname();
 
+       // actionListeners();
+
         binding.profileImage.getLayoutParams().height = (int) (util.getScreenWidth(this)/2);
         Log.v("current user",prefs.getname());
       //  List<User> users_temp = User.find(User.class,"username = ?",user).size()
@@ -127,6 +133,18 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         binding.countriesSpnner.setAdapter(spinnerAdapter);
         binding.countriesSpnner.setSelection(spinnerAdapter.getPosition("India"));
 
+        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,countries);
+       // binding.countiresEtAuto.setThreshold(1);
+        binding.countiresEtAuto.setAdapter(countriesAdapter);
+
+        binding.countiresEtAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.v("action info","recognised");
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+            }
+        });
 
         initialiseLocationSpinners();
 
@@ -167,6 +185,11 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         setSpinner(binding.drinkingSpnner,getResources().getStringArray(R.array.smokingArray));
         setSpinner(binding.eyeSpnner,getResources().getStringArray(R.array.eyeColorArray));
         setSpinner(binding.hairSpnner,getResources().getStringArray(R.array.hairColorArray));
+
+
+      //  setCountiresAutoTV();
+
+
        // setGenderSpinner();
        // setLifestyleSPinner();
        // setforSpinner();
@@ -192,6 +215,29 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
        // checkAllFields();
 
     }
+
+//    private void actionListeners() {
+//        binding.countiresEtAuto.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+//                if (i == EditorInfo.IME_ACTION_DONE){
+//                    Log.v("action info","recognised");
+//                    return true;
+//                } else if (i == EditorInfo.IME_FLAG_NO_ENTER_ACTION){
+//                    Log.v("action info","recognised");
+//                    return true;
+//                }
+//                Log.v("action info","recognised");
+//                return true;
+//            }
+//        });
+//
+//
+//    }
+
+//    private void setCountiresAutoTV() {
+//
+//    }
 
 
     private void setSpinner(Spinner spinner,String[] list){

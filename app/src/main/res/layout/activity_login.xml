@@ -73,6 +73,8 @@
     android:id="@+id/password_et"
     android:inputType="textPassword"
         android:textSize="10sp"
+        android:imeOptions="actionDone"
+        android:focusedByDefault="false"
     />
     </android.support.design.widget.TextInputLayout>
 
@@ -90,6 +92,8 @@
             android:textColor="@color/black"
             android:id="@+id/username_et"
             android:textSize="10sp"
+            android:imeOptions="actionNext"
+            android:focusedByDefault="false"
             />
     </android.support.design.widget.TextInputLayout>
 
