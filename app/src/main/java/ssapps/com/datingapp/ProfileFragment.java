@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -127,35 +128,63 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
 
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,countries);
-        binding.countriesSpnner.setAdapter(spinnerAdapter);
+        binding.countiresEtAuto.setText(loggedUser.getCountry_self());
+    //    binding.countriesSpnner.setAdapter(spinnerAdapter);
        // binding.countriesSpnner.setSelection(spinnerAdapter.getPosition("India"));
-        binding.countriesSpnner.setSelection(spinnerAdapter.getPosition(loggedUser.getCountry_self()));
+      //  binding.countriesSpnner.setSelection(spinnerAdapter.getPosition(loggedUser.getCountry_self()));
 
         initialiseLocationSpinners();
 
-
-        binding.countriesSpnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.countiresEtAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+
                 try {
-                    array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
-                    // Log.v("json array", String.valueOf(array));
+                    array = obj.getJSONArray(String.valueOf(binding.countiresEtAuto.getText().toString()));
+                    cities = util.convertToList(array);
                     Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
                     citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,cities);
-                    binding.citiesSpinner.setAdapter(citiesAdapter);
-                    binding.citiesSpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
-                    //  Log.v("cities spinner","set");
+                    binding.cityEtAuto.setAdapter(citiesAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    // Log.v("json array exception", String.valueOf(e));
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
+
+        binding.cityEtAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+            }
+        });
+
+
+//        binding.countriesSpnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                try {
+//                 //   array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
+//                    // Log.v("json array", String.valueOf(array));
+//                    Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+//                    citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,cities);
+//                   // binding.citiesSpinner.setAdapter(citiesAdapter);
+//                   // binding.citiesSpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
+//                    //  Log.v("cities spinner","set");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    // Log.v("json array exception", String.valueOf(e));
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
         setSpinner(binding.genderSpnner,getResources().getStringArray(R.array.genderArray));
         setSpinner(binding.lifestyleSpnner,getResources().getStringArray(R.array.lifestyleArray));
@@ -243,13 +272,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             String json = new String(buffer,"UTF-8");
             obj = new JSONObject(json);
             //  Log.v("json ","object");
-            array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
+          //  array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
             // Log.v("json","array");
             cities = util.convertToList(array);
             Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
             citiesAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,cities);
-            binding.citiesSpinner.setAdapter(citiesAdapter);
-            binding.citiesSpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
+            binding.cityEtAuto.setText(loggedUser.getCity_self());
+           // binding.citiesSpinner.setAdapter(citiesAdapter);
+         //ee   binding.citiesSpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
             // Log.v("cities spinner","set");
         } catch (IOException e) {
             e.printStackTrace();
@@ -597,9 +627,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         currentUser.setAboutme(binding.abtMeEt.getText().toString().trim());
         currentUser.setAge_self(binding.ageEt.getText().toString().trim());
         //  currentUser.setCity_self(util.getCity(binding.residenceEt.getText().toString().trim()));
-        currentUser.setCity_self(binding.citiesSpinner.getSelectedItem().toString());
+      //  currentUser.setCity_self(binding.citiesSpinner.getSelectedItem().toString());
+        currentUser.setCity_self(binding.cityEtAuto.getText().toString());
         // currentUser.setCountry_self(util.getCountry(binding.residenceEt.getText().toString().trim()));
-        currentUser.setCountry_self(binding.countriesSpnner.getSelectedItem().toString());
+       // currentUser.setCountry_self(binding.countriesSpnner.getSelectedItem().toString());
+        currentUser.setCountry_self(binding.countiresEtAuto.getText().toString());
         currentUser.setAge_others(binding.ageOthersEt.getText().toString().trim());
         //currentUser.setGender_self(binding.giEt.getText().toString().trim());
         currentUser.setGender_self(binding.genderIdentifySpnner.getSelectedItem().toString());

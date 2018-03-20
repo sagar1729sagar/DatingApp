@@ -23,6 +23,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +52,7 @@ import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivitySignupDetailsBinding;
 
-public class SignupDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignupDetailsActivity extends AppCompatActivity implements View.OnClickListener,EditText.OnEditorActionListener{
 
     ActivitySignupDetailsBinding binding;
     private Util util;
@@ -84,11 +85,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         SugarContext.init(this);
 
 
-//        ActionBar actionBar = getSupportActionBar();
-//
-//        actionBar.setHomeButtonEnabled(true);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        actionBar.setDisplayShowHomeEnabled(true);
+
 
         util = new Util();
         prefs = new Prefs(this);
@@ -129,12 +126,12 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         }
         Collections.sort(countries, String.CASE_INSENSITIVE_ORDER);
 
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,countries);
-        binding.countriesSpnner.setAdapter(spinnerAdapter);
-        binding.countriesSpnner.setSelection(spinnerAdapter.getPosition("India"));
+     //   ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,countries);
+      //  binding.countriesSpnner.setAdapter(spinnerAdapter);
+      //  binding.countriesSpnner.setSelection(spinnerAdapter.getPosition("India"));
 
-        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,countries);
-       // binding.countiresEtAuto.setThreshold(1);
+        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg1,countries);
+        binding.countiresEtAuto.setThreshold(1);
         binding.countiresEtAuto.setAdapter(countriesAdapter);
 
         binding.countiresEtAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -143,34 +140,59 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
                 Log.v("action info","recognised");
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+
+                try {
+                    array = obj.getJSONArray(binding.countiresEtAuto.getText().toString());
+                    cities = util.convertToList(array);
+                    Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+                    citiesAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg1,cities);
+                    binding.cityEtAuto.setAdapter(citiesAdapter);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
+
+
+//        binding.cityEtAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+//            }
+//        });
 
         initialiseLocationSpinners();
 
 
-        binding.countriesSpnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                try {
-                    array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
-                   // Log.v("json array", String.valueOf(array));
-                    Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-                    citiesAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,cities);
-                    binding.citiesSpinner.setAdapter(citiesAdapter);
-                    binding.citiesSpinner.setSelection(0);
-                  //  Log.v("cities spinner","set");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                   // Log.v("json array exception", String.valueOf(e));
-                }
-            }
+       // binding.abtMeEt.setOnEditorActionListener(this);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+//        binding.countriesSpnner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                try {
+//                   // array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
+//                   // Log.v("json array", String.valueOf(array));
+//                    Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+//                    citiesAdapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,cities);
+//                  //  binding.citiesSpinner.setAdapter(citiesAdapter);
+//                   // binding.citiesSpinner.setSelection(0);
+//                  //  Log.v("cities spinner","set");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                   // Log.v("json array exception", String.valueOf(e));
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
-            }
-        });
+//        ArrayAdapter<String> testAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,getResources().getStringArray(R.array.genderArray));
+//        binding.genderTest.setAdapter(testAdapter);
 
         setSpinner(binding.genderSpnner,getResources().getStringArray(R.array.genderArray));
         setSpinner(binding.lifestyleSpnner,getResources().getStringArray(R.array.lifestyleArray));
@@ -211,8 +233,48 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         binding.saveButton.setOnClickListener(this);
 
 
+//        binding.abtMeEt.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+//                Log.v("key event","detected");
+//                Log.v("key code", String.valueOf(keyEvent.getKeyCode())+"and"+String.valueOf(i));
+//                return true;
+//            }
+//        });
+
+//        binding.abtMeEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+////                if (i == EditorInfo.IME_ACTION_DONE){
+////                    Log.v("called","Keyboard");
+////                }
+////               // Log.v("called","Keyboard");
+////               // Log.v()
+////               // Log.v()
+//                return true;
+//            }
+//        });
 
        // checkAllFields();
+
+   // binding.abtMeEt.setOnEditorActionListener(this);
+
+//        binding.abtMeEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+//                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(binding.abtMeEt.getWindowToken(), 0);
+//                return true;
+//            }
+//        });
+//
+//        binding.ageEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+//                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(binding.ageEt.getWindowToken(), 0);
+//            }
+//        });
 
     }
 
@@ -241,7 +303,7 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 
 
     private void setSpinner(Spinner spinner,String[] list){
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg,list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.tv_bg1,list);
        // spinner.setPadding();
         spinner.setPadding((int) util.convertDpToPixel(10,getApplicationContext()),0,0,0);
         spinner.setAdapter(adapter);
@@ -305,13 +367,14 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
             String json = new String(buffer,"UTF-8");
             obj = new JSONObject(json);
           //  Log.v("json ","object");
-            array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
+           // array = obj.getJSONArray(String.valueOf(binding.countriesSpnner.getSelectedItem()));
            // Log.v("json","array");
             cities = util.convertToList(array);
             Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-            citiesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,cities);
-            binding.citiesSpinner.setAdapter(citiesAdapter);
-            binding.citiesSpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
+            citiesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg1,cities);
+           // binding.cityEtAuto.setAdapter(citiesAdapter);
+           // binding.citiesSpinner.setAdapter(citiesAdapter);
+         //   binding.citiesSpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
            // Log.v("cities spinner","set");
         } catch (IOException e) {
             e.printStackTrace();
@@ -421,12 +484,29 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
 //          binding.hairLayout.setError("Hair color information is required");
 //          return false;
 //      }
+        if (!util.checkEditTextField(binding.countiresEtAuto)){
+            binding.countryLayout.setError("Country information is required");
+          return false;
+        }
+        if (!util.checkEditTextField(binding.cityEtAuto)){
+            binding.countryLayout.setError("City information is required");
+            return false;
+        }
+        if (!countries.contains(binding.countiresEtAuto.getText().toString())){
+            binding.countryLayout.setError("Your input doesn't match any of our records");
+            return false;
+        }
+        if (!cities.contains(binding.cityEtAuto.getText().toString())){
+            binding.cityLayout.setError("Your input doesn't match any of our records");
+            return false;
+        }
       return true;
     }
 
     @Override
     public void onBackPressed() {
-        this.finish();
+       // this.finish();
+       // do nothing
     }
 
     @Override
@@ -553,9 +633,11 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
         currentUser.setAboutme(binding.abtMeEt.getText().toString().trim());
         currentUser.setAge_self(binding.ageEt.getText().toString().trim());
       //  currentUser.setCity_self(util.getCity(binding.residenceEt.getText().toString().trim()));
-        currentUser.setCity_self(binding.citiesSpinner.getSelectedItem().toString());
+       // currentUser.setCity_self(binding.citiesSpinner.getSelectedItem().toString());
+        currentUser.setCity_self(binding.cityEtAuto.getText().toString());
        // currentUser.setCountry_self(util.getCountry(binding.residenceEt.getText().toString().trim()));
-        currentUser.setCountry_self(binding.countriesSpnner.getSelectedItem().toString());
+       // currentUser.setCountry_self(binding.countriesSpnner.getSelectedItem().toString());
+        currentUser.setCountry_self(binding.countiresEtAuto.getText().toString());
         currentUser.setAge_others(binding.ageOthersEt.getText().toString().trim());
         //currentUser.setGender_self(binding.giEt.getText().toString().trim());
         currentUser.setGender_self(binding.genderIdentifySpnner.getSelectedItem().toString());
@@ -649,6 +731,16 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SugarContext.terminate();
+        //SugarContext.terminate();
+    }
+
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+      //  imm.hideSoftInputFromInputMethod(textView.getWindowToken(),0);
+        Log.v("this","called");
+        return true;
     }
 }

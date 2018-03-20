@@ -34,6 +34,7 @@ dependencies {
     compile 'com.android.volley:volley:1.1.0'
     compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
     compile 'pl.bclogic:pulsator4droid:1.0.3'
+    compile 'com.github.ganfra:material-spinner:2.0.0'
     // compile 'com.github.guilhermesgb:marqueeto:1.1.14'
     // compile project(':subProject:dialog')
     // compile 'com.github.f0ris.sweetalert:library:1.5.2'
