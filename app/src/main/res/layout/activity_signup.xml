@@ -66,7 +66,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:id="@+id/photo_circle1"
-                    android:src="@drawable/ic_add_image"
+                    android:src="@drawable/add_profile"
                     android:layout_gravity="center_horizontal"
                     />
 
