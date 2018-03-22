@@ -20,33 +20,64 @@
        android:textColor="@color/black"
        android:id="@+id/location_tv"
        />
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/country_spinner"
-        android:textColor="@color/black"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
-        android:paddingTop="0dp"
-        android:layout_below="@id/location_tv"
-        />
+   <AutoCompleteTextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/country_et_auto"
+       android:textColor="@color/black"
+       android:layout_marginLeft="10dp"
+       android:layout_marginStart="10dp"
+       android:layout_marginRight="10dp"
+       android:layout_marginEnd="10dp"
+       android:paddingTop="5dp"
+       android:layout_below="@id/location_tv"
+       android:hint="@string/country"
+       android:imeOptions="actionDone"
+       android:textSize="13sp"
+       />
+    <!--<Spinner-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/country_spinner"-->
+        <!--android:textColor="@color/black"-->
+        <!--style="@style/Widget.AppCompat.Spinner.Underlined"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:paddingTop="0dp"-->
+        <!--android:layout_below="@id/location_tv"-->
+        <!--/>-->
 
-    <Spinner
+    <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/city_spinner"
-        android:textColor="@color/black"
-        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:id="@+id/city_auto"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:paddingTop="5dp"
-        android:layout_below="@id/country_spinner"
+        android:hint="@string/city"
+        android:layout_below="@id/country_et_auto"
+        android:textSize="13sp"
+        android:imeOptions="actionDone"
+        android:inputType="textImeMultiLine"
         />
+
+    <!--<Spinner-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/city_spinner"-->
+        <!--android:textColor="@color/black"-->
+        <!--style="@style/Widget.AppCompat.Spinner.Underlined"-->
+        <!--android:layout_marginLeft="10dp"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginEnd="10dp"-->
+        <!--android:paddingTop="5dp"-->
+        <!--android:layout_below="@id/country_spinner"-->
+        <!--/>-->
 
     <TextView
         android:layout_width="match_parent"
@@ -58,7 +89,7 @@
         android:textColor="@color/black"
         android:textSize="12sp"
         android:id="@+id/date_tv"
-        android:layout_below="@id/city_spinner"
+        android:layout_below="@id/city_auto"
         />
     <CheckBox
         android:layout_width="match_parent"

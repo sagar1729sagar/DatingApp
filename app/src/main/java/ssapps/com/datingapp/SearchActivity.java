@@ -183,12 +183,12 @@ public class SearchActivity extends Fragment implements View.OnClickListener,Edi
 //        searchParams.setHeigh(heights.get(binding.heightMaterialSpinner.getSelectedIndex()));
 //        searchParams.setHaircolor(haircolor.get(binding.hairColorMaterialSpinner.getSelectedIndex()));
 //        searchParams.setEryecolor(eyecolor.get(binding.eyeColorMaterialSpinner.getSelectedIndex()));
-        searchParams.setOnlyOnline(binding.onlyOnlineCheckbox.isChecked());
-        searchParams.setOnlyWithPic(binding.onlyPicCheckbox.isChecked());
-        searchParams.setWhosNew(binding.whoNewCheckbox.isChecked());
-        searchParams.setIncognitoSearch(binding.incognitoCheckbox.isChecked());
+        searchParams.setOnlyOnline(binding.onlyOnlineToggle.isChecked());
+        searchParams.setOnlyWithPic(binding.onlyPicToggle.isChecked());
+        searchParams.setWhosNew(binding.whosNewToggle.isChecked());
+        searchParams.setIncognitoSearch(binding.incognitoToggle.isChecked());
         searchParams.setSaved_time(Calendar.getInstance().getTimeInMillis());
-        if (binding.saveSearchCheckbox.isChecked()){
+        if (binding.saveSearchToggle.isChecked()){
 //            Log.v("current time", String.valueOf(Calendar.getInstance().getTimeInMillis()));
 //            searchParams.setSaved_time(Calendar.getInstance().getTimeInMillis());
             searchParams.save();

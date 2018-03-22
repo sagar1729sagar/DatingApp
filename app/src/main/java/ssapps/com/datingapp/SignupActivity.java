@@ -23,8 +23,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -35,10 +39,14 @@ import com.backendless.files.BackendlessFile;
 import com.backendless.persistence.DataQueryBuilder;
 import com.orm.SugarContext;
 import com.orm.util.QueryBuilder;
+import com.tsongkha.spinnerdatepicker.DatePicker;
+import com.tsongkha.spinnerdatepicker.DatePickerDialog;
+import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -50,7 +58,7 @@ import ssapps.com.datingapp.databinding.ActivitySignupBinding;
 import Util.Prefs;
 
 
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener{
+public class SignupActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener,EditText.OnEditorActionListener, DatePickerDialog.OnDateSetListener {
 
     private ActivitySignupBinding binding;
     private Util util;
@@ -65,6 +73,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
     private Prefs pres;
+    private boolean isDateSelected = false;
+    private Calendar c_sel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +112,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 //        binding.photoCircle.setOnClickListener(this);
         binding.signupButton.setOnClickListener(this);
+        binding.dateSelectionButton.setOnClickListener(this);
+        binding.selectedDateTv.setOnClickListener(this);
 
 //
 //        binding.maleRadiobutton.setChecked(true);
@@ -123,6 +135,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         binding.allRadiobutton.setOnCheckedChangeListener(this);
         binding.queerRadiobutton.setOnCheckedChangeListener(this);
         binding.transgenderRadiobutton.setOnCheckedChangeListener(this);
+
+
+        setDateViews(isDateSelected);
 //
 //        binding.genderGroup.setOnCheckedChangeListener(this);
 
@@ -137,6 +152,16 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
 
+    }
+
+    private void setDateViews(boolean dateSelection) {
+        if (dateSelection){
+            binding.dateSelectionButton.setVisibility(View.GONE);
+            binding.selectedDateTv.setVisibility(View.VISIBLE);
+        } else {
+            binding.dateSelectionButton.setVisibility(View.VISIBLE);
+            binding.selectedDateTv.setVisibility(View.GONE);
+        }
     }
 
 //    private void radioButtonAdjstments() {
@@ -157,6 +182,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 selectImage();
                 break;
 
+            case R.id.date_selection_button:
+                selectDate();
+                break;
+
+            case R.id.selected_date_tv:
+                selectDate();
+                break;
+
             case R.id.signup_button:
                // startActivity(new Intent(SignupActivity.this,SignupDetailsActivity.class));
                 //checkAllFields();
@@ -175,6 +208,23 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 //                }
 
         }
+    }
+
+    private void selectDate() {
+
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        new SpinnerDatePickerDialogBuilder()
+                .context(this)
+                .callback(this)
+                .spinnerTheme(R.style.NumberPickerStyle)
+                .maxDate(year+5,month,day)
+                .minDate(year,month,day)
+                .build()
+                .show();
     }
 
     private void checkForInternetPermission() {
@@ -303,7 +353,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         User user = new User();
         user.setUsername(binding.username.getText().toString());
         user.setPassword(binding.password.getText().toString());
-        user.setDateofBirth(binding.dobEt.getText().toString());
+        //user.setDateofBirth(binding.dobEt.getText().toString());
+        user.setDateofBirth(String.valueOf(c_sel.getTimeInMillis()));
         user.setIsOnline("Yes");
         if (bitmap == null){
             user.setHasPicture("No");
@@ -455,10 +506,16 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             return false;
         }
 
-        if (!util.checkEditTextField(binding.dobEt)){
+        if (!checkRadioButtonSelection()){
+            setToast("Gender prefrence should be selected");
+            return false;
+        }
+
+        if (!isDateSelected){
             setToast("Please enter your date of birth");
             return false;
         }
+
 
         return true;
     }
@@ -631,5 +688,51 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     protected void onDestroy() {
         super.onDestroy();
        // SugarContext.terminate();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null){
+            imm.hideSoftInputFromWindow(binding.username.getWindowToken(),0);
+        }
+        return true;
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+        c_sel = Calendar.getInstance();
+        c_sel.set(Calendar.YEAR,year);
+        c_sel.set(Calendar.MONTH,monthOfYear);
+        c_sel.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        c_sel.set(Calendar.HOUR,0);
+        c_sel.set(Calendar.MINUTE,0);
+        c_sel.set(Calendar.SECOND,0);
+        c_sel.set(Calendar.MILLISECOND,0);
+
+        binding.selectedDateTv.setText(String.valueOf(dayOfMonth)+"/"+String.valueOf(monthOfYear+1)+"/"+String.valueOf(year));
+
+        isDateSelected = true;
+        setDateViews(isDateSelected);
+    }
+
+    private boolean checkRadioButtonSelection(){
+        if (binding.maleRadiobutton.isChecked()){
+            return true;
+        }
+        if (binding.femaleRadiobutton.isChecked()){
+            return true;
+        }
+        if (binding.queerRadiobutton.isChecked()){
+            return true;
+        }
+        if (binding.transgenderRadiobutton.isChecked()){
+            return true;
+        }
+        if (binding.allRadiobutton.isChecked()){
+            return true;
+        }
+        return false;
     }
 }

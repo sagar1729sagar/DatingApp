@@ -146,6 +146,7 @@
                 android:textColor="@color/black"
                 android:id="@+id/url_et"
                 android:inputType="textUri"
+                android:imeOptions="actionDone"
                 />
         </android.support.design.widget.TextInputLayout>
         <Button

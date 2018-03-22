@@ -1,12 +1,17 @@
 package ssapps.com.datingapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
@@ -28,7 +33,7 @@ import Util.Util;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivityLoginBinding;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements EditText.OnEditorActionListener {
 
     private ActivityLoginBinding binding;
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
@@ -179,5 +184,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         SugarContext.terminate();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.usernameEt.getWindowToken(), 0);
+        return true;
     }
 }

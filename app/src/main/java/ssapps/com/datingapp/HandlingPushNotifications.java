@@ -32,13 +32,20 @@ public class HandlingPushNotifications extends BackendlessPushService {
     @Override
     public boolean onMessage(Context context, Intent intent) {
 
+        Toast.makeText(context,"BNotification recieved",Toast.LENGTH_LONG).show();
+        Toast.makeText(context,intent.getStringExtra("message"),Toast.LENGTH_LONG).show();
+
+
         prefs = new Prefs(context);
         //displayNotification();
         if (intent.getStringExtra("message").contains("chat")) {
+            Toast.makeText(context,"Entered chat",Toast.LENGTH_LONG).show();
             displayNotification(context, intent.getStringExtra(PublishOptions.ANDROID_TICKER_TEXT_TAG),
                     intent.getStringExtra(PublishOptions.ANDROID_CONTENT_TITLE_TAG), intent.getStringExtra(PublishOptions.ANDROID_CONTENT_TEXT_TAG),
                     intent.getStringExtra("message"));
             return false;
+        } else {
+            Toast.makeText(context,"skipped chat",Toast.LENGTH_LONG).show();
         }
 
         return true;

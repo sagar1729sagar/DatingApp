@@ -1,6 +1,7 @@
 package ssapps.com.datingapp;
 
 import android.*;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,9 +18,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -52,7 +57,7 @@ import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivityAddBinding;
 
-public class AddActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class AddActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener,EditText.OnEditorActionListener {
 
     private ActivityAddBinding binding;
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
@@ -103,10 +108,50 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         setCountrySpinner();
         setCitiesSpinner();
 
-        binding.countrySpinner.setOnItemSelectedListener(this);
+       // binding.countrySpinner.setOnItemSelectedListener(this);
+      //  binding.countryEtAuto.setOnItemClickListener(this);
+       // binding.cityEtAuto.setOnItemClickListener(this);
         binding.selectDateButton.setOnClickListener(this);
         binding.selctPictureButton.setOnClickListener(this);
         binding.submitButton.setOnClickListener(this);
+
+
+        binding.cityEtAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(binding.cityEtAuto.getWindowToken(), 0);
+                }
+
+            }
+        });
+
+
+        binding.countryEtAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                 if (imm != null) {
+                  imm.hideSoftInputFromWindow(binding.cityEtAuto.getWindowToken(), 0);
+                  }
+
+            try {
+
+                array = obj.getJSONArray(binding.countryEtAuto.getText().toString());
+                cities = util.convertToList(array);
+                Collections.sort(cities, String.CASE_INSENSITIVE_ORDER);
+                citiesAdapter = new ArrayAdapter(getApplicationContext(), R.layout.tv_bg1, cities);
+                // binding.citySpinner.setAdapter(citiesAdapter);
+                //  binding.citySpinner.setSelection(0);
+                binding.cityEtAuto.setAdapter(citiesAdapter);
+            } catch (JSONException e) {
+
+            }
+
+            }
+        });
 
     }
 
@@ -120,16 +165,16 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
             is.close();
             String json = new String(buffer, "UTF-8");
             obj = new JSONObject(json);
-            array = obj.getJSONArray(binding.countrySpinner.getSelectedItem().toString());
+            array = obj.getJSONArray(binding.countryEtAuto.getText().toString());
             cities = util.convertToList(array);
             Collections.sort(cities, String.CASE_INSENSITIVE_ORDER);
-            citiesAdapter = new ArrayAdapter(this, R.layout.tv_bg, cities);
-            binding.citySpinner.setAdapter(citiesAdapter);
-            if (prefs.getname().equals("None")) {
-                binding.citySpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
-            } else {
-                binding.citySpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
-            }
+            citiesAdapter = new ArrayAdapter(this, R.layout.tv_bg1, cities);
+            binding.cityEtAuto.setAdapter(citiesAdapter);
+//            if (prefs.getname().equals("None")) {
+//              //  binding.citySpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
+//            } else {
+//               // binding.citySpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
+//            }
         } catch (IOException e) {
 
         } catch (JSONException e) {
@@ -148,13 +193,14 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
 
         Collections.sort(countries,String.CASE_INSENSITIVE_ORDER);
 
-        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,countries);
-        binding.countrySpinner.setAdapter(countriesAdapter);
-        if (prefs.getname().equals("None")){
-            binding.countrySpinner.setSelection(countriesAdapter.getPosition("India"));
-        } else {
-            binding.countrySpinner.setSelection(countriesAdapter.getPosition(loggedUser.getCountry_self()));
-        }
+        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg1,countries);
+       // binding.countrySpinner.setAdapter(countriesAdapter);
+        binding.countryEtAuto.setAdapter(countriesAdapter);
+//        if (prefs.getname().equals("None")){
+//            binding.countrySpinner.setSelection(countriesAdapter.getPosition("India"));
+//        } else {
+//            binding.countrySpinner.setSelection(countriesAdapter.getPosition(loggedUser.getCountry_self()));
+//        }
 
     }
 
@@ -173,9 +219,13 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                     binding.subjectLayout.setError("Enter the type of actvity like picnic,datout,trek etc...");
                 } else if (!util.checkEditTextField(binding.descriptionEt)){
                     binding.descriptionLayout.setError("Please enter a descriotn of the activity you are planning");
-                } else if (!isDateSelected){
-                    Toast.makeText(getApplicationContext(),"Pl" +
-                            "ease select a date",Toast.LENGTH_LONG).show();
+                } else if (!isDateSelected) {
+                    Toast.makeText(getApplicationContext(), "Pl" +
+                            "ease select a date", Toast.LENGTH_LONG).show();
+                } else if (!countries.contains(binding.countryEtAuto.getText().toString())){
+                    Toast.makeText(getApplicationContext(),"Your selected country is not in our list. Please select another",Toast.LENGTH_LONG).show();
+                }  else if (!cities.contains(binding.cityEtAuto.getText().toString())){
+                    Toast.makeText(getApplicationContext(),"Your selected city is not in our list. Please select another",Toast.LENGTH_LONG).show();
                 } else if (bitmap == null && firstPress){
                     firstPress = false;
                     Toast.makeText(getApplicationContext(),"You didnot select a picture.If you wish to continue without picture, please submit again",Toast.LENGTH_LONG).show();
@@ -215,8 +265,10 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
     private void saveActivity(boolean hasPicture) {
 
         final Activity activity = new Activity();
-        activity.setCity(binding.citySpinner.getSelectedItem().toString());
-        activity.setCountry(binding.countrySpinner.getSelectedItem().toString());
+        //activity.setCity(binding.citySpinner.getSelectedItem().toString());
+        activity.setCity(binding.cityEtAuto.getText().toString());
+       // activity.setCountry(binding.countrySpinner.getSelectedItem().toString());
+        activity.setCountry(binding.countryEtAuto.getText().toString());
         activity.setDateActivity(binding.dateDisplayTv.getText().toString());
         activity.setDescription(binding.descriptionEt.getText().toString());
         if (hasPicture){
@@ -278,25 +330,7 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
                 .show();
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        try {
-
-            array = obj.getJSONArray(binding.countrySpinner.getSelectedItem().toString());
-            Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-            citiesAdapter = new ArrayAdapter(this,R.layout.tv_bg,cities);
-            binding.citySpinner.setAdapter(citiesAdapter);
-            binding.citySpinner.setSelection(0);
-        } catch (JSONException e) {
-
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -370,5 +404,62 @@ public class AddActivity extends AppCompatActivity implements AdapterView.OnItem
         }
         return image;
     }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(binding.subjectEt.getWindowToken(), 0);
+        }
+        return true;
+    }
+
+//    @Override
+//    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//        if (imm != null) {
+//            imm.hideSoftInputFromWindow(binding.cityEtAuto.getWindowToken(), 0);
+//        }
+//
+//
+//
+//
+//            try {
+//
+//                array = obj.getJSONArray(binding.countryEtAuto.getText().toString());
+//                cities = util.convertToList(array);
+//                Collections.sort(cities, String.CASE_INSENSITIVE_ORDER);
+//                citiesAdapter = new ArrayAdapter(this, R.layout.tv_bg, cities);
+//                // binding.citySpinner.setAdapter(citiesAdapter);
+//                //  binding.citySpinner.setSelection(0);
+//                binding.cityEtAuto.setAdapter(citiesAdapter);
+//            } catch (JSONException e) {
+//
+//            }
+//        }
+//    }
+
+//    @Override
+//    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//        try {
+//
+//            array = obj.getJSONArray(binding.countryEtAuto.getText().toString());
+//            cities = util.convertToList(array);
+//            Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+//            citiesAdapter = new ArrayAdapter(this,R.layout.tv_bg,cities);
+//           // binding.citySpinner.setAdapter(citiesAdapter);
+//          //  binding.citySpinner.setSelection(0);
+//            binding.cityEtAuto.setAdapter(citiesAdapter);
+//        } catch (JSONException e) {
+//
+//        }
+//    }
+//
+//    @Override
+//    public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//    }
 }
 

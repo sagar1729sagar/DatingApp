@@ -54,6 +54,8 @@
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
             android:layout_centerVertical="true"
+            android:inputType="textImeMultiLine"
+            android:imeOptions="actionDone"
             />
         <!--<EditText-->
         <!--android:layout_width="wrap_content"-->

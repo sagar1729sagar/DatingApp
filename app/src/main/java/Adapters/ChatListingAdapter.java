@@ -51,7 +51,7 @@ public class ChatListingAdapter extends RecyclerView.Adapter<ChatListingAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         MessagesSorting message = messages.get(position);
-
+        Log.v("position",String.valueOf(position));
         User user = new User();
         Log.v("message from",message.getMessage_from());
         Log.v("message to",message.getMessage_to());

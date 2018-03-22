@@ -237,20 +237,20 @@ public class MainActivity extends AppCompatActivity
 
         switch (id){
             case R.id.add_new:
-                //todo intent to a new page to add new activity
+
                 startActivity(new Intent(MainActivity.this,AddActivity.class));
                 break;
             case R.id.refresh_activities:
-                //todo refresh user activities
+
                 startActivity(new Intent(MainActivity.this,RefreshActivitiesActivity.class));
                 break;
             case R.id.saved_activities:
                 startActivity(new Intent(MainActivity.this,SaveForLaterActivities.class));
-                //todo display saved activities
+
 
                 break;
             case R.id.search_activities:
-                //todo go to search page
+
                 startActivity(new Intent(MainActivity.this,ActivitySearch.class));
                 break;
         }

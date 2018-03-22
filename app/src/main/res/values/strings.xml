@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DatingApp</string>
+    <string name="app_name">VeMeet</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -133,6 +133,7 @@
     <string name="dd_mm_yyyy">dd/mm/yyyy</string>
     <string name="select_pic">Select pic</string>
     <string name="subject_like_picnic">Subject (like picnic)</string>
+    <string name="incognito_search">Incognito search</string>
 
 
     <string-array name="genderArray">

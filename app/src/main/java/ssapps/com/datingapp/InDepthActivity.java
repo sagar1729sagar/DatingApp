@@ -10,9 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.backendless.Backendless;
@@ -31,7 +35,7 @@ import Util.Util;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivityInDepthBinding;
 
-public class InDepthActivity extends Fragment implements YouTubePlayer.OnInitializedListener{
+public class InDepthActivity extends Fragment implements YouTubePlayer.OnInitializedListener,EditText.OnEditorActionListener{
 
     private ActivityInDepthBinding binding;
     private static final String key = "AIzaSyCXCH0moJoeDqFi9XIV2A8ogclFxo9zoJI";
@@ -186,6 +190,13 @@ public class InDepthActivity extends Fragment implements YouTubePlayer.OnInitial
         }
     }
 
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.urlEt.getWindowToken(), 0);
+        return true;
+    }
+
     //    @Override
 //    public void onAttach(Context context) {
 //
@@ -194,6 +205,5 @@ public class InDepthActivity extends Fragment implements YouTubePlayer.OnInitial
 //    }
 
 
-    //todo last
 
 }

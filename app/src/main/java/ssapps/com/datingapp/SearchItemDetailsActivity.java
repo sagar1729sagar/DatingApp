@@ -305,7 +305,7 @@ public class SearchItemDetailsActivity extends YouTubeBaseActivity implements Yo
                     likeUser();
                 }
                 break;
-            //todo
+
         }
     }
 

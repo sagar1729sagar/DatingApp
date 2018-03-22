@@ -87,8 +87,10 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
         util = new Util();
 
         if (prefs.getname().equals("None")){
-            binding.saveSearchCheckbox.setVisibility(View.GONE);
-            binding.incognitoCheckbox.setVisibility(View.GONE);
+            //binding.saveSearchCheckbox.setVisibility(View.GONE);
+            binding.saveSearchRl.setVisibility(View.GONE);
+           // binding.incognitoCheckbox.setVisibility(View.GONE);
+            binding.incognitoRl.setVisibility(View.GONE);
         }
 
         //        binding.whoAreMaterialSpinner.setItems(sexual_orientations);
@@ -369,12 +371,13 @@ public class SearchActivityNew extends Fragment implements View.OnClickListener 
            // searchParams.setHeigh(binding.heightEt.getText().toString().trim());
             searchParams.setHaircolor(binding.hairColorMaterialSpinner.getSelectedItem().toString());
             searchParams.setEryecolor(binding.eyeColorMaterialSpinner.getSelectedItem().toString());
-            searchParams.setOnlyOnline(binding.onlyOnlineCheckbox.isChecked());
-            searchParams.setOnlyWithPic(binding.onlyPicCheckbox.isChecked());
-            searchParams.setWhosNew(binding.whoNewCheckbox.isChecked());
-            searchParams.setIncognitoSearch(binding.incognitoCheckbox.isChecked());
+          //  searchParams.setOnlyOnline(binding.onlyOnlineCheckbox.isChecked());
+            searchParams.setOnlyOnline(binding.onlyOnlineToggle.isChecked());
+            searchParams.setOnlyWithPic(binding.onlyPicToggle.isChecked());
+            searchParams.setWhosNew(binding.whosNewToggle.isChecked());
+            searchParams.setIncognitoSearch(binding.incognitoToggle.isChecked());
            // searchParams.setSaved_time();
-            if (binding.saveSearchCheckbox.isChecked()){
+            if (binding.saveSearchToggle.isChecked()){
                 searchParams.setSaved_time(Calendar.getInstance().getTimeInMillis());
                 searchParams.save();
             }

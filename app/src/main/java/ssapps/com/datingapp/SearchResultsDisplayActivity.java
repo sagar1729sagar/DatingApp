@@ -57,7 +57,6 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
                     if (clickedUser.getPackages().contains("InDepth") || clickedUser.getPackages().contains("FullMembership")){
                         Log.v("premium ","indepth");
                         if (!clickedUser.getVideoUrl().equals("None")){
-                            //todo take to indepth profile
                             Log.v("no premium","normal");
                             Intent i = new Intent(SearchResultsDisplayActivity.this,SearchItemDetailsActivity.class);
                             i.putExtra("name",clickedUser.getUsername());
@@ -70,7 +69,6 @@ public class SearchResultsDisplayActivity extends AppCompatActivity {
                         }
                     }
                 } else {
-                    //todo take to normal class
                     Log.v("no premium","normal");
                     Intent i = new Intent(SearchResultsDisplayActivity.this,NormalProfileDisplay.class);
                     i.putExtra("name",clickedUser.getUsername());

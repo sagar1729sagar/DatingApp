@@ -188,7 +188,7 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
                     likeUser();
                 }
                 break;
-            //todo
+
         }
     }
 
@@ -540,7 +540,7 @@ public class NormalProfileDisplay extends AppCompatActivity implements View.OnCl
             publishOptions.putHeader("android-content-title", "VeMeet");
             publishOptions.putHeader("android-content-text", prefs.getname()+" liked you");
 
-            Backendless.Messaging.publish(currentUser.getUsername(), "frnd", publishOptions, new AsyncCallback<MessageStatus>() {
+            Backendless.Messaging.publish(currentUser.getUsername(), "liked", publishOptions, new AsyncCallback<MessageStatus>() {
                 @Override
                 public void handleResponse(MessageStatus response) {
                     dialog.dismiss();

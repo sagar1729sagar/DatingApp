@@ -18,9 +18,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/fb"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/fb"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
@@ -58,12 +58,12 @@
         </activity>
         <activity android:name=".SignupActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+             <!--<intent-filter>-->
+             <!--<action android:name="android.intent.action.MAIN" />-->
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <!--<category android:name="android.intent.category.LAUNCHER" />-->
+             <!--</intent-filter>-->
         </activity>
         <activity android:name=".SignupDetailsActivity">
 
@@ -102,24 +102,37 @@
 
         <service android:name=".HandlingPushNotifications" />
 
-        <activity android:name=".SavedSearchActivity" />
-        <activity android:name=".AroundMeActivity" />
-        <activity android:name=".ChatListingFragment" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".OnlineActivity" />
-        <activity android:name=".WhosNewActivity" />
-        <activity android:name=".InDepthActivity" />
-        <activity android:name=".ActivityBaord" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".NormalProfileDisplay" />
-        <activity android:name=".ActivitySearch" />
-        <activity android:name=".AddActivity" />
-        <activity android:name=".RefreshActivitiesActivity" />
-        <activity android:name=".ActivitiesResults" />
-        <activity android:name=".SaveForLaterActivities" />
-        <activity android:name=".FriendsFragment" />
-        <activity android:name=".FavouritesList" />
-        <activity android:name=".LikedList"></activity>
-    </application>
+        <!--<activity android:name=".SavedSearchActivity" />-->
+        <!--<activity android:name=".AroundMeActivity" />-->
+        <!--<activity android:name=".ChatListingFragment" />-->
+        <!--<activity android:name=".ChatActivity" />-->
+        <!--<activity android:name=".OnlineActivity" />-->
+        <!--<activity android:name=".WhosNewActivity" />-->
+        <!--<activity android:name=".InDepthActivity" />-->
+        <!--<activity android:name=".ActivityBaord" />-->
+        <activity android:name=".LoginActivity" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+       </activity>
+       <activity android:name=".NormalProfileDisplay" />
+        <activity android:name=".ActivitySearch" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+       <activity android:name=".AddActivity" />
+       <activity android:name=".RefreshActivitiesActivity" />
+       <activity android:name=".ActivitiesResults" />
+       <activity android:name=".SaveForLaterActivities" />
+       <!--<activity android:name=".FriendsFragment" />-->
+       <!--<activity android:name=".FavouritesList" />-->
+       <!--<activity android:name=".LikedList"/>-->
+   </application>
 
 </manifest>

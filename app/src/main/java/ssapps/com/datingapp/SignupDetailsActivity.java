@@ -738,8 +738,10 @@ public class SignupDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
-      //  imm.hideSoftInputFromInputMethod(textView.getWindowToken(),0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+        }
+        //  imm.hideSoftInputFromInputMethod(textView.getWindowToken(),0);
         Log.v("this","called");
         return true;
     }

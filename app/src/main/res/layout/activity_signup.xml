@@ -92,6 +92,8 @@
                         android:hint="@string/user_name"
                         android:textColor="@color/black"
                         android:textSize="10sp"
+                        android:imeOptions="actionDone"
+                        android:inputType="textImeMultiLine"
                         />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -110,6 +112,7 @@
                         android:textColor="@color/black"
                         android:inputType="textPassword"
                         android:textSize="10sp"
+                        android:imeOptions="actionDone"
                         />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -127,6 +130,7 @@
                         android:textColor="@color/black"
                         android:inputType="textEmailAddress"
                         android:textSize="10sp"
+                        android:imeOptions="actionDone"
                         />
                 </android.support.design.widget.TextInputLayout>
 
@@ -217,16 +221,47 @@
 
                 </RadioGroup>
 
-                    <EditText
+                    <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/dob"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:inputType="date"
+                        android:text="@string/dob"
                         android:textSize="12sp"
-                        android:id="@+id/dobEt"
+                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:id="@+id/date_selection_button"
                         />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/dd_mm_yyyy"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"
+                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:id="@+id/selected_date_tv"
+                        />
+
+                    <!--<EditText-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="@string/dob"-->
+                        <!--android:layout_gravity="center"-->
+                        <!--android:layout_marginLeft="20dp"-->
+                        <!--android:inputType="date"-->
+                        <!--android:textSize="12sp"-->
+                        <!--android:id="@+id/dobEt"-->
+                        <!---->
+                        <!--/>-->
 
 
                 </LinearLayout>

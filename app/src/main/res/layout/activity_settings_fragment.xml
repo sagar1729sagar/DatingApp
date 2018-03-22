@@ -38,6 +38,8 @@
             android:id="@+id/user_name_et"
             android:textSize="12sp"
             android:enabled="false"
+            android:inputType="textImeMultiLine"
+            android:imeOptions="actionDone"
             />
 
         <TextView
@@ -61,6 +63,7 @@
             android:textSize="12sp"
             android:inputType="textPassword"
             android:hint="@string/blank"
+            android:imeOptions="actionDone"
             />
         <TextView
             android:layout_width="match_parent"
@@ -83,6 +86,7 @@
             android:textSize="12sp"
             android:inputType="textPassword"
             android:hint="@string/blank"
+            android:imeOptions="actionDone"
             />
         <TextView
             android:layout_width="match_parent"
@@ -104,6 +108,8 @@
             android:id="@+id/email_et"
             android:textSize="12sp"
             android:enabled="false"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionDone"
             />
         <TextView
             android:layout_width="match_parent"
@@ -115,14 +121,26 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <!--<com.jaredrummler.materialspinner.MaterialSpinner-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:id="@+id/photos_spinner"-->
+            <!--/>-->
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:id="@+id/photos_spinner"
+            android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
         <TextView
             android:layout_width="match_parent"
@@ -134,14 +152,26 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <!--<com.jaredrummler.materialspinner.MaterialSpinner-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:id="@+id/friend_spinner"-->
+            <!--/>-->
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:id="@+id/friend_spinner"
+            android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
         <TextView
             android:layout_width="match_parent"
@@ -153,14 +183,26 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <!--<com.jaredrummler.materialspinner.MaterialSpinner-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:id="@+id/friend_view_spinner"-->
+            <!--/>-->
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:id="@+id/friend_view_spinner"
+            android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
 
         <TextView
@@ -173,14 +215,26 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             />
-        <com.jaredrummler.materialspinner.MaterialSpinner
+        <!--<com.jaredrummler.materialspinner.MaterialSpinner-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:id="@+id/incognito_spinner"-->
+            <!--/>-->
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:id="@+id/incognito_spinner"
+            android:textColor="@color/black"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingTop="0dp"
             />
 
         <Button

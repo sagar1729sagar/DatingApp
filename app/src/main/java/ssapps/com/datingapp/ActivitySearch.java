@@ -1,5 +1,6 @@
 package ssapps.com.datingapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.ActionBar;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
@@ -41,7 +43,7 @@ import Util.Prefs;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivitySearch2Binding;
 
-public class ActivitySearch extends AppCompatActivity implements AdapterView.OnItemSelectedListener,View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class ActivitySearch extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     private ActivitySearch2Binding binding;
     private ArrayList<String> countries = new ArrayList<>();
@@ -88,7 +90,7 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
 
         setCountrySpinner();
         setCitiesSpinner();
-        binding.countrySpinner.setOnItemSelectedListener(this);
+       // binding.countrySpinner.setOnItemSelectedListener(this);
         setSeekbar();
 
         binding.seekBar.setPadding(0,0,0,0);
@@ -104,6 +106,36 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
         binding.subImage.setOnClickListener(this);
         binding.selectDateButton.setOnClickListener(this);
         binding.searchButton.setOnClickListener(this);
+
+
+        binding.cityAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(binding.countryEtAuto.getWindowToken(), 0);
+                }
+            }
+        });
+
+
+        binding.countryEtAuto.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                try {
+
+                    array = obj.getJSONArray(binding.countryEtAuto.getText().toString());
+                    cities = util.convertToList(array);
+                    Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+                    citiesAdapter = new ArrayAdapter(getApplicationContext(),R.layout.tv_bg1,cities);
+                    binding.cityAuto.setAdapter(citiesAdapter);
+                   // binding.citySpinner.setAdapter(citiesAdapter);
+                 //   binding.citySpinner.setSelection(0);
+                } catch (JSONException e) {
+
+                }
+            }
+        });
 
     }
 
@@ -127,16 +159,16 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
             is.close();
             String json = new String(buffer,"UTF-8");
             obj = new JSONObject(json);
-            array = obj.getJSONArray(binding.countrySpinner.getSelectedItem().toString());
+            array = obj.getJSONArray(binding.countryEtAuto.getText().toString());
             cities = util.convertToList(array);
             Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-            citiesAdapter = new ArrayAdapter(this,R.layout.tv_bg,cities);
-            binding.citySpinner.setAdapter(citiesAdapter);
-            if (prefs.getname().equals("None")){
-                binding.citySpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
-            } else {
-                binding.citySpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
-            }
+            citiesAdapter = new ArrayAdapter(this,R.layout.tv_bg1,cities);
+            binding.cityAuto.setAdapter(citiesAdapter);
+//            if (prefs.getname().equals("None")){
+//                binding.citySpinner.setSelection(citiesAdapter.getPosition("Vijayawada"));
+//            } else {
+//                binding.citySpinner.setSelection(citiesAdapter.getPosition(loggedUser.getCity_self()));
+//            }
         } catch (IOException e) {
 
         } catch (JSONException e) {
@@ -155,33 +187,33 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
 
         Collections.sort(countries,String.CASE_INSENSITIVE_ORDER);
 
-        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg,countries);
-        binding.countrySpinner.setAdapter(countriesAdapter);
-        if (prefs.getname().equals("None")){
-            binding.countrySpinner.setSelection(countriesAdapter.getPosition("India"));
-        } else {
-            binding.countrySpinner.setSelection(countriesAdapter.getPosition(loggedUser.getCountry_self()));
-        }
+        ArrayAdapter<String> countriesAdapter = new ArrayAdapter<String>(this,R.layout.tv_bg1,countries);
+        binding.countryEtAuto.setAdapter(countriesAdapter);
+//        if (prefs.getname().equals("None")){
+//            binding.countrySpinner.setSelection(countriesAdapter.getPosition("India"));
+//        } else {
+//            binding.countrySpinner.setSelection(countriesAdapter.getPosition(loggedUser.getCountry_self()));
+//        }
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        try {
-
-            array = obj.getJSONArray(binding.countrySpinner.getSelectedItem().toString());
-            Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
-            citiesAdapter = new ArrayAdapter(this,R.layout.tv_bg,cities);
-            binding.citySpinner.setAdapter(citiesAdapter);
-            binding.citySpinner.setSelection(0);
-        } catch (JSONException e) {
-
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+//    @Override
+//    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//        try {
+//
+//            array = obj.getJSONArray(binding.countrySpinner.getSelectedItem().toString());
+//            Collections.sort(cities,String.CASE_INSENSITIVE_ORDER);
+//            citiesAdapter = new ArrayAdapter(this,R.layout.tv_bg,cities);
+//            binding.citySpinner.setAdapter(citiesAdapter);
+//            binding.citySpinner.setSelection(0);
+//        } catch (JSONException e) {
+//
+//        }
+//    }
+//
+//    @Override
+//    public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//    }
 
     @Override
     public void onClick(View view) {
@@ -209,7 +241,6 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
                 } else {
                     getData();
                 }
-                //todo
                 break;
         }
 
@@ -220,11 +251,11 @@ public class ActivitySearch extends AppCompatActivity implements AdapterView.OnI
         DataQueryBuilder query = DataQueryBuilder.create();
         query.setPageSize(100);
         if (binding.allCheckbox.isChecked()) {
-            query.setWhereClause("city = '" + binding.citySpinner.getSelectedItem().toString() + "' and country = '"
-                    + binding.countrySpinner.getSelectedItem().toString() + "' and time >= " + Calendar.getInstance().getTimeInMillis());
+            query.setWhereClause("city = '" + binding.cityAuto.getText().toString() + "' and country = '"
+                    + binding.countryEtAuto.getText().toString() + "' and time >= " + Calendar.getInstance().getTimeInMillis());
         } else {
-        query.setWhereClause("city = '" + binding.citySpinner.getSelectedItem().toString() + "' and country = '"
-                + binding.countrySpinner.getSelectedItem().toString() + "' and time >= " + time);
+        query.setWhereClause("city = '" + binding.cityAuto.getText().toString() + "' and country = '"
+                + binding.countryEtAuto.getText().toString() + "' and time >= " + time);
     }
       //  query.setWhereClause("country = '"+binding.countrySpinner.getSelectedItem().toString()+"' and city = '"
        //         +binding.citySpinner.getSelectedItem().toString()+"'");

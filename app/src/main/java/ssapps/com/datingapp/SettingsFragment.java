@@ -1,15 +1,19 @@
 package ssapps.com.datingapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,7 +38,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import ssapps.com.datingapp.databinding.ActivitySettingsFragmentBinding;
 
 @SuppressLint("NewApi")
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements EditText.OnEditorActionListener {
 
     private static final String appKey = "7EEB2727-4E8D-944C-FFDD-3D802BC37800";
     private static final String appId = "648D896E-EDD8-49C8-FF74-2F1C32DB7A00";
@@ -86,67 +90,80 @@ public class SettingsFragment extends Fragment {
 
             binding.emailEt.setText(currentUser.getMailId());
 
-            binding.photosSpinner.setItems(photo_spinner_items);
-            switch (currentUser.getWho_view_photos()) {
 
-                case "Only me":
-                    binding.photosSpinner.setSelectedIndex(0);
-                    break;
-                case "Only friends":
-                    binding.photosSpinner.setSelectedIndex(1);
-                    break;
-                case "All":
-                    binding.photosSpinner.setSelectedIndex(2);
-                    break;
-                default:
-                    binding.photosSpinner.setSelectedIndex(2);
-                    break;
-            }
-
-
-            binding.friendSpinner.setItems(friend_spinner_items);
-            switch (currentUser.getFriend_requests()) {
-                case "All":
-                    binding.friendSpinner.setSelectedIndex(0);
-                    break;
-                case "None":
-                    binding.friendSpinner.setSelectedIndex(1);
-                    break;
-                default:
-                    binding.friendSpinner.setSelectedIndex(0);
-                    break;
-            }
+            ArrayAdapter<String> photosAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,photo_spinner_items);
+            binding.photosSpinner.setAdapter(photosAdapter);
+            binding.photosSpinner.setSelection(photosAdapter.getPosition(currentUser.getWho_view_photos()));
+//            binding.photosSpinner.setItems(photo_spinner_items);
+//            switch (currentUser.getWho_view_photos()) {
+//
+//                case "Only me":
+//                    binding.photosSpinner.setSelectedIndex(0);
+//                    break;
+//                case "Only friends":
+//                    binding.photosSpinner.setSelectedIndex(1);
+//                    break;
+//                case "All":
+//                    binding.photosSpinner.setSelectedIndex(2);
+//                    break;
+//                default:
+//                    binding.photosSpinner.setSelectedIndex(2);
+//                    break;
+//            }
 
 
-            binding.friendViewSpinner.setItems(friend_view_spinner_items);
-            switch (currentUser.getWho_view_friends()) {
-                case "All":
-                    binding.friendViewSpinner.setSelectedIndex(0);
-                    break;
-                case "Friends":
-                    binding.friendViewSpinner.setSelectedIndex(1);
-                    break;
-                case "None":
-                    binding.friendViewSpinner.setSelectedIndex(2);
-                    break;
-                default:
-                    binding.friendViewSpinner.setSelectedIndex(0);
-                    break;
-            }
+            ArrayAdapter<String> friendsAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,friend_spinner_items);
+            binding.friendSpinner.setAdapter(friendsAdapter);
+            binding.friendSpinner.setSelection(friendsAdapter.getPosition(currentUser.getFriend_requests()));
+//            binding.friendSpinner.setItems(friend_spinner_items);
+//            switch (currentUser.getFriend_requests()) {
+//                case "All":
+//                    binding.friendSpinner.setSelectedIndex(0);
+//                    break;
+//                case "None":
+//                    binding.friendSpinner.setSelectedIndex(1);
+//                    break;
+//                default:
+//                    binding.friendSpinner.setSelectedIndex(0);
+//                    break;
+//            }
 
 
-            binding.incognitoSpinner.setItems(incognito_spinner_items);
-            switch (currentUser.getIncognito_mode()) {
-                case "Yes":
-                    binding.incognitoSpinner.setSelectedIndex(0);
-                    break;
-                case "No":
-                    binding.incognitoSpinner.setSelectedIndex(1);
-                    break;
-                default:
-                    binding.incognitoSpinner.setSelectedIndex(1);
-                    break;
-            }
+            ArrayAdapter<String> firendViewAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,friend_view_spinner_items);
+            binding.friendViewSpinner.setAdapter(firendViewAdapter);
+            binding.friendViewSpinner.setSelection(firendViewAdapter.getPosition(currentUser.getWho_view_friends()));
+//            binding.friendViewSpinner.setItems(friend_view_spinner_items);
+//            switch (currentUser.getWho_view_friends()) {
+//                case "All":
+//                    binding.friendViewSpinner.setSelectedIndex(0);
+//                    break;
+//                case "Friends":
+//                    binding.friendViewSpinner.setSelectedIndex(1);
+//                    break;
+//                case "None":
+//                    binding.friendViewSpinner.setSelectedIndex(2);
+//                    break;
+//                default:
+//                    binding.friendViewSpinner.setSelectedIndex(0);
+//                    break;
+//            }
+
+
+            ArrayAdapter<String> incognitoAdapter = new ArrayAdapter<String>(getContext(),R.layout.tv_bg,incognito_spinner_items);
+            binding.incognitoSpinner.setAdapter(incognitoAdapter);
+            binding.incognitoSpinner.setSelection(incognitoAdapter.getPosition(currentUser.getIncognito_mode()));
+//            binding.incognitoSpinner.setItems(incognito_spinner_items);
+//            switch (currentUser.getIncognito_mode()) {
+//                case "Yes":
+//                    binding.incognitoSpinner.setSelectedIndex(0);
+//                    break;
+//                case "No":
+//                    binding.incognitoSpinner.setSelectedIndex(1);
+//                    break;
+//                default:
+//                    binding.incognitoSpinner.setSelectedIndex(1);
+//                    break;
+//            }
 
 
             binding.submitButton.setOnClickListener(new View.OnClickListener() {
@@ -160,10 +177,14 @@ public class SettingsFragment extends Fragment {
 
                     }
 
-                        currentUser.setWho_view_photos(photo_spinner_items.get(binding.photosSpinner.getSelectedIndex()));
-                        currentUser.setFriend_requests(friend_spinner_items.get(binding.friendSpinner.getSelectedIndex()));
-                        currentUser.setWho_view_friends(friend_view_spinner_items.get(binding.friendViewSpinner.getSelectedIndex()));
-                        currentUser.setIncognito_mode(incognito_spinner_items.get(binding.incognitoSpinner.getSelectedIndex()));
+                      //  currentUser.setWho_view_photos(photo_spinner_items.get(binding.photosSpinner.getSelectedIndex()));
+                        currentUser.setWho_view_photos(binding.photosSpinner.getSelectedItem().toString());
+                      //  currentUser.setFriend_requests(friend_spinner_items.get(binding.friendSpinner.getSelectedIndex()));
+                        currentUser.setFriend_requests(binding.friendSpinner.getSelectedItem().toString());
+                       // currentUser.setWho_view_friends(friend_view_spinner_items.get(binding.friendViewSpinner.getSelectedIndex()));
+                        currentUser.setWho_view_friends(binding.friendViewSpinner.getSelectedItem().toString());
+                       // currentUser.setIncognito_mode(incognito_spinner_items.get(binding.incognitoSpinner.getSelectedIndex()));
+                        currentUser.setIncognito_mode(binding.incognitoSpinner.getSelectedItem().toString());
 
                         dialog.show();
                         Backendless.Data.save(currentUser, new AsyncCallback<User>() {
@@ -210,6 +231,19 @@ public class SettingsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         SugarContext.terminate();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+//        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//        if (imm != null) {
+//            imm.hideSoftInputFromWindow(binding.countiresEtAuto.getWindowToken(), 0);
+//        }
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null){
+            imm.hideSoftInputFromWindow(binding.userNameEt.getWindowToken(),0);
+        }
+        return true;
     }
 }
 
