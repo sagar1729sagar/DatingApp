@@ -221,8 +221,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 .context(this)
                 .callback(this)
                 .spinnerTheme(R.style.NumberPickerStyle)
-                .maxDate(year+5,month,day)
-                .minDate(year,month,day)
+                .maxDate(year - 17,month,day)
+                .minDate(1975,month,day)
                 .build()
                 .show();
     }
