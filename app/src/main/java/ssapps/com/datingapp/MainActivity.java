@@ -87,13 +87,13 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -162,36 +162,41 @@ public class MainActivity extends AppCompatActivity
 
                 prefs.setActivity_Redirect(false);
                 supportInvalidateOptionsMenu();
-             //   makeScreenTransition(new SearchActivity());
-                //makeScreenTransition(new InDepthActivity());
-                Log.v("Indepth redirecrt", String.valueOf(prefs.isIndeothRedirect()));
-                if (getIntent().hasExtra("redirectProfile")) {
-                    if (getIntent().getBooleanExtra("redirectProfile", false)) {
-                        getSupportActionBar().setTitle("My Profile");
-                        makeScreenTransition(new ProfileFragment());
-                    }
-                } else if (getIntent().hasExtra("SettingsRedirect")) {
-                    if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
-                        getSupportActionBar().setTitle("Upgrades");
-                        makeScreenTransition(new UpgradePackages());
-                    }
-                } else if (getIntent().hasExtra("chatRedirect")) {
-                    if (getIntent().getBooleanExtra("chatRedirect", false)) {
-                        if (prefs.getname().equals("None")){
-                            Toast.makeText(getApplicationContext(),"Please login or regiter to continue",Toast.LENGTH_LONG).show();
-                        } else {
-                            getSupportActionBar().setTitle("Chat");
-                            makeScreenTransition(new ChatListingFragment());
+                if (prefs.getname().equals("None")){
+                    startActivity(new Intent(MainActivity.this, SignInChooserActivity.class));
+                } else {
+                    //   makeScreenTransition(new SearchActivity());
+                    //makeScreenTransition(new InDepthActivity());
+                    Log.v("Indepth redirecrt", String.valueOf(prefs.isIndeothRedirect()));
+                    if (getIntent().hasExtra("redirectProfile")) {
+                        if (getIntent().getBooleanExtra("redirectProfile", false)) {
+                            getSupportActionBar().setTitle("My Profile");
+                            makeScreenTransition(new ProfileFragment());
                         }
+                    } else if (getIntent().hasExtra("SettingsRedirect")) {
+                        if (getIntent().getBooleanExtra("PackagesRedirect", false)) {
+                            getSupportActionBar().setTitle("Upgrades");
+                            makeScreenTransition(new UpgradePackages());
+                        }
+                    } else if (getIntent().hasExtra("chatRedirect")) {
+                        if (getIntent().getBooleanExtra("chatRedirect", false)) {
+                            if (prefs.getname().equals("None")) {
+                                Toast.makeText(getApplicationContext(), "Please login or regiter to continue", Toast.LENGTH_LONG).show();
+                            } else {
+                                getSupportActionBar().setTitle("Chat");
+                                makeScreenTransition(new ChatListingFragment());
+                            }
+                        }
+                    } else if (prefs.isIndeothRedirect()) {
+                        prefs.setIndepthRedirect(false);
+                        getSupportActionBar().setTitle("In depth");
+                        makeScreenTransition(new InDepthActivity());
+                    } else {
+                        drawer.openDrawer(GravityCompat.START);
+                       // getSupportActionBar().setTitle("Search");
+                        //makeScreenTransition(new SearchActivityNew());
                     }
-                } else if(prefs.isIndeothRedirect()){
-                    prefs.setIndepthRedirect(false);
-                    getSupportActionBar().setTitle("In depth");
-                    makeScreenTransition(new InDepthActivity());
-                }
-                else {
-                    getSupportActionBar().setTitle("Search");
-                    makeScreenTransition(new SearchActivityNew());
+
                 }
 
 //                }
